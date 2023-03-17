@@ -3,6 +3,7 @@ package me.eldodebug.soar.management.mods;
 import java.util.ArrayList;
 
 import me.eldodebug.soar.management.mods.impl.*;
+import me.eldodebug.soar.management.mods.impl.hacks.AutoClickHackMod;
 import me.eldodebug.soar.management.mods.impl.hacks.ReachHackMod;
 
 public class ModManager {
@@ -113,6 +114,7 @@ public class ModManager {
 
 
 		mods.add(new ReachHackMod());
+		mods.add(new AutoClickHackMod());
 	}
 	
 	public Mod getModByName(String name) {

@@ -33,9 +33,6 @@ public class ServerSelectionList extends GuiListExtended {
             }
             else {
                 --index;
-                if (index >= this.serverListLan.size()) {
-                    return this.lanScanEntry;
-                }
                 return (GuiListExtended.IGuiListEntry)this.serverListLan.get(index);
             }
         }
