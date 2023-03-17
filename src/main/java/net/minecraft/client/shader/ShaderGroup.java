@@ -32,10 +32,10 @@ public class ShaderGroup {
     public final Map<String, Framebuffer> mapFramebuffers = Maps.<String, Framebuffer>newHashMap();
     public final List<Framebuffer> listFramebuffers = Lists.<Framebuffer>newArrayList();
     public Matrix4f projectionMatrix;
-    private int mainFramebufferWidth;
-    private int mainFramebufferHeight;
-    private float field_148036_j;
-    private float field_148037_k;
+    public int mainFramebufferWidth;
+    public int mainFramebufferHeight;
+    public float field_148036_j;
+    public float field_148037_k;
 
     public ShaderGroup(TextureManager p_i1050_1_, IResourceManager p_i1050_2_, Framebuffer p_i1050_3_, ResourceLocation p_i1050_4_) throws JsonException, IOException, JsonSyntaxException {
         this.resourceManager = p_i1050_2_;
@@ -342,5 +342,9 @@ public class ShaderGroup {
 
     private Framebuffer getFramebuffer(String p_148017_1_) {
         return p_148017_1_ == null ? null : (p_148017_1_.equals("minecraft:main") ? this.mainFramebuffer : (Framebuffer)this.mapFramebuffers.get(p_148017_1_));
+    }
+
+    public List<Shader> getListShaders() {
+        return listShaders;
     }
 }

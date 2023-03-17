@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
-
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -342,10 +339,7 @@ public class FontRenderer implements IResourceManagerReloadListener {
      * Draws the specified string with a shadow.
      */
     public int drawStringWithShadow(String text, float x, float y, int color) {
-        if(Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Remove Font Shadow").getValBoolean()) {
-            return this.drawString(text, (float)x, (float)y, color, false);
-        }
-        return this.drawString(text, (float)x, (float)y, color, true);
+        return this.drawString(text, x, y, color, true);
     }
 
     /**
@@ -787,7 +781,7 @@ public class FontRenderer implements IResourceManagerReloadListener {
 
     /**
      * Returns the width of the wordwrapped String (maximum length is parameter k)
-     *  
+     *
      * @param str The string to split
      * @param maxLength The maximum length of a word
      */

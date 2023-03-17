@@ -3,14 +3,12 @@ package net.minecraft.client.renderer.tileentity;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
-import me.eldodebug.soar.utils.interfaces.ICullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -107,7 +105,7 @@ public class TileEntityRendererDispatcher {
     }
 
     public void renderTileEntity(TileEntity tileentityIn, float partialTicks, int destroyStage) {
-        if(((ICullable) tileentityIn).isCulled()) {
+        if((tileentityIn).isCulled()) {
             return;
         }
 

@@ -3,10 +3,6 @@ package net.minecraft.client.renderer.entity;
 import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.List;
-
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.events.impl.EventHitOverlay;
-import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -21,7 +17,6 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.scoreboard.ScorePlayerTeam;
@@ -56,10 +51,6 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     public float renderPartialTicks;
     private boolean renderModelPushMatrix;
     private boolean renderLayersPushMatrix;
-    private float red;
-    private float green;
-    private float blue;
-    private float alpha;
     public static final boolean animateModelLiving = Boolean.getBoolean("animate.model.living");
 
     public RendererLivingEntity(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn) {
@@ -107,16 +98,6 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
      * Renders the desired {@code T} type Entity.
      */
     public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        if(Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled()) {
-
-            if(Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Disable Armor Stand").getValBoolean() & entity instanceof EntityArmorStand) {
-                return;
-            }
-
-            if(Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Disable Invisible Player").getValBoolean() & entity.isInvisible() && entity instanceof EntityPlayer) {
-               return;
-            }
-        }
         if (!Reflector.RenderLivingEvent_Pre_Constructor.exists() || !Reflector.postForgeBusEvent(Reflector.RenderLivingEvent_Pre_Constructor, new Object[] {entity, this, Double.valueOf(x), Double.valueOf(y), Double.valueOf(z)})) {
             if (animateModelLiving) {
                 entity.limbSwingAmount = 1.0F;
@@ -345,14 +326,6 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     }
 
     protected boolean setBrightness(T entitylivingbaseIn, float partialTicks, boolean combineTextures) {
-        EventHitOverlay event = new EventHitOverlay(1, 0, 0, 0.3F);
-        event.call();
-
-        red = event.getRed();
-        green = event.getGreen();
-        blue = event.getBlue();
-        alpha = event.getAlpha();
-
         float f = entitylivingbaseIn.getBrightness(partialTicks);
         int i = this.getColorMultiplier(entitylivingbaseIn, f, partialTicks);
         boolean flag = (i >> 24 & 255) > 0;

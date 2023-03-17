@@ -1,8 +1,5 @@
 package net.minecraft.client.model;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
-import me.eldodebug.soar.utils.interfaces.IMixinWorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -14,7 +11,6 @@ public class TexturedQuad {
     public PositionTextureVertex[] vertexPositions;
     public int nVertices;
     private boolean invertNormal;
-    private boolean drawOnSelf;
 
     public TexturedQuad(PositionTextureVertex[] vertices) {
         this.vertexPositions = vertices;
@@ -60,14 +56,7 @@ public class TexturedQuad {
         }
 
         if (Config.isShaders()) {
-            // renderer.begin(7, SVertexFormat.defVertexFormatTextured);
-
-            boolean batchRendering = Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Batch Rendering").getValBoolean();
-
-            this.drawOnSelf = !((IMixinWorldRenderer) renderer).isDrawing();
-            if (this.drawOnSelf || !batchRendering) {
-                renderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
-            }
+            renderer.begin(7, SVertexFormat.defVertexFormatTextured);
         }
         else {
             renderer.begin(7, DefaultVertexFormats.OLDMODEL_POSITION_TEX_NORMAL);
@@ -78,11 +67,6 @@ public class TexturedQuad {
             renderer.pos(positiontexturevertex.vector3D.xCoord * (double)scale, positiontexturevertex.vector3D.yCoord * (double)scale, positiontexturevertex.vector3D.zCoord * (double)scale).tex((double)positiontexturevertex.texturePositionX, (double)positiontexturevertex.texturePositionY).normal(f, f1, f2).endVertex();
         }
 
-        // Tessellator.getInstance().draw();
-        boolean batchRendering = Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Batch Rendering").getValBoolean();
-
-        if (this.drawOnSelf || !batchRendering) {
-            Tessellator.getInstance().draw();
-        }
+        Tessellator.getInstance().draw();
     }
 }

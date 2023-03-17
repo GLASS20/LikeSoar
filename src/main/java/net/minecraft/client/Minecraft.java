@@ -342,7 +342,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     /**
      * Set to true to keep the game loop running. Set to false by shutdown() to allow the game loop to exit cleanly.
      */
-    volatile boolean running = true;
+    public volatile boolean running = true;
 
     /** String that shows the debug information */
     public String debug = "";

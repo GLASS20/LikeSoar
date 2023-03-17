@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import me.eldodebug.soar.management.events.impl.EventRenderHitbox;
-import me.eldodebug.soar.utils.interfaces.ICullable;
-import me.eldodebug.soar.utils.interfaces.IMixinRender;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
@@ -353,8 +351,8 @@ public class RenderManager {
     }
 
     public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox) {
-        if(((ICullable) entity).isCulled()) {
-            ((IMixinRender<Entity>) getEntityRenderObject(entity)).doRenderName(entity, x, y, z);
+        if((entity).isCulled()) {
+            ((Render<Entity>) getEntityRenderObject(entity)).doRender(entity, x, y, z,entityYaw,partialTicks);
             return (renderEngine == null);
         }
 

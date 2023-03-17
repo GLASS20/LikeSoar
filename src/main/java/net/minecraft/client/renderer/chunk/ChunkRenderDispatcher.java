@@ -12,9 +12,6 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
-
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -193,12 +190,6 @@ public class ChunkRenderDispatcher {
     }
 
     public ChunkCompileTaskGenerator getNextChunkUpdate() throws InterruptedException {
-        if(Soar.instance.modManager != null && Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Chunk Delay").getValBoolean()) {
-
-            int mode = Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Delay").getValInt();
-
-            Thread.sleep((mode == 1) ? 15L : ((mode == 2) ? 50L : ((mode == 3) ? 110L : ((mode == 4) ? 150L : ((mode == 5) ? 200L : -1L)))));
-        }
         return (ChunkCompileTaskGenerator)this.queueChunkUpdates.take();
     }
 

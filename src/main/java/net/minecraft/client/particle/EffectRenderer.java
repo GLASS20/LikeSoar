@@ -6,9 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
-
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -115,7 +112,7 @@ public class EffectRenderer {
 
     /**
      * Spawns the relevant particle according to the particle id.
-     *  
+     *
      * @param xCoord X position of the particle
      * @param yCoord Y position of the particle
      * @param zCoord Z position of the particle
@@ -333,10 +330,6 @@ public class EffectRenderer {
     }
 
     public void addBlockDestroyEffects(BlockPos pos, IBlockState state) {
-        if(Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Remove Block Effects").getValBoolean()) {
-            return;
-        }
-
         boolean flag;
 
         if (Reflector.ForgeBlock_addDestroyEffects.exists() && Reflector.ForgeBlock_isAir.exists()) {
@@ -368,10 +361,6 @@ public class EffectRenderer {
      * Adds block hit particles for the specified block
      */
     public void addBlockHitEffects(BlockPos pos, EnumFacing side) {
-        if(Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Remove Block Effects").getValBoolean()) {
-            return;
-        }
-
         IBlockState iblockstate = this.worldObj.getBlockState(pos);
         Block block = iblockstate.getBlock();
 

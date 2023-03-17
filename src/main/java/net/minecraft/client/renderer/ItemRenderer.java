@@ -6,7 +6,6 @@ import me.eldodebug.soar.management.mods.impl.ClearWaterMod;
 import me.eldodebug.soar.management.mods.impl.OldAnimationsMod;
 import me.eldodebug.soar.management.mods.impl.OverlayEditorMod;
 import me.eldodebug.soar.management.mods.impl.SmallHeldItemsMod;
-import me.eldodebug.soar.utils.interfaces.IMixinMinecraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -376,25 +375,25 @@ public class ItemRenderer {
                     switch (enumaction) {
                         case NONE:
                             transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
-                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
+                                    mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             break;
 
                         case EAT:
                         case DRINK:
                             this.performDrinking(abstractclientplayer, partialTicks);
                             transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
-                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
+                                    mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             break;
 
                         case BLOCK:
                             transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
-                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
+                                    mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             this.doBlockTransformations();
                             break;
 
                         case BOW:
                             transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
-                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
+                                    mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
                     }
                 }
