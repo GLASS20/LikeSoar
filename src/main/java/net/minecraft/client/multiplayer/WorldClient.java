@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.management.events.impl.EventPlaySound;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -391,6 +393,24 @@ public class WorldClient extends World {
      * par8 is loudness, all pars passed to minecraftInstance.sndManager.playSound
      */
     public void playSound(double x, double y, double z, String soundName, float volume, float pitch, boolean distanceDelay) {
+        EventPlaySound event = new EventPlaySound(soundName, volume, pitch, volume, pitch);
+        event.call();
+
+        if(event.getPitch() != event.getOriginalPitch() || event.getVolume() != event.getOriginalVolume()) {
+            return;
+            /*volume = event.getVolume();
+            pitch = event.getPitch();
+            double distanceSq = this.mc.getRenderViewEntity().getDistanceSq(x, y, z);
+
+            PositionedSoundRecord positionedsoundrecord = new PositionedSoundRecord(new ResourceLocation(soundName), volume, pitch, (float) x, (float) y, (float) z);
+
+            if(distanceDelay && distanceSq > 100.0D) {
+                mc.getSoundHandler().playDelayedSound(positionedsoundrecord, (int) (Math.sqrt(distanceSq) / 40.0D * 20.0D));
+            } else {
+                mc.getSoundHandler().playSound(positionedsoundrecord);
+            }*/
+        }
+
         double d0 = this.mc.getRenderViewEntity().getDistanceSq(x, y, z);
         PositionedSoundRecord positionedsoundrecord = new PositionedSoundRecord(new ResourceLocation(soundName), volume, pitch, (float)x, (float)y, (float)z);
 

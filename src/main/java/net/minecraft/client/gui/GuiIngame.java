@@ -3,9 +3,22 @@ package net.minecraft.client.gui;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.hooks.GuiIngameHook;
+import me.eldodebug.soar.management.events.impl.EventRenderBossbar;
+import me.eldodebug.soar.management.events.impl.EventRenderCrosshair;
+import me.eldodebug.soar.management.events.impl.EventRenderScoreboard;
+import me.eldodebug.soar.management.events.impl.EventRenderSelectedItem;
+import me.eldodebug.soar.management.mods.impl.HotbarMod;
+import me.eldodebug.soar.management.mods.impl.OldAnimationsMod;
+import me.eldodebug.soar.management.mods.impl.OverlayEditorMod;
+import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -104,6 +117,8 @@ public class GuiIngame extends Gui {
     /** Used with updateCounter to make the heart bar flash */
     private long healthUpdateCounter = 0L;
 
+    public SimpleAnimation simpleAnimation = new SimpleAnimation(0.0F);
+
     public GuiIngame(Minecraft mcIn) {
         this.mc = mcIn;
         this.itemRenderer = mcIn.getRenderItem();
@@ -163,7 +178,12 @@ public class GuiIngame extends Gui {
         this.mc.getTextureManager().bindTexture(icons);
         GlStateManager.enableBlend();
 
-        if (this.showCrosshair()) {
+        EventRenderCrosshair event = new EventRenderCrosshair();
+        event.call();
+        boolean result = !event.isCancelled() && showCrosshair();
+        mc.getTextureManager().bindTexture(icons);
+
+        if (result/*this.showCrosshair()*/) {
             GlStateManager.tryBlendFuncSeparate(775, 769, 1, 0);
             GlStateManager.enableAlpha();
             this.drawTexturedModalRect(i / 2 - 7, j / 2 - 7, 0, 0, 16, 16);
@@ -332,7 +352,61 @@ public class GuiIngame extends Gui {
     }
 
     protected void renderTooltip(ScaledResolution sr, float partialTicks) {
+        GuiIngameHook.renderGameOverlay(partialTicks);
+
         if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
+
+            boolean animation = Soar.instance.settingsManager.getSettingByClass(HotbarMod.class, "Animation").getValBoolean();
+            int animationSpeed = Soar.instance.settingsManager.getSettingByClass(HotbarMod.class, "Speed").getValInt();
+            String mode = Soar.instance.settingsManager.getSettingByClass(HotbarMod.class, "Design").getValString();
+
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.mc.getTextureManager().bindTexture(widgetsTexPath);
+            EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
+            int i = sr.getScaledWidth() / 2;
+            float f = this.zLevel;
+            this.zLevel = -90.0F;
+
+            simpleAnimation.setAnimation(entityplayer.inventory.currentItem * 20, animationSpeed);
+            int itemX = i - 91 + (animation ? (int) simpleAnimation.getValue() : (entityplayer.inventory.currentItem * 20));
+
+            if(Soar.instance.modManager.getModByClass(HotbarMod.class).isToggled()) {
+
+                switch(mode) {
+                    case "Vanilla":
+                        this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
+                        this.drawTexturedModalRect(i - 91 - 1 + (animation ? simpleAnimation.getValue() : (entityplayer.inventory.currentItem * 20)), sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+                        break;
+                    case "Chill":
+                        drawRect(0, sr.getScaledHeight() - 22, sr.getScaledWidth(), sr.getScaledHeight() + 22, new Color(20, 20, 20, 180).getRGB());
+                        drawRect(itemX, sr.getScaledHeight() - 22, itemX + 22, sr.getScaledHeight(), new Color(230, 230, 230, 180).getRGB());
+                        break;
+                    case "Clear":
+                        drawRect(itemX, sr.getScaledHeight() - 22, itemX + 22, sr.getScaledHeight(), new Color(230, 230, 230, 180).getRGB());
+                        break;
+                }
+            }else {
+                this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
+                this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+            }
+
+            this.zLevel = f;
+            GlStateManager.enableRescaleNormal();
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+            RenderHelper.enableGUIStandardItemLighting();
+
+            for (int j = 0; j < 9; ++j) {
+                int k = sr.getScaledWidth() / 2 - 90 + j * 20 + 2;
+                int l = sr.getScaledHeight() - 16 - 3;
+                this.renderHotbarItem(j, k, l, partialTicks, entityplayer);
+            }
+
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.disableRescaleNormal();
+            GlStateManager.disableBlend();
+        }
+       /* if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(widgetsTexPath);
             EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
@@ -356,7 +430,7 @@ public class GuiIngame extends Gui {
             RenderHelper.disableStandardItemLighting();
             GlStateManager.disableRescaleNormal();
             GlStateManager.disableBlend();
-        }
+        }*/
     }
 
     public void renderHorseJumpBar(ScaledResolution scaledRes, int x) {
@@ -440,7 +514,19 @@ public class GuiIngame extends Gui {
             if (k > 0) {
                 GlStateManager.pushMatrix();
                 GlStateManager.enableBlend();
-                GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                // GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+                if (this.remainingHighlightTicks > 0 && this.highlightingItemStack != null) {
+                    k = (int)((float)this.remainingHighlightTicks * 256.0F / 10.0F);
+
+                    if (k > 255)
+                    {
+                        k = 255;
+                    }
+
+                    EventRenderSelectedItem event = new EventRenderSelectedItem(16777215 + (k << 24));
+                    event.call();
+                }
+
                 this.getFontRenderer().drawStringWithShadow(s, (float)i, (float)j, 16777215 + (k << 24));
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();
@@ -496,7 +582,12 @@ public class GuiIngame extends Gui {
     }
 
     private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
-        Scoreboard scoreboard = objective.getScoreboard();
+        EventRenderScoreboard event = new EventRenderScoreboard(objective);
+        event.call();
+
+        return;
+
+       /* Scoreboard scoreboard = objective.getScoreboard();
         Collection<Score> collection = scoreboard.getSortedScores(objective);
         List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>() {
             public boolean apply(Score p_apply_1_) {
@@ -542,11 +633,298 @@ public class GuiIngame extends Gui {
                 drawRect(l1 - 2, k - 1, l, k, 1342177280);
                 this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
             }
-        }
+        }*/
     }
 
     private void renderPlayerStats(ScaledResolution scaledRes) {
-        if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
+        if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
+        {
+            EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
+            int i = MathHelper.ceiling_float_int(entityplayer.getHealth());
+            boolean flag = this.healthUpdateCounter > (long)this.updateCounter && (this.healthUpdateCounter - (long)this.updateCounter) / 3L % 2L == 1L;
+
+            if (i < this.playerHealth && entityplayer.hurtResistantTime > 0)
+            {
+                this.lastSystemTime = Minecraft.getSystemTime();
+                this.healthUpdateCounter = (long)(this.updateCounter + 20);
+            }
+            else if (i > this.playerHealth && entityplayer.hurtResistantTime > 0)
+            {
+                this.lastSystemTime = Minecraft.getSystemTime();
+                this.healthUpdateCounter = (long)(this.updateCounter + 10);
+            }
+
+            if (Minecraft.getSystemTime() - this.lastSystemTime > 1000L)
+            {
+                this.playerHealth = i;
+                this.lastPlayerHealth = i;
+                this.lastSystemTime = Minecraft.getSystemTime();
+            }
+
+            this.playerHealth = i;
+            int j = this.lastPlayerHealth;
+            this.rand.setSeed((long)(this.updateCounter * 312871));
+            boolean flag1 = false;
+            FoodStats foodstats = entityplayer.getFoodStats();
+            int k = foodstats.getFoodLevel();
+            int l = foodstats.getPrevFoodLevel();
+            IAttributeInstance iattributeinstance = entityplayer.getEntityAttribute(SharedMonsterAttributes.maxHealth);
+            int i1 = scaledRes.getScaledWidth() / 2 - 91;
+            int j1 = scaledRes.getScaledWidth() / 2 + 91;
+            int k1 = scaledRes.getScaledHeight() - 39;
+            float f = (float)iattributeinstance.getAttributeValue();
+            float f1 = entityplayer.getAbsorptionAmount();
+            int l1 = MathHelper.ceiling_float_int((f + f1) / 2.0F / 10.0F);
+            int i2 = Math.max(10 - (l1 - 2), 3);
+            int j2 = k1 - (l1 - 1) * i2 - 10;
+            float f2 = f1;
+            int k2 = entityplayer.getTotalArmorValue();
+            int l2 = -1;
+
+            if (entityplayer.isPotionActive(Potion.regeneration))
+            {
+                l2 = this.updateCounter % MathHelper.ceiling_float_int(f + 5.0F);
+            }
+
+            this.mc.mcProfiler.startSection("armor");
+
+            for (int i3 = 0; i3 < 10; ++i3)
+            {
+                if (k2 > 0)
+                {
+                    int j3 = i1 + i3 * 8;
+
+                    if (i3 * 2 + 1 < k2)
+                    {
+                        this.drawTexturedModalRect(j3, j2, 34, 9, 9, 9);
+                    }
+
+                    if (i3 * 2 + 1 == k2)
+                    {
+                        this.drawTexturedModalRect(j3, j2, 25, 9, 9, 9);
+                    }
+
+                    if (i3 * 2 + 1 > k2)
+                    {
+                        this.drawTexturedModalRect(j3, j2, 16, 9, 9, 9);
+                    }
+                }
+            }
+
+            this.mc.mcProfiler.endStartSection("health");
+
+            for (int i6 = MathHelper.ceiling_float_int((f + f1) / 2.0F) - 1; i6 >= 0; --i6)
+            {
+                int j6 = 16;
+
+                if (entityplayer.isPotionActive(Potion.poison))
+                {
+                    j6 += 36;
+                }
+                else if (entityplayer.isPotionActive(Potion.wither))
+                {
+                    j6 += 72;
+                }
+
+                int k3 = 0;
+
+                if (flag)
+                {
+                    k3 = 1;
+                }
+
+                int l3 = MathHelper.ceiling_float_int((float)(i6 + 1) / 10.0F) - 1;
+                int i4 = i1 + i6 % 10 * 8;
+                int j4 = k1 - l3 * i2;
+
+                if (i <= 4)
+                {
+                    j4 += this.rand.nextInt(2);
+                }
+
+                if (i6 == l2)
+                {
+                    j4 -= 2;
+                }
+
+                int k4 = 0;
+
+                if (entityplayer.worldObj.getWorldInfo().isHardcoreModeEnabled())
+                {
+                    k4 = 5;
+                }
+
+                this.drawTexturedModalRect(i4, j4, 16 + k3 * 9, 9 * k4, 9, 9);
+
+                if (flag)
+                {
+                    if((!Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled()) || (Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled()) && !Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Health").getValBoolean()) {
+                        if (i6 * 2 + 1 < j)
+                        {
+                            this.drawTexturedModalRect(i4, j4, j6 + 54, 9 * k4, 9, 9);
+                        }
+                    }
+
+                    if (i6 * 2 + 1 == j)
+                    {
+                        this.drawTexturedModalRect(i4, j4, j6 + 63, 9 * k4, 9, 9);
+                    }
+                }
+
+                if (f2 > 0.0F)
+                {
+                    if (f2 == f1 && f1 % 2.0F == 1.0F)
+                    {
+                        this.drawTexturedModalRect(i4, j4, j6 + 153, 9 * k4, 9, 9);
+                    }
+                    else
+                    {
+                        this.drawTexturedModalRect(i4, j4, j6 + 144, 9 * k4, 9, 9);
+                    }
+
+                    f2 -= 2.0F;
+                }
+                else
+                {
+                    if (i6 * 2 + 1 < i)
+                    {
+                        this.drawTexturedModalRect(i4, j4, j6 + 36, 9 * k4, 9, 9);
+                    }
+
+                    if (i6 * 2 + 1 == i)
+                    {
+                        this.drawTexturedModalRect(i4, j4, j6 + 45, 9 * k4, 9, 9);
+                    }
+                }
+            }
+
+            Entity entity = entityplayer.ridingEntity;
+
+            if (entity == null)
+            {
+                this.mc.mcProfiler.endStartSection("food");
+
+                for (int k6 = 0; k6 < 10; ++k6)
+                {
+                    int i7 = k1;
+                    int l7 = 16;
+                    int j8 = 0;
+
+                    if (entityplayer.isPotionActive(Potion.hunger))
+                    {
+                        l7 += 36;
+                        j8 = 13;
+                    }
+
+                    if (entityplayer.getFoodStats().getSaturationLevel() <= 0.0F && this.updateCounter % (k * 3 + 1) == 0)
+                    {
+                        i7 = k1 + (this.rand.nextInt(3) - 1);
+                    }
+
+                    if (flag1)
+                    {
+                        j8 = 1;
+                    }
+
+                    int i9 = j1 - k6 * 8 - 9;
+                    this.drawTexturedModalRect(i9, i7, 16 + j8 * 9, 27, 9, 9);
+
+                    if (flag1)
+                    {
+                        if (k6 * 2 + 1 < l)
+                        {
+                            this.drawTexturedModalRect(i9, i7, l7 + 54, 27, 9, 9);
+                        }
+
+                        if (k6 * 2 + 1 == l)
+                        {
+                            this.drawTexturedModalRect(i9, i7, l7 + 63, 27, 9, 9);
+                        }
+                    }
+
+                    if (k6 * 2 + 1 < k)
+                    {
+                        this.drawTexturedModalRect(i9, i7, l7 + 36, 27, 9, 9);
+                    }
+
+                    if (k6 * 2 + 1 == k)
+                    {
+                        this.drawTexturedModalRect(i9, i7, l7 + 45, 27, 9, 9);
+                    }
+                }
+            }
+            else if (entity instanceof EntityLivingBase)
+            {
+                this.mc.mcProfiler.endStartSection("mountHealth");
+                EntityLivingBase entitylivingbase = (EntityLivingBase)entity;
+                int j7 = (int)Math.ceil((double)entitylivingbase.getHealth());
+                float f3 = entitylivingbase.getMaxHealth();
+                int k8 = (int)(f3 + 0.5F) / 2;
+
+                if (k8 > 30)
+                {
+                    k8 = 30;
+                }
+
+                int j9 = k1;
+
+                for (int k9 = 0; k8 > 0; k9 += 20)
+                {
+                    int l4 = Math.min(k8, 10);
+                    k8 -= l4;
+
+                    for (int i5 = 0; i5 < l4; ++i5)
+                    {
+                        int j5 = 52;
+                        int k5 = 0;
+
+                        if (flag1)
+                        {
+                            k5 = 1;
+                        }
+
+                        int l5 = j1 - i5 * 8 - 9;
+                        this.drawTexturedModalRect(l5, j9, j5 + k5 * 9, 9, 9, 9);
+
+                        if (i5 * 2 + 1 + k9 < j7)
+                        {
+                            this.drawTexturedModalRect(l5, j9, j5 + 36, 9, 9, 9);
+                        }
+
+                        if (i5 * 2 + 1 + k9 == j7)
+                        {
+                            this.drawTexturedModalRect(l5, j9, j5 + 45, 9, 9, 9);
+                        }
+                    }
+
+                    j9 -= 10;
+                }
+            }
+
+            this.mc.mcProfiler.endStartSection("air");
+
+            if (entityplayer.isInsideOfMaterial(Material.water))
+            {
+                int l6 = this.mc.thePlayer.getAir();
+                int k7 = MathHelper.ceiling_double_int((double)(l6 - 2) * 10.0D / 300.0D);
+                int i8 = MathHelper.ceiling_double_int((double)l6 * 10.0D / 300.0D) - k7;
+
+                for (int l8 = 0; l8 < k7 + i8; ++l8)
+                {
+                    if (l8 < k7)
+                    {
+                        this.drawTexturedModalRect(j1 - l8 * 8 - 9, j2, 16, 18, 9, 9);
+                    }
+                    else
+                    {
+                        this.drawTexturedModalRect(j1 - l8 * 8 - 9, j2, 25, 18, 9, 9);
+                    }
+                }
+            }
+
+            this.mc.mcProfiler.endSection();
+        }
+       /* if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
             EntityPlayer entityplayer = (EntityPlayer)this.mc.getRenderViewEntity();
             int i = MathHelper.ceiling_float_int(entityplayer.getHealth());
             boolean flag = this.healthUpdateCounter > (long)this.updateCounter && (this.healthUpdateCounter - (long)this.updateCounter) / 3L % 2L == 1L;
@@ -783,14 +1161,18 @@ public class GuiIngame extends Gui {
             }
 
             this.mc.mcProfiler.endSection();
-        }
+        }*/
     }
 
     /**
      * Renders dragon's (boss) health on the HUD
      */
     private void renderBossHealth() {
-        if (BossStatus.bossName != null && BossStatus.statusBarTime > 0) {
+        EventRenderBossbar event = new EventRenderBossbar();
+        event.call();
+        return;
+
+        /*if (BossStatus.bossName != null && BossStatus.statusBarTime > 0) {
             --BossStatus.statusBarTime;
             FontRenderer fontrenderer = this.mc.fontRendererObj;
             ScaledResolution scaledresolution = new ScaledResolution(this.mc);
@@ -810,10 +1192,15 @@ public class GuiIngame extends Gui {
             this.getFontRenderer().drawStringWithShadow(s, (float)(i / 2 - this.getFontRenderer().getStringWidth(s) / 2), (float)(i1 - 10), 16777215);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(icons);
-        }
+        }*/
     }
 
     private void renderPumpkinOverlay(ScaledResolution scaledRes) {
+        if(Soar.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled()) {
+            if(Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Hide Pumpkin").getValBoolean()) {
+                return;
+            }
+        }
         GlStateManager.disableDepth();
         GlStateManager.depthMask(false);
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);

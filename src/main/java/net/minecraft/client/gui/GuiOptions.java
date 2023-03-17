@@ -101,6 +101,10 @@ public class GuiOptions extends GuiScreen implements GuiYesNoCallback {
         return ichatcomponent.getFormattedText();
     }
 
+    public void onGuiClosed() {
+        mc.gameSettings.saveOptions();
+    }
+
     public void confirmClicked(boolean result, int id) {
         this.mc.displayGuiScreen(this);
 

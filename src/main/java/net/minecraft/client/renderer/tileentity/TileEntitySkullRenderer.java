@@ -5,6 +5,9 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import java.util.Map;
 import java.util.UUID;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelHumanoidHead;
@@ -16,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntitySkull> {
     private static final ResourceLocation SKELETON_TEXTURES = new ResourceLocation("textures/entity/skeleton/skeleton.png");
@@ -27,6 +31,9 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
     private final ModelSkeletonHead humanoidHead = new ModelHumanoidHead();
 
     public void renderTileEntityAt(TileEntitySkull te, double x, double y, double z, float partialTicks, int destroyStage) {
+        if (Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Disable Skulls").getValBoolean()) {
+            return;
+        }
         EnumFacing enumfacing = EnumFacing.getFront(te.getBlockMetadata() & 7);
         this.renderSkull((float)x, (float)y, (float)z, enumfacing, (float)(te.getSkullRotation() * 360) / 16.0F, te.getSkullType(), te.getPlayerProfile(), destroyStage);
     }
@@ -121,7 +128,10 @@ public class TileEntitySkullRenderer extends TileEntitySpecialRenderer<TileEntit
         GlStateManager.enableRescaleNormal();
         GlStateManager.scale(-1.0F, -1.0F, 1.0F);
         GlStateManager.enableAlpha();
-        modelbase.render((Entity)null, 0.0F, 0.0F, 0.0F, p_180543_5_, 0.0F, f);
+        // modelbase.render((Entity)null, 0.0F, 0.0F, 0.0F, p_180543_5_, 0.0F, f);
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ONE, GL11.GL_ZERO);
+
         GlStateManager.popMatrix();
 
         if (p_180543_8_ >= 0) {

@@ -1,5 +1,10 @@
 package net.minecraft.client.renderer.entity;
 
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.HypixelMod;
+import me.eldodebug.soar.utils.server.HypixelUtils;
+import me.eldodebug.soar.utils.server.ServerUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
@@ -16,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer> {
@@ -132,6 +138,16 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer> {
         }
 
         super.renderOffsetLivingLabel(entityIn, x, y, z, str, p_177069_9_, p_177069_10_);
+
+        boolean toggle = Soar.instance.modManager.getModByClass(HypixelMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(HypixelMod.class, "Level Head").getValBoolean();
+
+        if(toggle && ServerUtils.isHypixel()) {
+            String levelhead = HypixelUtils.getHypixelLevel(entityIn == Minecraft.getMinecraft().thePlayer, entityIn.getDisplayName().getFormattedText(), entityIn.getUniqueID());
+
+            if(levelhead != null) {
+                renderLivingLabel(entityIn, EnumChatFormatting.AQUA + "Level: " + EnumChatFormatting.YELLOW + levelhead, x, y + ((double) ((float) getFontRendererFromRenderManager().FONT_HEIGHT * 1.15F * p_177069_9_)), z, 64);
+            }
+        }
     }
 
     public void renderRightArm(AbstractClientPlayer clientPlayer) {

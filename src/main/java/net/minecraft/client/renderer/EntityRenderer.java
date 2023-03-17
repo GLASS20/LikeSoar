@@ -5,11 +5,20 @@ import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.events.impl.EventCameraRotation;
+import me.eldodebug.soar.management.events.impl.EventPlayerHeadRotation;
+import me.eldodebug.soar.management.events.impl.EventRender3D;
+import me.eldodebug.soar.management.events.impl.EventZoomFov;
+import me.eldodebug.soar.management.mods.impl.MinimalBobbingMod;
+import me.eldodebug.soar.management.mods.impl.MinimalDamageShakeMod;
+import me.eldodebug.soar.management.mods.impl.MotionBlurMod;
+import me.eldodebug.soar.management.mods.impl.OldAnimationsMod;
+import me.eldodebug.soar.utils.interfaces.IMixinEntityLivingBase;
+import me.eldodebug.soar.utils.shader.MotionBlurUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
@@ -218,8 +227,16 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     private int serverWaitTimeCurrent = 0;
     private float avgServerTimeDiff = 0.0F;
     private float avgServerTickDiff = 0.0F;
-    private ShaderGroup[] fxaaShaders = new ShaderGroup[10];
+    public ShaderGroup[] fxaaShaders = new ShaderGroup[10];
     private boolean loadVisibleChunks = false;
+
+    private float eyeHeightSubtractor;
+    private long lastEyeHeightUpdate;
+
+    private float rotationYaw;
+    private float prevRotationYaw;
+    private float rotationPitch;
+    private float prevRotationPitch;
 
     public EntityRenderer(Minecraft mcIn, IResourceManager resourceManagerIn) {
         this.shaderIndex = shaderCount;
@@ -413,6 +430,17 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
             this.mc.renderGlobal.createBindEntityOutlineFbs(width, height);
         }
+        if(mc.theWorld == null) {
+            return;
+        }
+
+        if (OpenGlHelper.shadersSupported) {
+            ShaderGroup motionBlur = MotionBlurUtils.instance.getShader();
+
+            if (motionBlur != null){
+                motionBlur.createBindFramebuffers(width, height);
+            }
+        }
     }
 
     /**
@@ -592,7 +620,12 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 f = f * 60.0F / 70.0F;
             }
 
-            return Reflector.ForgeHooksClient_getFOVModifier.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getFOVModifier, new Object[] {this, entity, block, Float.valueOf(partialTicks), Float.valueOf(f)}): f;
+            EventZoomFov event = new EventZoomFov(Reflector.ForgeHooksClient_getFOVModifier.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getFOVModifier, new Object[] {this, entity, block, Float.valueOf(partialTicks), Float.valueOf(f)}): f);
+            event.call();
+
+            return (event.getFov());
+
+            // return Reflector.ForgeHooksClient_getFOVModifier.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getFOVModifier, new Object[] {this, entity, block, Float.valueOf(partialTicks), Float.valueOf(f)}): f;
         }
     }
 
@@ -640,8 +673,53 @@ public class EntityRenderer implements IResourceManagerReloadListener {
      * sets up player's eye (or camera in third person mode)
      */
     private void orientCamera(float partialTicks) {
+
+        rotationYaw = mc.getRenderViewEntity().rotationYaw;
+        prevRotationYaw = mc.getRenderViewEntity().prevRotationYaw;
+        rotationPitch = mc.getRenderViewEntity().rotationPitch;
+        prevRotationPitch = mc.getRenderViewEntity().prevRotationPitch;
+        float roll = 0;
+
+        EventCameraRotation event = new EventCameraRotation(rotationYaw, rotationPitch, roll);
+        event.call();
+
+        rotationYaw = event.getYaw();
+        rotationPitch = event.getPitch();
+        roll = event.getRoll();
+
+        prevRotationYaw = event.getYaw();
+        prevRotationPitch = event.getPitch();
+        GlStateManager.rotate(event.getRoll(), 0, 0, 1);
+
         Entity entity = this.mc.getRenderViewEntity();
+
         float f = entity.getEyeHeight();
+
+        if(Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Sneak").getValBoolean() && entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            float height = player.getEyeHeight();
+            if(player.isSneaking()) {
+                height += 0.08F;
+            }
+            float actualEyeHeightSubtractor = player.isSneaking() ? 0.08F : 0;
+            long sinceLastUpdate = System.currentTimeMillis() - lastEyeHeightUpdate;
+            lastEyeHeightUpdate = System.currentTimeMillis();
+            if(actualEyeHeightSubtractor > eyeHeightSubtractor) {
+                eyeHeightSubtractor += sinceLastUpdate / 500f;
+                if(actualEyeHeightSubtractor < eyeHeightSubtractor) {
+                    eyeHeightSubtractor = actualEyeHeightSubtractor;
+                }
+            }
+            else if(actualEyeHeightSubtractor < eyeHeightSubtractor) {
+                eyeHeightSubtractor -= sinceLastUpdate / 500f;
+                if(actualEyeHeightSubtractor > eyeHeightSubtractor) {
+                    eyeHeightSubtractor = actualEyeHeightSubtractor;
+                }
+            }
+            f = height - eyeHeightSubtractor;
+        }
+        f = entity.getEyeHeight();
+
         double d0 = entity.prevPosX + (entity.posX - entity.prevPosX) * (double)partialTicks;
         double d1 = entity.prevPosY + (entity.posY - entity.prevPosY) * (double)partialTicks + (double)f;
         double d2 = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * (double)partialTicks;
@@ -800,10 +878,16 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             GlStateManager.translate((float)(pass * 2 - 1) * 0.1F, 0.0F, 0.0F);
         }
 
-        this.hurtCameraEffect(partialTicks);
+        // this.hurtCameraEffect(partialTicks);
+        if(!Soar.instance.modManager.getModByClass(MinimalDamageShakeMod.class).isToggled()) {
+            this.hurtCameraEffect(f);
+        }
 
         if (this.mc.gameSettings.viewBobbing) {
-            this.setupViewBobbing(partialTicks);
+            // this.setupViewBobbing(partialTicks);
+            if(!Soar.instance.modManager.getModByClass(MinimalBobbingMod.class).isToggled()) {
+                this.setupViewBobbing(f);
+            }
         }
 
         float f1 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * partialTicks;
@@ -856,6 +940,19 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     }
 
     public void renderHand(float p_renderHand_1_, int p_renderHand_2_, boolean p_renderHand_3_, boolean p_renderHand_4_, boolean p_renderHand_5_) {
+        if(mc.thePlayer != null && Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() &&
+                Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean()
+                && mc.objectMouseOver != null
+                && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
+                && mc.thePlayer != null
+                && mc.gameSettings.keyBindAttack.isKeyDown() && mc.gameSettings.keyBindUseItem.isKeyDown()
+                && mc.thePlayer.getItemInUseCount() > 0 && (!mc.thePlayer.isSwingInProgress
+                || mc.thePlayer.swingProgressInt >= ((IMixinEntityLivingBase) mc.thePlayer).accessArmSwingAnimationEnd()
+                / 2 || mc.thePlayer.swingProgressInt < 0)) {
+            mc.thePlayer.swingProgressInt = -1;
+            mc.thePlayer.isSwingInProgress = true;
+        }
+
         if (!this.debugView) {
             GlStateManager.matrixMode(5889);
             GlStateManager.loadIdentity();
@@ -1140,12 +1237,26 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 this.smoothCamPartialTicks = partialTicks;
                 f2 = this.smoothCamFilterX * f4;
                 f3 = this.smoothCamFilterY * f4;
-                this.mc.thePlayer.setAngles(f2, f3 * (float)i);
+                EventPlayerHeadRotation event = new EventPlayerHeadRotation(f2,  f3 * (float)i);
+                event.call();
+                float yaw = event.getYaw();
+                float pitch = event.getPitch();
+                if(!event.isCancelled()) {
+                    this.mc.thePlayer.setAngles(yaw, pitch);
+                }
+                // this.mc.thePlayer.setAngles(f2, f3 * (float)i);
             }
             else {
                 this.smoothCamYaw = 0.0F;
                 this.smoothCamPitch = 0.0F;
-                this.mc.thePlayer.setAngles(f2, f3 * (float)i);
+                EventPlayerHeadRotation event = new EventPlayerHeadRotation(f2,  f3 * (float)i);
+                event.call();
+                float yaw = event.getYaw();
+                float pitch = event.getPitch();
+                if(!event.isCancelled()) {
+                    this.mc.thePlayer.setAngles(yaw, pitch);
+                }
+                // this.mc.thePlayer.setAngles(f2, f3 * (float)i);
             }
         }
 
@@ -1179,6 +1290,26 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                         GlStateManager.popMatrix();
                     }
 
+                    List<ShaderGroup> shaders = new ArrayList<ShaderGroup>();
+
+                    if (this.theShaderGroup != null && this.useShader) {
+                        shaders.add(this.theShaderGroup);
+                    }
+
+                    ShaderGroup motionBlur = MotionBlurUtils.instance.getShader();
+
+                    if(Soar.instance.modManager.getModByClass(MotionBlurMod.class).isToggled()) {
+                        if (motionBlur != null){
+                            shaders.add(motionBlur);
+                        }
+
+                        for (ShaderGroup shader : shaders){
+                            GlStateManager.pushMatrix();
+                            GlStateManager.loadIdentity();
+                            shader.loadShaderGroup(partialTicks);
+                            GlStateManager.popMatrix();
+                        }
+                    }
                     this.mc.getFramebuffer().bindFramebuffer(true);
                 }
 
@@ -1671,6 +1802,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 ShadersRender.renderFPOverlay(this, partialTicks, pass);
             }
             else {
+                EventRender3D event = new EventRender3D(partialTicks);
+                event.call();
                 this.renderHand(partialTicks, pass);
             }
 
@@ -2518,5 +2651,9 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             this.mc.gameSettings.ofChunkUpdates = i;
             this.mc.gameSettings.ofLazyChunkLoading = flag;
         }
+    }
+
+    public long getRendeerEndNanoTime() {
+        return renderEndNanoTime;
     }
 }

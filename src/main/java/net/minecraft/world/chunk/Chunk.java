@@ -3,12 +3,13 @@ package net.minecraft.world.chunk;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import me.eldodebug.soar.hooks.ChunkHook;
+import me.eldodebug.soar.utils.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -16,6 +17,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -61,7 +63,7 @@ public class Chunk {
     private boolean isChunkLoaded;
 
     /** Reference to the World object. */
-    private final World worldObj;
+    public final World worldObj;
     private final int[] heightMap;
 
     /** The x coordinate of the chunk. */
@@ -499,7 +501,8 @@ public class Chunk {
     }
 
     public IBlockState getBlockState(final BlockPos pos) {
-        if (this.worldObj.getWorldType() == WorldType.DEBUG_WORLD) {
+        return ChunkHook.getBlockState((Chunk) (Object) this, pos);
+       /* if (this.worldObj.getWorldType() == WorldType.DEBUG_WORLD) {
             IBlockState iblockstate = null;
 
             if (pos.getY() == 60) {
@@ -537,7 +540,7 @@ public class Chunk {
                 });
                 throw new ReportedException(crashreport);
             }
-        }
+        }*/
     }
 
     /**
@@ -656,6 +659,10 @@ public class Chunk {
     }
 
     public int getLightFor(EnumSkyBlock p_177413_1_, BlockPos pos) {
+        if (ClientUtils.isFullbright()) {
+            return 15;
+        }
+
         int i = pos.getX() & 15;
         int j = pos.getY();
         int k = pos.getZ() & 15;
@@ -687,6 +694,10 @@ public class Chunk {
     }
 
     public int getLightSubtracted(BlockPos pos, int amount) {
+        if (ClientUtils.isFullbright()) {
+            return 15;
+        }
+
         int i = pos.getX() & 15;
         int j = pos.getY();
         int k = pos.getZ() & 15;
@@ -844,6 +855,18 @@ public class Chunk {
      * Called when this Chunk is unloaded by the ChunkProvider
      */
     public void onChunkUnload() {
+        final List<EntityPlayer> players = new ArrayList<>();
+
+        for (final ClassInheritanceMultiMap<Entity> classinheritancemultimap : entityLists) {
+            for (final EntityPlayer player : classinheritancemultimap.getByClass(EntityPlayer.class)) {
+                players.add(player);
+            }
+        }
+
+        for (final EntityPlayer player : players) {
+            worldObj.updateEntityWithOptionalForce(player, false);
+        }
+
         this.isChunkLoaded = false;
 
         for (TileEntity tileentity : this.chunkTileEntityMap.values()) {

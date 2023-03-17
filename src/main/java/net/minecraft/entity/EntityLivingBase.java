@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.events.impl.EventLivingUpdate;
+import me.eldodebug.soar.management.mods.impl.SlowSwingMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -348,6 +352,9 @@ public abstract class EntityLivingBase extends Entity {
         this.prevRotationYaw = this.rotationYaw;
         this.prevRotationPitch = this.rotationPitch;
         this.worldObj.theProfiler.endSection();
+
+        EventLivingUpdate event = new EventLivingUpdate((EntityLivingBase) (Object) this);
+        event.call();
     }
 
     /**
@@ -541,6 +548,10 @@ public abstract class EntityLivingBase extends Entity {
         while (iterator.hasNext()) {
             Integer integer = (Integer)iterator.next();
             PotionEffect potioneffect = (PotionEffect)this.activePotionsMap.get(integer);
+
+            if (potioneffect == null) {
+                return;
+            }
 
             if (!potioneffect.onUpdate(this)) {
                 if (!this.worldObj.isRemote) {
@@ -1146,6 +1157,10 @@ public abstract class EntityLivingBase extends Entity {
      * progress indicator. Takes dig speed enchantments into account.
      */
     private int getArmSwingAnimationEnd() {
+        if(Soar.instance.modManager.getModByClass(SlowSwingMod.class).isToggled()) {
+            return ((int) Soar.instance.settingsManager.getSettingByClass(SlowSwingMod.class, "Delay").getValDouble());
+        }
+
         return this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) * 1 : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
     }
 
@@ -1965,5 +1980,9 @@ public abstract class EntityLivingBase extends Entity {
 
     protected void markPotionsDirty() {
         this.potionsNeedUpdate = true;
+    }
+
+    public int accessArmSwingAnimationEnd() {
+        return getArmSwingAnimationEnd();
     }
 }

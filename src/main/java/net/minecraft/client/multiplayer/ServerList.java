@@ -9,7 +9,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 public class ServerList {
     private static final Logger logger = LogManager.getLogger();
 
@@ -71,21 +70,29 @@ public class ServerList {
      * Gets the ServerData instance stored for the given index in the list.
      */
     public ServerData getServerData(int index) {
-        return (ServerData)this.servers.get(index);
+        try {
+            return this.servers.get(index);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
      * Removes the ServerData instance stored for the given index in the list.
      */
     public void removeServerData(int index) {
-        this.servers.remove(index);
+        try {
+            this.servers.remove(index);
+        } catch (Exception e) {}
     }
 
     /**
      * Adds the given ServerData instance to the list.
      */
     public void addServerData(ServerData server) {
-        this.servers.add(server);
+        try {
+            this.servers.add(server);
+        } catch (Exception e) {}
     }
 
     /**
@@ -99,14 +106,18 @@ public class ServerList {
      * Takes two list indexes, and swaps their order around.
      */
     public void swapServers(int p_78857_1_, int p_78857_2_) {
-        ServerData serverdata = this.getServerData(p_78857_1_);
-        this.servers.set(p_78857_1_, this.getServerData(p_78857_2_));
-        this.servers.set(p_78857_2_, serverdata);
-        this.saveServerList();
+        try {
+            ServerData serverdata = this.getServerData(p_78857_1_);
+            this.servers.set(p_78857_1_, this.getServerData(p_78857_2_));
+            this.servers.set(p_78857_2_, serverdata);
+            this.saveServerList();
+        } catch (Exception e) {}
     }
 
     public void func_147413_a(int index, ServerData server) {
-        this.servers.set(index, server);
+        try {
+            this.servers.set(index, server);
+        } catch (Exception e) {}
     }
 
     public static void func_147414_b(ServerData p_147414_0_) {

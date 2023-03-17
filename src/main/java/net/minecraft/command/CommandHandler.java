@@ -29,6 +29,15 @@ public class CommandHandler implements ICommandManager {
      * @param rawCommand The raw arguments that were passed. This includes the command name.
      */
     public int executeCommand(ICommandSender sender, String rawCommand) {
+        /**
+         *     @ModifyArg(method = "executeCommand", at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", remap = false))
+         *     private Object executeCommand(Object s) {
+         *         if (s instanceof String) {
+         *             return ((String) s).toLowerCase(Locale.ENGLISH);
+         *         }
+         *         return s;
+         *     }
+         */
         rawCommand = rawCommand.trim();
 
         if (rawCommand.startsWith("/")) {
@@ -110,6 +119,16 @@ public class CommandHandler implements ICommandManager {
      * adds the command and any aliases it has to the internal map of available commands
      */
     public ICommand registerCommand(ICommand command) {
+        /**
+         * @ModifyArg(method = "registerCommand", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;", remap = false), index = 0)
+         *     private Object registerCommand(Object s) {
+         *         if (s instanceof String) {
+         *             return ((String) s).toLowerCase(Locale.ENGLISH);
+         *         }
+         *         return s;
+         *     }
+         */
+
         this.commandMap.put(command.getCommandName(), command);
         this.commandSet.add(command);
 

@@ -7,6 +7,8 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
+
+import me.eldodebug.soar.management.events.impl.EventRenderChunkPosition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockRedstoneWire;
@@ -135,6 +137,9 @@ public class RenderChunk {
 
         this.chunk = null;
         this.boundingBoxParent = null;
+
+        EventRenderChunkPosition event = new EventRenderChunkPosition((RenderChunk) (Object) this, pos);
+        event.call();
     }
 
     public void resortTransparency(float x, float y, float z, ChunkCompileTaskGenerator generator) {

@@ -27,6 +27,7 @@ public abstract class NodeProcessor {
      * net.minecraft.world.pathfinder.WalkNodeProcessor#avoidsWater avoidsWater}
      */
     public void postProcess() {
+        this.blockaccess = null;
     }
 
     /**

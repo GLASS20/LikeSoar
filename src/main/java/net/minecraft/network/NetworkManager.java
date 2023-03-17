@@ -32,6 +32,9 @@ import java.net.SocketAddress;
 import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.crypto.SecretKey;
+
+import me.eldodebug.soar.management.events.impl.EventReceivePacket;
+import me.eldodebug.soar.management.events.impl.EventSendPacket;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.CryptManager;
@@ -131,6 +134,13 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     protected void channelRead0(ChannelHandlerContext p_channelRead0_1_, Packet p_channelRead0_2_) throws Exception {
+        EventReceivePacket event = new EventReceivePacket(p_channelRead0_2_);
+        event.call();
+
+        if(event.isCancelled()) {
+            return;
+        }
+
         if (this.channel.isOpen()) {
             try {
                 p_channelRead0_2_.processPacket(this.packetListener);
@@ -152,6 +162,12 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
     }
 
     public void sendPacket(Packet packetIn) {
+        EventSendPacket event = new EventSendPacket(packetIn);
+        event.call();
+
+        if(event.isCancelled()) {
+            return;
+        }
         if (this.isChannelOpen()) {
             this.flushOutboundQueue();
             this.dispatchPacket(packetIn, (GenericFutureListener <? extends Future <? super Void >> [])null);

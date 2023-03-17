@@ -4,6 +4,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
+
+import me.eldodebug.soar.gui.GuiFixConnecting;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.ServerList;
@@ -333,7 +335,8 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback {
     }
 
     private void connectToServer(ServerData server) {
-        this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
+        this.mc.displayGuiScreen(new GuiFixConnecting(this, this.mc, server));
+        // this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
     }
 
     public void selectServer(int index) {

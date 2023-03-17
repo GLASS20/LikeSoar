@@ -5,6 +5,10 @@ import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
 import java.util.Comparator;
 import java.util.List;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.TabEditorMod;
+import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -26,6 +30,8 @@ public class GuiPlayerTabOverlay extends Gui {
     private final GuiIngame guiIngame;
     private IChatComponent footer;
     private IChatComponent header;
+
+    private SimpleAnimation animation = new SimpleAnimation(0.0F);
 
     /**
      * The last time the playerlist was opened (went from not being renderd, to being rendered)
@@ -87,7 +93,7 @@ public class GuiPlayerTabOverlay extends Gui {
             ++j4;
         }
 
-        boolean flag = this.mc.isIntegratedServerRunning() || this.mc.getNetHandler().getNetworkManager().getIsencrypted();
+        boolean flag = this.mc.isIntegratedServerRunning() && showHeads() || this.mc.getNetHandler().getNetworkManager().getIsencrypted() && showHeads();
         int l;
 
         if (scoreObjectiveIn != null) {
@@ -156,7 +162,13 @@ public class GuiPlayerTabOverlay extends Gui {
                 GameProfile gameprofile = networkplayerinfo1.getGameProfile();
 
                 if (flag) {
-                    EntityPlayer entityplayer = this.mc.theWorld.getPlayerEntityByUUID(gameprofile.getId());
+                    EntityPlayer entityplayer;
+                    if(Soar.instance.modManager.getModByClass(TabEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(TabEditorMod.class, "Remove Player Head").getValBoolean()) {
+                        entityplayer = null;
+                    }
+
+                    entityplayer = this.mc.theWorld.getPlayerEntityByUUID(gameprofile.getId());
+
                     boolean flag1 = entityplayer != null && entityplayer.isWearing(EnumPlayerModelParts.CAPE) && (gameprofile.getName().equals("Dinnerbone") || gameprofile.getName().equals("Grumm"));
                     this.mc.getTextureManager().bindTexture(networkplayerinfo1.getLocationSkin());
                     int l2 = 8 + (flag1 ? 8 : 0);
@@ -335,5 +347,9 @@ public class GuiPlayerTabOverlay extends Gui {
             ScorePlayerTeam scoreplayerteam1 = p_compare_2_.getPlayerTeam();
             return ComparisonChain.start().compareTrueFirst(p_compare_1_.getGameType() != WorldSettings.GameType.SPECTATOR, p_compare_2_.getGameType() != WorldSettings.GameType.SPECTATOR).compare(scoreplayerteam != null ? scoreplayerteam.getRegisteredName() : "", scoreplayerteam1 != null ? scoreplayerteam1.getRegisteredName() : "").compare(p_compare_1_.getGameProfile().getName(), p_compare_2_.getGameProfile().getName()).result();
         }
+    }
+
+    private boolean showHeads() {
+        return !(Soar.instance.modManager.getModByClass(TabEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(TabEditorMod.class, "Remove Player Head").getValBoolean());
     }
 }

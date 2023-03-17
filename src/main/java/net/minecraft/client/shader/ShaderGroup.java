@@ -25,13 +25,13 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 
 public class ShaderGroup {
-    private Framebuffer mainFramebuffer;
-    private IResourceManager resourceManager;
-    private String shaderGroupName;
-    private final List<Shader> listShaders = Lists.<Shader>newArrayList();
-    private final Map<String, Framebuffer> mapFramebuffers = Maps.<String, Framebuffer>newHashMap();
-    private final List<Framebuffer> listFramebuffers = Lists.<Framebuffer>newArrayList();
-    private Matrix4f projectionMatrix;
+    public Framebuffer mainFramebuffer;
+    public IResourceManager resourceManager;
+    public String shaderGroupName;
+    public final List<Shader> listShaders = Lists.<Shader>newArrayList();
+    public final Map<String, Framebuffer> mapFramebuffers = Maps.<String, Framebuffer>newHashMap();
+    public final List<Framebuffer> listFramebuffers = Lists.<Framebuffer>newArrayList();
+    public Matrix4f projectionMatrix;
     private int mainFramebufferWidth;
     private int mainFramebufferHeight;
     private float field_148036_j;

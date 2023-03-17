@@ -1,5 +1,12 @@
 package net.minecraft.client.renderer;
 
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.events.impl.EventTransformFirstPersonItem;
+import me.eldodebug.soar.management.mods.impl.ClearWaterMod;
+import me.eldodebug.soar.management.mods.impl.OldAnimationsMod;
+import me.eldodebug.soar.management.mods.impl.OverlayEditorMod;
+import me.eldodebug.soar.management.mods.impl.SmallHeldItemsMod;
+import me.eldodebug.soar.utils.interfaces.IMixinMinecraft;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -282,6 +289,8 @@ public class ItemRenderer {
      * Performs transformations prior to the rendering of a held item in first person.
      */
     private void transformFirstPersonItem(float equipProgress, float swingProgress) {
+        EventTransformFirstPersonItem event = new EventTransformFirstPersonItem(itemToRender, equipProgress, swingProgress);
+        event.call();
         GlStateManager.translate(0.56F, -0.52F, -0.71999997F);
         GlStateManager.translate(0.0F, equipProgress * -0.6F, 0.0F);
         GlStateManager.rotate(45.0F, 0.0F, 1.0F, 0.0F);
@@ -336,6 +345,15 @@ public class ItemRenderer {
      * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
      */
     public void renderItemInFirstPerson(float partialTicks) {
+        if(Soar.instance.modManager.getModByClass(SmallHeldItemsMod.class).isToggled()) {
+
+            double x = Soar.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "X").getValDouble();
+            double y = Soar.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "Y").getValDouble();
+            double z = Soar.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "Z").getValDouble();
+
+            GlStateManager.translate(x, y, z);
+        }
+
         if (!Config.isShaders() || !Shaders.isSkipRenderHand()) {
             float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
             AbstractClientPlayer abstractclientplayer = this.mc.thePlayer;
@@ -357,22 +375,26 @@ public class ItemRenderer {
 
                     switch (enumaction) {
                         case NONE:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
                             break;
 
                         case EAT:
                         case DRINK:
                             this.performDrinking(abstractclientplayer, partialTicks);
-                            this.transformFirstPersonItem(f, 0.0F);
+                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
                             break;
 
                         case BLOCK:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
                             this.doBlockTransformations();
                             break;
 
                         case BOW:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                                    mc.thePlayer.getSwingProgress(((IMixinMinecraft)mc).getTimer().renderPartialTicks) : 0.0F);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
                     }
                 }
@@ -478,6 +500,9 @@ public class ItemRenderer {
      * @param partialTicks Partial ticks
      */
     private void renderWaterOverlayTexture(float partialTicks) {
+        if (Soar.instance.modManager.getModByClass(ClearWaterMod.class).isToggled()) {
+            return;
+        }
         if (!Config.isShaders() || Shaders.isUnderwaterOverlay()) {
             this.mc.getTextureManager().bindTexture(RES_UNDERWATER_OVERLAY);
             Tessellator tessellator = Tessellator.getInstance();
@@ -513,6 +538,11 @@ public class ItemRenderer {
      * @param partialTicks Partial ticks
      */
     private void renderFireInFirstPerson(float partialTicks) {
+        GlStateManager.pushMatrix();
+        if(Soar.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Fire").getValBoolean()) {
+            GlStateManager.translate(0, Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Fire Height").getValFloat(), 0);
+        }
+
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 0.9F);
@@ -551,6 +581,8 @@ public class ItemRenderer {
         GlStateManager.disableBlend();
         GlStateManager.depthMask(true);
         GlStateManager.depthFunc(515);
+
+        GlStateManager.popMatrix();
     }
 
     public void updateEquippedItem() {

@@ -2,7 +2,15 @@ package net.minecraft.client.gui.inventory;
 
 import com.google.common.collect.Sets;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.InventoryMod;
+import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
+import me.eldodebug.soar.utils.render.ClickEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -75,6 +83,11 @@ public abstract class GuiContainer extends GuiScreen {
     private boolean doubleClick;
     private ItemStack shiftClickedSlot;
 
+    private SimpleAnimation animation;
+    private SimpleAnimation animation2;
+
+    private List<ClickEffect> clickEffects = new ArrayList<>();
+
     public GuiContainer(Container inventorySlotsIn) {
         this.inventorySlots = inventorySlotsIn;
         this.ignoreMouseUp = true;
@@ -89,12 +102,38 @@ public abstract class GuiContainer extends GuiScreen {
         this.mc.thePlayer.openContainer = this.inventorySlots;
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
+        animation = new SimpleAnimation(0.0F);
+        animation2 = new SimpleAnimation(0.0F);
     }
 
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        animation.setAnimation(this.width, (int) Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Speed").getValDouble());
+        animation2.setAnimation(this.height, (int) Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Speed").getValDouble());
+
+        if((Soar.instance.modManager.getModByClass(InventoryMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Transparent background").getValBoolean())) {
+            GlStateManager.enableTexture2D();
+            GlStateManager.disableBlend();
+            GlStateManager.disableDepth();
+            GlStateManager.disableLighting();
+        }
+
+        if(!Soar.instance.modManager.getModByClass(InventoryMod.class).isToggled() || (Soar.instance.modManager.getModByClass(InventoryMod.class).isToggled() && !Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Transparent background").getValBoolean())) {
+            this.drawDefaultBackground();
+        }
+
+        GlStateManager.enableDepth();
+
+        double xmod = this.width/2-(animation.getValue()/2);
+        double ymod = this.height/2-(animation2.getValue()/2);
+
+        if(Soar.instance.modManager.getModByClass(InventoryMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Animation").getValBoolean()){
+            GlStateManager.translate(xmod,ymod, 0);
+            GlStateManager.scale(animation.getValue()/this.width, animation2.getValue() / this.height, 1);
+        }
+
         this.drawDefaultBackground();
         int i = this.guiLeft;
         int j = this.guiTop;
@@ -185,6 +224,15 @@ public abstract class GuiContainer extends GuiScreen {
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
         RenderHelper.enableStandardItemLighting();
+
+        if(clickEffects.size() > 0) {
+            Iterator<ClickEffect> clickEffectIterator= clickEffects.iterator();
+            while(clickEffectIterator.hasNext()){
+                ClickEffect clickEffect = clickEffectIterator.next();
+                clickEffect.draw();
+                if (clickEffect.canRemove()) clickEffectIterator.remove();
+            }
+        }
     }
 
     /**
@@ -288,6 +336,10 @@ public abstract class GuiContainer extends GuiScreen {
 
             for (Slot slot : this.dragSplittingSlots) {
                 ItemStack itemstack1 = itemstack.copy();
+                if (this.dragSplittingButton == 2) {
+                    this.dragSplittingRemnant = mc.thePlayer.inventory.getItemStack().getMaxStackSize();
+                    return;
+                }
                 int i = slot.getStack() == null ? 0 : slot.getStack().stackSize;
                 Container.computeStackSize(this.dragSplittingSlots, this.dragSplittingLimit, itemstack1, i);
 
@@ -324,6 +376,13 @@ public abstract class GuiContainer extends GuiScreen {
      */
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
+        ClickEffect clickEffect = new ClickEffect(mouseX, mouseY);
+        clickEffects.add(clickEffect);
+
+        if (mouseButton - 100 == mc.gameSettings.keyBindInventory.getKeyCode()) {
+            mc.thePlayer.closeScreen();
+            return;
+        }
         boolean flag = mouseButton == this.mc.gameSettings.keyBindPickBlock.getKeyCode() + 100;
         Slot slot = this.getSlotAtPosition(mouseX, mouseY);
         long i = Minecraft.getSystemTime();
@@ -350,7 +409,8 @@ public abstract class GuiContainer extends GuiScreen {
             }
 
             if (l != -1) {
-                if (this.mc.gameSettings.touchscreen) {
+                if ((Soar.instance.modManager.getModByClass(InventoryMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Click out of Container").getValBoolean())
+                        || mc.gameSettings.touchscreen/*this.mc.gameSettings.touchscreen*/) {
                     if (slot != null && slot.getHasStack()) {
                         this.clickedSlot = slot;
                         this.draggedStack = null;
@@ -404,6 +464,7 @@ public abstract class GuiContainer extends GuiScreen {
         this.lastClickSlot = slot;
         this.lastClickTime = i;
         this.lastClickButton = mouseButton;
+        checkHotbarKeys(mouseButton - 100);
     }
 
     /**

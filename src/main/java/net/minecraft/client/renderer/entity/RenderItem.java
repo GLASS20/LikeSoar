@@ -2,6 +2,9 @@ package net.minecraft.client.renderer.entity;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.GlintColorMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
@@ -200,7 +203,7 @@ public class RenderItem implements IResourceManagerReloadListener {
         }
     }
 
-    private void renderEffect(IBakedModel model) {
+   /* private void renderEffect(IBakedModel model) {
         if (!Config.isCustomItems() || CustomItems.isUseGlint()) {
             if (!Config.isShaders() || !Shaders.isShadowPass) {
                 GlStateManager.depthMask(false);
@@ -240,6 +243,38 @@ public class RenderItem implements IResourceManagerReloadListener {
                 }
             }
         }
+    }*/
+
+    private void renderEffect(IBakedModel model){
+
+        int color = Soar.instance.modManager.getModByClass(GlintColorMod.class).isToggled() ? GlintColorMod.instance.getColor().getRGB() : -8372020;
+
+        GlStateManager.depthMask(false);
+        GlStateManager.depthFunc(514);
+        GlStateManager.disableLighting();
+        GlStateManager.blendFunc(768, 1);
+        this.textureManager.bindTexture(new ResourceLocation("textures/misc/enchanted_item_glint.png"));
+        GlStateManager.matrixMode(5890);
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(8.0F, 8.0F, 8.0F);
+        float f = (float)(Minecraft.getSystemTime() % 3000L) / 3000.0F / 8.0F;
+        GlStateManager.translate(f, 0.0F, 0.0F);
+        GlStateManager.rotate(-50.0F, 0.0F, 0.0F, 1.0F);
+        this.renderModel(model, color);
+        GlStateManager.popMatrix();
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(8.0F, 8.0F, 8.0F);
+        float f1 = (float)(Minecraft.getSystemTime() % 4873L) / 4873.0F / 8.0F;
+        GlStateManager.translate(-f1, 0.0F, 0.0F);
+        GlStateManager.rotate(10.0F, 0.0F, 0.0F, 1.0F);
+        this.renderModel(model, color);
+        GlStateManager.popMatrix();
+        GlStateManager.matrixMode(5888);
+        GlStateManager.blendFunc(770, 771);
+        GlStateManager.enableLighting();
+        GlStateManager.depthFunc(515);
+        GlStateManager.depthMask(true);
+        this.textureManager.bindTexture(TextureMap.locationBlocksTexture);
     }
 
     private void putQuadNormal(WorldRenderer renderer, BakedQuad quad) {

@@ -3,11 +3,15 @@ package net.minecraft.client.model;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.FPSBoostMod;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.src.Config;
 import net.minecraft.util.ResourceLocation;
 import net.optifine.entity.model.anim.ModelUpdater;
@@ -60,6 +64,8 @@ public class ModelRenderer {
     private String id;
     private ModelUpdater modelUpdater;
     private RenderGlobal renderGlobal;
+
+    private boolean compiledState;
 
     public ModelRenderer(ModelBase model, String boxNameIn) {
         this.spriteList = new ArrayList();
@@ -138,6 +144,11 @@ public class ModelRenderer {
     }
 
     public void render(float p_78785_1_) {
+        boolean batchRendering = Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Batch Rendering").getValBoolean();
+
+        if (compiledState != batchRendering) {
+            this.compiled = false;
+        }
         if (!this.isHidden && this.showModel) {
             this.checkResetDisplayList();
 
@@ -344,6 +355,14 @@ public class ModelRenderer {
         }
 
         GL11.glNewList(this.displayList, GL11.GL_COMPILE);
+
+        boolean batchRendering = Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Batch Rendering").getValBoolean();
+
+        this.compiledState = batchRendering;
+        if (batchRendering) {
+            Tessellator.getInstance().getWorldRenderer().begin(7, DefaultVertexFormats.OLDMODEL_POSITION_TEX_NORMAL);
+        }
+
         WorldRenderer worldrenderer = Tessellator.getInstance().getWorldRenderer();
 
         for (int i = 0; i < this.cubeList.size(); ++i) {
@@ -355,7 +374,12 @@ public class ModelRenderer {
             modelsprite.render(Tessellator.getInstance(), scale);
         }
 
-        GL11.glEndList();
+        batchRendering = Soar.instance.modManager.getModByClass(FPSBoostMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(FPSBoostMod.class, "Batch Rendering").getValBoolean();
+
+        if (batchRendering) {
+            Tessellator.getInstance().draw();
+        }
+        // GL11.glEndList();
         this.compiled = true;
     }
 

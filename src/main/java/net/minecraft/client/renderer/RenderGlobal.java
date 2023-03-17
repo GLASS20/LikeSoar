@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonSyntaxException;
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -19,6 +21,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.BlockOverlayMod;
+import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
+import me.eldodebug.soar.utils.color.ColorUtils;
+import me.eldodebug.soar.utils.render.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockEnderChest;
@@ -221,6 +229,10 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     public boolean renderOverlayEyes = false;
     private boolean firstWorldLoad = false;
     private static int renderEntitiesCounter = 0;
+
+    private SimpleAnimation animationX = new SimpleAnimation(0.0F);
+    private SimpleAnimation animationY = new SimpleAnimation(0.0F);
+    private SimpleAnimation animationZ = new SimpleAnimation(0.0F);
 
     public RenderGlobal(Minecraft mcIn) {
         this.cloudRenderer = new CloudRenderer(mcIn);
@@ -2289,6 +2301,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.color(0.0F, 0.0F, 0.0F, 0.4F);
+            if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Outline").getValBoolean()) {
+                ColorUtils.setColor(ColorUtils.getClientColor(1).getRGB());
+            }
             GL11.glLineWidth(2.0F);
             GlStateManager.disableTexture2D();
 
@@ -2297,6 +2312,10 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
 
             GlStateManager.depthMask(false);
+            if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Depth").getValBoolean()) {
+                GlStateManager.disableDepth();
+            }
+
             float f = 0.002F;
             BlockPos blockpos = movingObjectPositionIn.getBlockPos();
             Block block = this.theWorld.getBlockState(blockpos).getBlock();
@@ -2314,9 +2333,25 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 }
 
                 drawSelectionBoundingBox(axisalignedbb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-d0, -d1, -d2));
+                if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Fill").getValBoolean()) {
+                    ColorUtils.setColor(new Color(ColorUtils.getClientColor(0).getRed(), ColorUtils.getClientColor(0).getGreen(), ColorUtils.getClientColor(0).getBlue(), (int) (Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Opacity").getValFloat() * 255)).getRGB());
+
+                    double x = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double)partialTicks;
+                    double y = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double)partialTicks;
+                    double z = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double)partialTicks;
+
+                    animationX.setAnimation(blockpos.getX(), 16);
+                    animationY.setAnimation(blockpos.getY(), 16);
+                    animationZ.setAnimation(blockpos.getZ(), 16);
+
+                    RenderUtils.drawFilledWithGL(block.getSelectedBoundingBox(this.theWorld, blockpos).expand(0.0020000000949949026, 0.0020000000949949026, 0.0020000000949949026).offset(-x, -y, -z));
+                }
             }
 
             GlStateManager.depthMask(true);
+            if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Depth").getValBoolean()) {
+                GlStateManager.enableDepth();
+            }
             GlStateManager.enableTexture2D();
 
             if (Config.isShaders()) {
@@ -2980,5 +3015,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             this.facing = p_initialize_1_;
             this.setFacing = p_initialize_2_;
         }
+    }
+
+    public WorldClient getWorldClient() {
+        return theWorld;
     }
 }

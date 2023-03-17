@@ -3,6 +3,10 @@ package net.minecraft.client.gui;
 import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.ChatMod;
+import me.eldodebug.soar.utils.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,12 +24,31 @@ public class GuiNewChat extends Gui {
     private final List<ChatLine> drawnChatLines = Lists.<ChatLine>newArrayList();
     private int scrollPos;
     private boolean isScrolled;
+    private float percentComplete;
+    private int newLines;
+    private long prevMillis = System.currentTimeMillis();
+    private float animationPercent;
+    private int lineBeingDrawn;
+
+    private void updatePercentage(long diff) {
+        if (percentComplete < 1) {
+            percentComplete += (Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth Speed").getValDouble() / 1000) * (float) diff;
+        }
+        percentComplete = MathUtils.clamp(percentComplete, 0, 1);
+    }
 
     public GuiNewChat(Minecraft mcIn) {
         this.mc = mcIn;
     }
 
     public void drawChat(int updateCounter) {
+        long current = System.currentTimeMillis();
+        long diff = current - prevMillis;
+        prevMillis = current;
+        updatePercentage(diff);
+        float t = percentComplete;
+        animationPercent = MathUtils.clamp(1 - (--t) * t * t * t, 0, 1);
+
         if (this.mc.gameSettings.chatVisibility != EntityPlayer.EnumChatVisibility.HIDDEN) {
             int i = this.getLineCount();
             boolean flag = false;
@@ -40,12 +63,26 @@ public class GuiNewChat extends Gui {
 
                 float f1 = this.getChatScale();
                 int l = MathHelper.ceiling_float_int((float)this.getChatWidth() / f1);
-                GlStateManager.pushMatrix();
+                // GlStateManager.pushMatrix();
+                float y = 0;
+                if (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth").getValBoolean() && !this.isScrolled) {
+                    y += (9 - 9 * animationPercent) * this.getChatScale();
+                }
+                GlStateManager.translate(0, y, 0);
+
                 GlStateManager.translate(2.0F, 20.0F, 0.0F);
                 GlStateManager.scale(f1, f1, 1.0F);
 
                 for (int i1 = 0; i1 + this.scrollPos < this.drawnChatLines.size() && i1 < i; ++i1) {
                     ChatLine chatline = (ChatLine)this.drawnChatLines.get(i1 + this.scrollPos);
+
+                    if (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth").getValBoolean() && lineBeingDrawn <= newLines) {
+                        int opacity = (i1 + this.scrollPos >> 24) & 0xFF;
+                        opacity *= animationPercent;
+                        chatline = (ChatLine) this.drawnChatLines.get((i1 + this.scrollPos & ~(0xFF << 24)) | (opacity << 24));
+                    } else {
+                        chatline = (ChatLine) this.drawnChatLines.get(i1 + this.scrollPos);
+                    }
 
                     if (chatline != null) {
                         int j1 = updateCounter - chatline.getUpdatedCounter();
@@ -68,7 +105,14 @@ public class GuiNewChat extends Gui {
                             if (l1 > 3) {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                // drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                boolean transparent = !Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() || (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() &&
+                                        !Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Transparent background").getValBoolean());
+
+                                if (transparent) {
+                                    drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                }
+
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
                                 this.mc.fontRendererObj.drawStringWithShadow(s, (float)i2, (float)(j2 - 8), 16777215 + (l1 << 24));
@@ -90,8 +134,14 @@ public class GuiNewChat extends Gui {
                     if (l2 != i3) {
                         int k3 = j3 > 0 ? 170 : 96;
                         int l3 = this.isScrolled ? 13382451 : 3355562;
-                        drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
-                        drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
+
+                        boolean transparent = !Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() || (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() &&
+                                !Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Transparent background").getValBoolean());
+
+                        if (transparent) {
+                            drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));
+                            drawRect(2, -j3, 1, -j3 - k1, 13421772 + (k3 << 24));
+                        }
                     }
                 }
 
@@ -117,6 +167,7 @@ public class GuiNewChat extends Gui {
      * prints the ChatComponent to Chat. If the ID is not 0, deletes an existing Chat Line of that ID from the GUI
      */
     public void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId) {
+        percentComplete = 0;
         this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
         logger.info("[CHAT] " + chatComponent.getUnformattedText());
     }
@@ -228,6 +279,9 @@ public class GuiNewChat extends Gui {
 
                 if (j <= MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale()) && k < this.mc.fontRendererObj.FONT_HEIGHT * l + l) {
                     int i1 = k / this.mc.fontRendererObj.FONT_HEIGHT + this.scrollPos;
+                    int line = k / mc.fontRendererObj.FONT_HEIGHT;
+                    if (line >= getLineCount())
+                        return null;
 
                     if (i1 >= 0 && i1 < this.drawnChatLines.size()) {
                         ChatLine chatline = (ChatLine)this.drawnChatLines.get(i1);
@@ -274,7 +328,7 @@ public class GuiNewChat extends Gui {
         while (iterator.hasNext()) {
             ChatLine chatline = (ChatLine)iterator.next();
 
-            if (chatline.getChatLineID() == id) {
+            if ((chatline == null ? -1 :chatline.getChatLineID()) == id) {
                 iterator.remove();
             }
         }
@@ -284,7 +338,7 @@ public class GuiNewChat extends Gui {
         while (iterator.hasNext()) {
             ChatLine chatline1 = (ChatLine)iterator.next();
 
-            if (chatline1.getChatLineID() == id) {
+            if ((chatline1 == null ? -1 :chatline1.getChatLineID()) == id) {
                 iterator.remove();
                 break;
             }

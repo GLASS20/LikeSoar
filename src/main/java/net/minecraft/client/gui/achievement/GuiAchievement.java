@@ -1,5 +1,7 @@
 package net.minecraft.client.gui.achievement;
 
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.OverlayEditorMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -64,6 +66,10 @@ public class GuiAchievement extends Gui {
     }
 
     public void updateAchievementWindow() {
+        if(Soar.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Disable Achievements").getValBoolean()) {
+            return;
+        }
+
         if (this.theAchievement != null && this.notificationTime != 0L && Minecraft.getMinecraft().thePlayer != null) {
             double d0 = (double)(Minecraft.getSystemTime() - this.notificationTime) / 3000.0D;
 

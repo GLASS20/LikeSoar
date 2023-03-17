@@ -14,6 +14,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.events.impl.EventSwitchTexture;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.StitcherException;
 import net.minecraft.client.resources.IResource;
@@ -419,6 +422,10 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 TextureUtils.saveGlTexture("debug/" + this.basePath.replaceAll("/", "_"), this.getGlTextureId(), this.mipmapLevels, stitcher.getCurrentWidth(), stitcher.getCurrentHeight());
             }
 
+            if(Soar.instance.eventManager != null) {
+                EventSwitchTexture event = new EventSwitchTexture();
+                event.call();
+            }
             return;
         }
     }

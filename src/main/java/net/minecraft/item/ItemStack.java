@@ -38,6 +38,7 @@ public final class ItemStack {
 
     /** Size of the stack. */
     public int stackSize;
+    private String cachedDisplayName;
 
     /**
      * Number of animation frames to go when receiving an item (by walking into it, for example).
@@ -495,6 +496,9 @@ public final class ItemStack {
      * returns the display name of the itemstack
      */
     public String getDisplayName() {
+        if (cachedDisplayName != null) {
+            return (cachedDisplayName);
+        }
         String s = this.getItem().getItemStackDisplayName(this);
 
         if (this.stackTagCompound != null && this.stackTagCompound.hasKey("display", 10)) {
@@ -505,10 +509,12 @@ public final class ItemStack {
             }
         }
 
+        cachedDisplayName = s;
         return s;
     }
 
     public ItemStack setStackDisplayName(String displayName) {
+        cachedDisplayName = null;
         if (this.stackTagCompound == null) {
             this.stackTagCompound = new NBTTagCompound();
         }

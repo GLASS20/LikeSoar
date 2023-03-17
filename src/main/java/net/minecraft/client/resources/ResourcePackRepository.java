@@ -215,6 +215,10 @@ public class ResourcePackRepository {
      * Keep only the 10 most recent resources packs, delete the others
      */
     private void deleteOldServerResourcesPacks() {
+        if (!this.dirServerResourcepacks.exists()) {
+            this.dirServerResourcepacks.mkdirs();
+        }
+
         List<File> list = Lists.newArrayList(FileUtils.listFiles(this.dirServerResourcepacks, TrueFileFilter.TRUE, (IOFileFilter)null));
         Collections.sort(list, LastModifiedFileComparator.LASTMODIFIED_REVERSE);
         int i = 0;

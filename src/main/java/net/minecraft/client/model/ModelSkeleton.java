@@ -47,4 +47,10 @@ public class ModelSkeleton extends ModelZombie {
     public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
         super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
     }
+
+    public void postRenderArm(float scale) {
+        this.bipedRightArm.rotationPointX++;
+        this.bipedRightArm.postRender(scale);
+        this.bipedRightArm.rotationPointX--;
+    }
 }

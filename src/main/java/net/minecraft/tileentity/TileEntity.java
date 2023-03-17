@@ -29,6 +29,16 @@ public abstract class TileEntity {
     /** the Block type that this TileEntity is contained within */
     protected Block blockType;
 
+    private boolean culled;
+
+    public boolean isCulled() {
+        return culled;
+    }
+
+    public void setCulled(boolean culled) {
+        this.culled = culled;
+    }
+
     /**
      * Adds a new two-way mapping between the class and its string name in both hashmaps.
      */

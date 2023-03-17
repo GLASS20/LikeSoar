@@ -179,26 +179,34 @@ public class Scoreboard {
         return map;
     }
 
-    public void removeObjective(ScoreObjective p_96519_1_) {
-        this.scoreObjectives.remove(p_96519_1_.getName());
+    public void removeObjective(ScoreObjective objective) {
+        if (objective == null) {
+            return;
+        }
+
+        if (objective.getName() != null) {
+            this.scoreObjectives.remove(objective.getName());
+        }
 
         for (int i = 0; i < 19; ++i) {
-            if (this.getObjectiveInDisplaySlot(i) == p_96519_1_) {
+            if (this.getObjectiveInDisplaySlot(i) == objective) {
                 this.setObjectiveInDisplaySlot(i, (ScoreObjective)null);
             }
         }
 
-        List<ScoreObjective> list = (List)this.scoreObjectiveCriterias.get(p_96519_1_.getCriteria());
+        List<ScoreObjective> list = (List)this.scoreObjectiveCriterias.get(objective.getCriteria());
 
         if (list != null) {
-            list.remove(p_96519_1_);
+            list.remove(objective);
         }
 
         for (Map<ScoreObjective, Score> map : this.entitiesScoreObjectives.values()) {
-            map.remove(p_96519_1_);
+            if (objective != null) {
+                map.remove(objective);
+            }
         }
 
-        this.onScoreObjectiveRemoved(p_96519_1_);
+        this.onScoreObjectiveRemoved(objective);
     }
 
     /**
@@ -230,7 +238,8 @@ public class Scoreboard {
             ScorePlayerTeam scoreplayerteam = this.getTeam(name);
 
             if (scoreplayerteam != null) {
-                throw new IllegalArgumentException("A team with the name \'" + name + "\' already exists!");
+                return this.getTeam(name);
+                // throw new IllegalArgumentException("A team with the name \'" + name + "\' already exists!");
             }
             else {
                 scoreplayerteam = new ScorePlayerTeam(this, name);
@@ -244,14 +253,19 @@ public class Scoreboard {
     /**
      * Removes the team from the scoreboard, updates all player memberships and broadcasts the deletion to all players
      */
-    public void removeTeam(ScorePlayerTeam p_96511_1_) {
-        this.teams.remove(p_96511_1_.getRegisteredName());
+    public void removeTeam(ScorePlayerTeam team) {
+        if (team == null) {
+            return;
+        }
+        this.teams.remove(team.getRegisteredName());
 
-        for (String s : p_96511_1_.getMembershipCollection()) {
-            this.teamMemberships.remove(s);
+        for (String s : team.getMembershipCollection()) {
+            if (this.teamMemberships != null && s != null) {
+                this.teamMemberships.remove(s);
+            }
         }
 
-        this.func_96513_c(p_96511_1_);
+        this.func_96513_c(team);
     }
 
     /**
@@ -295,7 +309,8 @@ public class Scoreboard {
      */
     public void removePlayerFromTeam(String p_96512_1_, ScorePlayerTeam p_96512_2_) {
         if (this.getPlayersTeam(p_96512_1_) != p_96512_2_) {
-            throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team \'" + p_96512_2_.getRegisteredName() + "\'.");
+            return;
+            // throw new IllegalStateException("Player is either on another team or not on any team. Cannot remove from team \'" + p_96512_2_.getRegisteredName() + "\'.");
         }
         else {
             this.teamMemberships.remove(p_96512_1_);

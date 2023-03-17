@@ -3,6 +3,10 @@ package net.minecraft.client.renderer.entity;
 import com.google.common.collect.Maps;
 import java.util.Collections;
 import java.util.Map;
+
+import me.eldodebug.soar.management.events.impl.EventRenderHitbox;
+import me.eldodebug.soar.utils.interfaces.ICullable;
+import me.eldodebug.soar.utils.interfaces.IMixinRender;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
@@ -349,6 +353,11 @@ public class RenderManager {
     }
 
     public boolean doRenderEntity(Entity entity, double x, double y, double z, float entityYaw, float partialTicks, boolean hideDebugBox) {
+        if(((ICullable) entity).isCulled()) {
+            ((IMixinRender<Entity>) getEntityRenderObject(entity)).doRenderName(entity, x, y, z);
+            return (renderEngine == null);
+        }
+
         Render<Entity> render = null;
 
         try {
@@ -417,6 +426,13 @@ public class RenderManager {
      * @param partialTicks The partials ticks
      */
     private void renderDebugBoundingBox(Entity entityIn, double x, double y, double z, float entityYaw, float partialTicks) {
+        EventRenderHitbox event = new EventRenderHitbox(entityIn, x, y, z, entityYaw, partialTicks);
+        event.call();
+
+        if(event.isCancelled()) {
+            return;
+        }
+
         if (!Shaders.isShadowPass) {
             GlStateManager.depthMask(false);
             GlStateManager.disableTexture2D();
@@ -484,4 +500,17 @@ public class RenderManager {
     public Map<String, RenderPlayer> getSkinMap() {
         return Collections.<String, RenderPlayer>unmodifiableMap(this.skinMap);
     }
+
+    public double getRenderPosX() {
+        return this.renderPosX;
+    }
+
+    public double getRenderPosY() {
+        return this.renderPosY;
+    }
+
+    public double getRenderPosZ() {
+        return this.renderPosZ;
+    }
+
 }

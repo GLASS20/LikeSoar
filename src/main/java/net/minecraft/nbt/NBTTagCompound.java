@@ -64,7 +64,9 @@ public class NBTTagCompound extends NBTBase {
      * Stores the given tag into the map with the given string key. This is mostly used to store tag lists.
      */
     public void setTag(String key, NBTBase value) {
-        this.tagMap.put(key, value);
+        if (value == null) {
+            throw new IllegalArgumentException("Invalid null NBT value with key " + key);
+        }
     }
 
     /**

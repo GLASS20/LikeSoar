@@ -3,6 +3,11 @@ package net.minecraft.client.gui;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.ChatMod;
+import me.eldodebug.soar.utils.GlUtils;
+import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -36,6 +41,8 @@ public class GuiChat extends GuiScreen {
      * is the text that appears when you press the chat key and the input box appears pre-filled
      */
     private String defaultInputFieldText = "";
+
+    private SimpleAnimation animation = new SimpleAnimation(0.0F);
 
     public GuiChat() {
     }
@@ -254,12 +261,21 @@ public class GuiChat extends GuiScreen {
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        if(Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Bar Animation").getValBoolean()) {
+            animation.setAnimation(30, 20);
+            GlUtils.startTranslate(0, 29 - (int) animation.getValue());
+        }
+
         drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
         IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
         if (ichatcomponent != null && ichatcomponent.getChatStyle().getChatHoverEvent() != null) {
             this.handleComponentHover(ichatcomponent, mouseX, mouseY);
+        }
+
+        if(Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Bar Animation").getValBoolean()) {
+            GlUtils.stopTranslate();
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

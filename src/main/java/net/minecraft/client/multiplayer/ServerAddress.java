@@ -15,8 +15,16 @@ public class ServerAddress {
         this.serverPort = port;
     }
 
+//    public String getIP() {
+//        return IDN.toASCII(this.ipAddress);
+//    }
+
     public String getIP() {
-        return IDN.toASCII(this.ipAddress);
+        try {
+            return IDN.toASCII(this.ipAddress);
+        } catch (IllegalArgumentException e) {
+            return "";
+        }
     }
 
     public int getPort() {

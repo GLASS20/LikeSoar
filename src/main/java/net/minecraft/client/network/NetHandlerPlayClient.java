@@ -13,6 +13,10 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.Map.Entry;
+
+import me.eldodebug.soar.hooks.NetHandlerPlayClientHook;
+import me.eldodebug.soar.management.events.impl.EventDamageEntity;
+import me.eldodebug.soar.management.events.impl.EventRespawn;
 import net.minecraft.block.Block;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;
@@ -285,6 +289,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
         this.gameController.playerController.setGameType(packetIn.getGameType());
         this.gameController.gameSettings.sendSettingsToServer();
         this.netManager.sendPacket(new C17PacketCustomPayload("MC|Brand", (new PacketBuffer(Unpooled.buffer())).writeString(ClientBrandRetriever.getClientModName())));
+        EventRespawn event = new EventRespawn();
+        event.call();
     }
 
     /**
@@ -919,6 +925,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
                 entity.handleStatusUpdate(packetIn.getOpCode());
             }
         }
+
+        if(packetIn.getOpCode() == 2) {
+            EventDamageEntity event = new EventDamageEntity(packetIn.getEntity(clientWorldController));
+            event.call();
+        }
     }
 
     public void handleUpdateHealth(S06PacketUpdateHealth packetIn) {
@@ -1480,6 +1491,10 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
     }
 
     public void handleResourcePack(S48PacketResourcePackSend packetIn) {
+        if (!NetHandlerPlayClientHook.validateResourcePackUrl((NetHandlerPlayClient) (Object) this, packetIn)) {
+            return;
+        }
+
         final String s = packetIn.getURL();
         final String s1 = packetIn.getHash();
 

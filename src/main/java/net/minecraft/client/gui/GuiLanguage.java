@@ -49,6 +49,10 @@ public class GuiLanguage extends GuiScreen {
         this.list.registerScrollButtons(7, 8);
     }
 
+    public void onGuiClosed() {
+        mc.ingameGUI.getChatGUI().refreshChat();
+    }
+
     /**
      * Handles mouse input.
      */

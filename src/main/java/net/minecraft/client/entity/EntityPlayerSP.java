@@ -1,5 +1,7 @@
 package net.minecraft.client.entity;
 
+import me.eldodebug.soar.management.events.impl.EventPreMotionUpdate;
+import me.eldodebug.soar.management.events.impl.EventUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -160,6 +162,9 @@ public class EntityPlayerSP extends AbstractClientPlayer {
      * Called to update the entity's position/logic.
      */
     public void onUpdate() {
+        EventUpdate event = new EventUpdate();
+        event.call();
+
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ))) {
             super.onUpdate();
 
@@ -177,6 +182,9 @@ public class EntityPlayerSP extends AbstractClientPlayer {
      * called every tick when the player is on foot. Performs all the things that normally happen during movement.
      */
     public void onUpdateWalkingPlayer() {
+        EventPreMotionUpdate event = new EventPreMotionUpdate();
+        event.call();
+
         boolean flag = this.isSprinting();
 
         if (flag != this.serverSprintState) {

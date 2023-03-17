@@ -35,24 +35,23 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.gui.GuiSplashScreen;
+import me.eldodebug.soar.hooks.MinecraftHook;
+import me.eldodebug.soar.management.events.impl.EventKey;
+import me.eldodebug.soar.management.events.impl.EventRenderTick;
+import me.eldodebug.soar.management.events.impl.EventScrollMouse;
+import me.eldodebug.soar.management.events.impl.EventTick;
+import me.eldodebug.soar.management.mods.impl.FPSLimiterMod;
+import me.eldodebug.soar.management.mods.impl.FPSSpooferMod;
+import me.eldodebug.soar.management.mods.impl.HitDelayFixMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiControls;
-import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiMemoryErrorScreen;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSleepMP;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.achievement.GuiAchievement;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.gui.stream.GuiStreamUnavailable;
@@ -208,7 +207,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      */
     private static Minecraft theMinecraft;
     public PlayerControllerMP playerController;
-    private boolean fullscreen;
+    public boolean fullscreen;
     private boolean enableGLErrorChecking = true;
     private boolean hasCrashed;
 
@@ -219,7 +218,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     /** True if the player is connected to a realms server */
     private boolean connectedToRealms = false;
-    private Timer timer = new Timer(20.0F);
+    public Timer timer = new Timer(20.0F);
 
     /** Instance of PlayerUsageSnooper. */
     private PlayerUsageSnooper usageSnooper = new PlayerUsageSnooper("client", this, MinecraftServer.getCurrentTimeMillis());
@@ -232,7 +231,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private Entity renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;
-    private final Session session;
+    public Session session;
     private boolean isGamePaused;
 
     /** The font renderer used for displaying and measuring text */
@@ -245,7 +244,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     public EntityRenderer entityRenderer;
 
     /** Mouse left click counter */
-    private int leftClickCounter;
+    public int leftClickCounter;
 
     /** Display width */
     private int tempDisplayWidth;
@@ -281,7 +280,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * This is set to fpsCounter every debug screen update, and is shown on the debug screen. It's also sent as part of
      * the usage snooping.
      */
-    private static int debugFPS;
+    public static int debugFPS;
 
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
@@ -319,7 +318,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private IReloadableResourceManager mcResourceManager;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
     private final List<IResourcePack> defaultResourcePacks = Lists.<IResourcePack>newArrayList();
-    private final DefaultResourcePack mcDefaultResourcePack;
+    public final DefaultResourcePack mcDefaultResourcePack;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
     private IStream stream;
@@ -481,11 +480,16 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.drawSplashScreen(this.renderEngine);
         this.initStream();
         this.skinManager = new SkinManager(this.renderEngine, new File(this.fileAssets, "skins"), this.sessionService);
+        GuiSplashScreen.setProgress(1);
         this.saveLoader = new AnvilSaveConverter(new File(this.mcDataDir, "saves"));
+        GuiSplashScreen.setProgress(2);
         this.mcSoundHandler = new SoundHandler(this.mcResourceManager, this.gameSettings);
+        GuiSplashScreen.setProgress(3);
         this.mcResourceManager.registerReloadListener(this.mcSoundHandler);
         this.mcMusicTicker = new MusicTicker(this);
+        GuiSplashScreen.setProgress(4);
         this.fontRendererObj = new FontRenderer(this.gameSettings, new ResourceLocation("textures/font/ascii.png"), this.renderEngine, false);
+        GuiSplashScreen.setProgress(5);
 
         if (this.gameSettings.language != null) {
             this.fontRendererObj.setUnicodeFlag(this.isUnicode());
@@ -508,6 +512,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
             }
         });
         this.mouseHelper = new MouseHelper();
+        GuiSplashScreen.setProgress(6);
         this.checkGLError("Pre startup");
         GlStateManager.enableTexture2D();
         GlStateManager.shadeModel(7425);
@@ -522,27 +527,40 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         GlStateManager.matrixMode(5888);
         this.checkGLError("Startup");
         this.textureMapBlocks = new TextureMap("textures");
+        GuiSplashScreen.setProgress(7);
         this.textureMapBlocks.setMipmapLevels(this.gameSettings.mipmapLevels);
         this.renderEngine.loadTickableTexture(TextureMap.locationBlocksTexture, this.textureMapBlocks);
         this.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         this.textureMapBlocks.setBlurMipmapDirect(false, this.gameSettings.mipmapLevels > 0);
         this.modelManager = new ModelManager(this.textureMapBlocks);
+        GuiSplashScreen.setProgress(8);
         this.mcResourceManager.registerReloadListener(this.modelManager);
         this.renderItem = new RenderItem(this.renderEngine, this.modelManager);
+        GuiSplashScreen.setProgress(9);
         this.renderManager = new RenderManager(this.renderEngine, this.renderItem);
+        GuiSplashScreen.setProgress(10);
         this.itemRenderer = new ItemRenderer(this);
+        GuiSplashScreen.setProgress(11);
         this.mcResourceManager.registerReloadListener(this.renderItem);
         this.entityRenderer = new EntityRenderer(this, this.mcResourceManager);
+        GuiSplashScreen.setProgress(12);
         this.mcResourceManager.registerReloadListener(this.entityRenderer);
         this.blockRenderDispatcher = new BlockRendererDispatcher(this.modelManager.getBlockModelShapes(), this.gameSettings);
+        GuiSplashScreen.setProgress(13);
         this.mcResourceManager.registerReloadListener(this.blockRenderDispatcher);
         this.renderGlobal = new RenderGlobal(this);
+        GuiSplashScreen.setProgress(14);
         this.mcResourceManager.registerReloadListener(this.renderGlobal);
         this.guiAchievement = new GuiAchievement(this);
+        GuiSplashScreen.setProgress(15);
         GlStateManager.viewport(0, 0, this.displayWidth, this.displayHeight);
         this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
+        GuiSplashScreen.setProgress(16);
         this.checkGLError("Post startup");
         this.ingameGUI = new GuiIngame(this);
+        GuiSplashScreen.setProgress(17);
+
+        Soar.instance.startClient();
 
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
@@ -590,7 +608,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     private void createDisplay() throws LWJGLException {
         Display.setResizable(true);
-        Display.setTitle("Minecraft 1.8.9");
+        // Display.setTitle("Minecraft 1.8.9");
+        Display.setTitle(Soar.instance.getName() + " Client v" + Soar.instance.getVersion() + " for " + "Minecraft 1.8.9");
 
         try {
             Display.create((new PixelFormat()).withDepthBits(24));
@@ -613,7 +632,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
     }
 
+    public static boolean displayFixCancel = false;
     private void setInitialDisplayMode() throws LWJGLException {
+        displayFixCancel = false;
+        MinecraftHook.displayFix(fullscreen, displayWidth, displayHeight);
+        if (displayFixCancel) {
+            return;
+        }
+
         if (this.fullscreen) {
             Display.setFullscreen(true);
             DisplayMode displaymode = Display.getDisplayMode();
@@ -675,6 +701,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private void startTimerHackThread() {
         Thread thread = new Thread("Timer hack thread") {
             public void run() {
+                if (displayWidth < 1100) {
+                    displayWidth = 1100;
+                }
+
+                if (displayHeight < 630) {
+                    displayHeight = 630;
+                }
                 while (Minecraft.this.running) {
                     try {
                         Thread.sleep(2147483647L);
@@ -810,7 +843,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void drawSplashScreen(TextureManager textureManagerInstance) throws LWJGLException {
-        ScaledResolution scaledresolution = new ScaledResolution(this);
+        GuiSplashScreen.onRender(textureManagerInstance);
+        /*ScaledResolution scaledresolution = new ScaledResolution(this);
         int i = scaledresolution.getScaleFactor();
         Framebuffer framebuffer = new Framebuffer(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i, true);
         framebuffer.bindFramebuffer(false);
@@ -856,7 +890,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         framebuffer.framebufferRender(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i);
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.1F);
-        this.updateDisplay();
+        this.updateDisplay();*/
     }
 
     /**
@@ -925,6 +959,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         else {
             this.mcSoundHandler.resumeSounds();
             this.setIngameFocus();
+        }
+
+        if(guiScreenIn instanceof GuiMainMenu) {
+            displayGuiScreen(Soar.instance.guiManager.getGuiMainMenu());
         }
     }
 
@@ -1050,6 +1088,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         this.guiAchievement.updateAchievementWindow();
+        EventRenderTick event = new EventRenderTick();
+        event.call();
+
         this.framebufferMc.unbindFramebuffer();
         GlStateManager.popMatrix();
         GlStateManager.pushMatrix();
@@ -1063,9 +1104,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         Thread.yield();
         this.mcProfiler.startSection("stream");
         this.mcProfiler.startSection("update");
-        this.stream.func_152935_j();
+        // this.stream.func_152935_j();
         this.mcProfiler.endStartSection("submit");
-        this.stream.func_152922_k();
+        // this.stream.func_152922_k();
         this.mcProfiler.endSection();
         this.mcProfiler.endSection();
         this.checkGLError("Post render");
@@ -1126,7 +1167,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public int getLimitFramerate() {
-        return this.theWorld == null && this.currentScreen != null ? 30 : this.gameSettings.limitFramerate;
+        if(Soar.instance.modManager.getModByClass(FPSLimiterMod.class).isToggled()) {
+            return this.theWorld == null && this.currentScreen != null ? 60 : (this.currentScreen instanceof Gui ? 60 : this.gameSettings.limitFramerate);
+        }
+
+        return this.theWorld == null && this.currentScreen != null ? 250 : this.gameSettings.limitFramerate;
+        /*return this.theWorld == null && this.currentScreen != null ? 30 : this.gameSettings.limitFramerate;*/
     }
 
     public boolean isFramerateLimitBelowMax() {
@@ -1291,6 +1337,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Called when the window is closing. Sets 'running' to false which allows the game loop to exit cleanly.
      */
     public void shutdown() {
+        Soar.instance.stopClient();
         this.running = false;
     }
 
@@ -1302,6 +1349,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         if (Display.isActive()) {
             if (!this.inGameHasFocus) {
                 this.inGameHasFocus = true;
+                for(KeyBinding keyBinding : gameSettings.keyBindings) {
+                    try {
+                        KeyBinding.setKeyBindState(keyBinding.getKeyCode(), keyBinding.getKeyCode() < 256 && Keyboard.isKeyDown(keyBinding.getKeyCode()));
+                    }
+                    catch (IndexOutOfBoundsException error) {}
+                }
                 this.mouseHelper.grabMouseCursor();
                 this.displayGuiScreen((GuiScreen)null);
                 this.leftClickCounter = 10000;
@@ -1354,6 +1407,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void clickMouse() {
+        if(Soar.instance.modManager.getModByClass(HitDelayFixMod.class).isToggled()) {
+            leftClickCounter = 0;
+        }
         if (this.leftClickCounter <= 0) {
             this.thePlayer.swingItem();
 
@@ -1493,6 +1549,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
             Display.setFullscreen(this.fullscreen);
             Display.setVSyncEnabled(this.gameSettings.enableVsync);
+            MinecraftHook.fullScreenFix(fullscreen, displayWidth, displayHeight);
             this.updateDisplay();
         }
         catch (Exception exception) {
@@ -1626,7 +1683,18 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 long i1 = getSystemTime() - this.systemTime;
 
                 if (i1 <= 200L) {
-                    int j = Mouse.getEventDWheel();
+                    int dWheel = Mouse.getEventDWheel();
+
+                    EventScrollMouse event = new EventScrollMouse(dWheel);
+                    event.call();
+
+                    if(dWheel != 0) {
+                        if(event.isCancelled()) {
+                            dWheel = 0;
+                        }
+                    }
+
+                    int j = dWheel;
 
                     if (j != 0) {
                         if (this.thePlayer.isSpectator()) {
@@ -1684,6 +1752,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
                 }
 
                 this.dispatchKeypresses();
+
+                if (Keyboard.getEventKeyState() && Minecraft.getMinecraft().currentScreen == null) {
+                    EventKey event = new EventKey(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey());
+                    event.call();
+                }
 
                 if (Keyboard.getEventKeyState()) {
                     if (k == 62 && this.entityRenderer != null) {
@@ -1955,6 +2028,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
         this.mcProfiler.endSection();
         this.systemTime = getSystemTime();
+
+        EventTick event = new EventTick();
+        event.call();
     }
 
     /**
@@ -2028,6 +2104,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * par2Str is displayed on the loading screen to the user unloads the current world first
      */
     public void loadWorld(WorldClient worldClientIn, String loadingMessage) {
+        if (worldClientIn != this.theWorld) {
+            this.entityRenderer.getMapItemRenderer().clearLoadedMaps();
+        }
+
         if (worldClientIn == null) {
             NetHandlerPlayClient nethandlerplayclient = this.getNetHandler();
 
@@ -2684,7 +2764,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public void dispatchKeypresses() {
-        int i = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() : Keyboard.getEventKey();
+        // int i = Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() : Keyboard.getEventKey();
+
+        int i = Keyboard.getEventKey() == 0 ? (char) (Keyboard.getEventCharacter() + 256) : Keyboard.getEventKey();
 
         if (i != 0 && !Keyboard.isRepeatEvent()) {
             if (!(this.currentScreen instanceof GuiControls) || ((GuiControls)this.currentScreen).time <= getSystemTime() - 20L) {
@@ -2809,7 +2891,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public static int getDebugFPS() {
+        if(Soar.instance.modManager.getModByClass(FPSSpooferMod.class).isToggled()) {
+            return Soar.instance.settingsManager.getSettingByClass(FPSSpooferMod.class, "Multiplication").getValInt() * debugFPS;
+        }
         return debugFPS;
+//        return debugFPS;
     }
 
     /**
@@ -2841,5 +2927,17 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      */
     public void setConnectedToRealms(boolean isConnected) {
         this.connectedToRealms = isConnected;
+    }
+
+    public Timer getTimer(){
+        return timer;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public DefaultResourcePack getMcDefaultResourcePack() {
+        return this.mcDefaultResourcePack;
     }
 }

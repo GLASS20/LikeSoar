@@ -2,6 +2,9 @@ package net.minecraft.block;
 
 import java.util.List;
 import java.util.Random;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.ClearGlassMod;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -408,6 +411,10 @@ public class Block {
     }
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+        return !Soar.instance.modManager.getModByClass(ClearGlassMod.class).isToggled() && shouldSideBeRenderedAfter(worldIn, pos, side);
+    }
+
+    public boolean shouldSideBeRenderedAfter(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
         return side == EnumFacing.DOWN && this.minY > 0.0D ? true : (side == EnumFacing.UP && this.maxY < 1.0D ? true : (side == EnumFacing.NORTH && this.minZ > 0.0D ? true : (side == EnumFacing.SOUTH && this.maxZ < 1.0D ? true : (side == EnumFacing.WEST && this.minX > 0.0D ? true : (side == EnumFacing.EAST && this.maxX < 1.0D ? true : !worldIn.getBlockState(pos).getBlock().isOpaqueCube())))));
     }
 

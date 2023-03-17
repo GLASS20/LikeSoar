@@ -50,6 +50,9 @@ public class S14PacketEntity implements Packet<INetHandlerPlayClient> {
     }
 
     public Entity getEntity(World worldIn) {
+        if (worldIn == null) {
+            return null;
+        }
         return worldIn.getEntityByID(this.entityId);
     }
 

@@ -41,6 +41,8 @@ public class LayerWitherAura implements LayerRenderer<EntityWither> {
             GlStateManager.enableLighting();
             GlStateManager.disableBlend();
         }
+
+        GlStateManager.depthMask(true);
     }
 
     public boolean shouldCombineTextures() {

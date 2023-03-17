@@ -136,6 +136,10 @@ public class EntityItem extends Entity {
      * Looks for other itemstacks nearby and tries to stack them together
      */
     private void searchForOtherItemsNearby() {
+        if (this.getEntityItem().stackSize >= this.getEntityItem().getMaxStackSize()) {
+            return;
+        }
+
         for (EntityItem entityitem : this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(0.5D, 0.0D, 0.5D))) {
             this.combineItems(entityitem);
         }

@@ -8,6 +8,7 @@ public class NBTTagString extends NBTBase {
 
     /** The string value for the tag (cannot be empty). */
     private String data;
+    private String dataCache;
 
     public NBTTagString() {
         this.data = "";
@@ -29,6 +30,7 @@ public class NBTTagString extends NBTBase {
     }
 
     void read(DataInput input, int depth, NBTSizeTracker sizeTracker) throws IOException {
+        this.dataCache = null;
         sizeTracker.read(288L);
         this.data = input.readUTF();
         sizeTracker.read((long)(16 * this.data.length()));
@@ -41,9 +43,9 @@ public class NBTTagString extends NBTBase {
         return (byte)8;
     }
 
-    public String toString() {
-        return "\"" + this.data.replace("\"", "\\\"") + "\"";
-    }
+//    public String toString() {
+//        return "\"" + this.data.replace("\"", "\\\"") + "\"";
+//    }
 
     /**
      * Creates a clone of the tag.
@@ -73,7 +75,12 @@ public class NBTTagString extends NBTBase {
         return super.hashCode() ^ this.data.hashCode();
     }
 
-    public String getString() {
-        return this.data;
+    @Override
+    public String toString() {
+        if (this.dataCache == null) {
+            this.dataCache = "\"" + this.data.replace("\"", "\\\"") + "\"";
+        }
+
+        return this.dataCache;
     }
 }

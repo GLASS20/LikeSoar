@@ -1,6 +1,9 @@
 package net.minecraft.world.storage;
 
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.TimeChangerMod;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -411,7 +414,9 @@ public class WorldInfo {
      * Set current world time
      */
     public void setWorldTime(long time) {
-        this.worldTime = time;
+        boolean toggle = Soar.instance.modManager.getModByClass(TimeChangerMod.class).isToggled();
+        long customTime = (long) Soar.instance.settingsManager.getSettingByClass(TimeChangerMod.class, "Time").getValDouble();
+        this.worldTime = toggle ? customTime : time;
     }
 
     public void setSpawn(BlockPos spawnPoint) {

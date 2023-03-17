@@ -54,6 +54,8 @@ public class LayerSpiderEyes implements LayerRenderer<EntitySpider> {
         this.spiderRenderer.setLightmap(entitylivingbaseIn, partialTicks);
         GlStateManager.disableBlend();
         GlStateManager.enableAlpha();
+
+        GlStateManager.depthMask(true);
     }
 
     public boolean shouldCombineTextures() {

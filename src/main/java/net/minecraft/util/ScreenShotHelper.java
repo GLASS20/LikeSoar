@@ -2,6 +2,7 @@ package net.minecraft.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.IntBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -45,36 +46,22 @@ public class ScreenShotHelper {
      * Saves a screenshot in the game directory with the given file name (or null to generate a time-stamped name).
      * Args: gameDirectory, fileName, requestedWidthInPixels, requestedHeightInPixels, frameBuffer
      */
+
     public static IChatComponent saveScreenshot(File gameDirectory, String screenshotName, int width, int height, Framebuffer buffer) {
         try {
             File file1 = new File(gameDirectory, "screenshots");
             file1.mkdir();
-            Minecraft minecraft = Minecraft.getMinecraft();
-            int i = Config.getGameSettings().guiScale;
-            ScaledResolution scaledresolution = new ScaledResolution(minecraft);
-            int j = scaledresolution.getScaleFactor();
-            int k = Config.getScreenshotSize();
-            boolean flag = OpenGlHelper.isFramebufferEnabled() && k > 1;
-
-            if (flag) {
-                Config.getGameSettings().guiScale = j * k;
-                resize(width * k, height * k);
-                GlStateManager.pushMatrix();
-                GlStateManager.clear(16640);
-                minecraft.getFramebuffer().bindFramebuffer(true);
-                minecraft.entityRenderer.updateCameraAndRender(Config.renderPartialTicks, System.nanoTime());
-            }
 
             if (OpenGlHelper.isFramebufferEnabled()) {
                 width = buffer.framebufferTextureWidth;
                 height = buffer.framebufferTextureHeight;
             }
 
-            int l = width * height;
+            int i = width * height;
 
-            if (pixelBuffer == null || pixelBuffer.capacity() < l) {
-                pixelBuffer = BufferUtils.createIntBuffer(l);
-                pixelValues = new int[l];
+            if (pixelBuffer == null || pixelBuffer.capacity() < i) {
+                pixelBuffer = BufferUtils.createIntBuffer(i);
+                pixelValues = new int[i];
             }
 
             GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
@@ -83,10 +70,11 @@ public class ScreenShotHelper {
 
             if (OpenGlHelper.isFramebufferEnabled()) {
                 GlStateManager.bindTexture(buffer.framebufferTexture);
-                GL11.glGetTexImage(GL11.GL_TEXTURE_2D, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, (IntBuffer)pixelBuffer);
-            }
-            else {
-                GL11.glReadPixels(0, 0, width, height, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, (IntBuffer)pixelBuffer);
+                GL11.glGetTexImage(GL11.GL_TEXTURE_2D, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV,
+                        (IntBuffer) pixelBuffer);
+            } else {
+                GL11.glReadPixels(0, 0, width, height, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV,
+                        (IntBuffer) pixelBuffer);
             }
 
             pixelBuffer.get(pixelValues);
@@ -95,45 +83,41 @@ public class ScreenShotHelper {
 
             if (OpenGlHelper.isFramebufferEnabled()) {
                 bufferedimage = new BufferedImage(buffer.framebufferWidth, buffer.framebufferHeight, 1);
-                int i1 = buffer.framebufferTextureHeight - buffer.framebufferHeight;
+                int j = buffer.framebufferTextureHeight - buffer.framebufferHeight;
 
-                for (int j1 = i1; j1 < buffer.framebufferTextureHeight; ++j1) {
-                    for (int k1 = 0; k1 < buffer.framebufferWidth; ++k1) {
-                        bufferedimage.setRGB(k1, j1 - i1, pixelValues[j1 * buffer.framebufferTextureWidth + k1]);
+                for (int k = j; k < buffer.framebufferTextureHeight; ++k) {
+                    for (int l = 0; l < buffer.framebufferWidth; ++l) {
+                        bufferedimage.setRGB(l, k - j, pixelValues[k * buffer.framebufferTextureWidth + l]);
                     }
                 }
-            }
-            else {
+            } else {
                 bufferedimage = new BufferedImage(width, height, 1);
                 bufferedimage.setRGB(0, 0, width, height, pixelValues, 0, width);
-            }
-
-            if (flag) {
-                minecraft.getFramebuffer().unbindFramebuffer();
-                GlStateManager.popMatrix();
-                Config.getGameSettings().guiScale = i;
-                resize(width, height);
             }
 
             File file2;
 
             if (screenshotName == null) {
                 file2 = getTimestampedPNGFileForDirectory(file1);
-            }
-            else {
+            } else {
                 file2 = new File(file1, screenshotName);
             }
-
-            file2 = file2.getCanonicalFile();
-            ImageIO.write(bufferedimage, "png", (File)file2);
+            final BufferedImage image = bufferedimage;
+            new Thread(() -> {
+                try {
+                    ImageIO.write(image, "png", (File) file2);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
             IChatComponent ichatcomponent = new ChatComponentText(file2.getName());
-            ichatcomponent.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file2.getAbsolutePath()));
+            ichatcomponent.getChatStyle()
+                    .setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file2.getAbsolutePath()));
             ichatcomponent.getChatStyle().setUnderlined(Boolean.valueOf(true));
-            return new ChatComponentTranslation("screenshot.success", new Object[] {ichatcomponent});
-        }
-        catch (Exception exception) {
-            logger.warn((String)"Couldn\'t save screenshot", (Throwable)exception);
-            return new ChatComponentTranslation("screenshot.failure", new Object[] {exception.getMessage()});
+            return new ChatComponentTranslation("screenshot.success", new Object[] { ichatcomponent });
+        } catch (Exception exception) {
+            logger.warn((String) "Couldn\'t save screenshot", (Throwable) exception);
+            return new ChatComponentTranslation("screenshot.failure", new Object[] { exception.getMessage() });
         }
     }
 

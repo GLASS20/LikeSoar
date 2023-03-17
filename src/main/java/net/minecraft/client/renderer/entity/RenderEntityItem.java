@@ -1,6 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
 import java.util.Random;
+
+import me.eldodebug.soar.hooks.RenderEntityItemHook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -23,7 +25,8 @@ public class RenderEntityItem extends Render<EntityItem> {
     }
 
     private int func_177077_a(EntityItem itemIn, double p_177077_2_, double p_177077_4_, double p_177077_6_, float p_177077_8_, IBakedModel p_177077_9_) {
-        ItemStack itemstack = itemIn.getEntityItem();
+        return RenderEntityItemHook.func_177077_a(itemIn, p_177077_2_, p_177077_4_, p_177077_6_, p_177077_8_, p_177077_9_, func_177078_a(itemIn.getEntityItem()));
+       /* ItemStack itemstack = itemIn.getEntityItem();
         Item item = itemstack.getItem();
 
         if (item == null) {
@@ -51,7 +54,7 @@ public class RenderEntityItem extends Render<EntityItem> {
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             return i;
-        }
+        }*/
     }
 
     private int func_177078_a(ItemStack stack) {

@@ -1,5 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.hooks.RenderTNTPrimedHook;
+import me.eldodebug.soar.management.mods.impl.TNTTimerMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
@@ -19,6 +22,10 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed> {
      * Renders the desired {@code T} type Entity.
      */
     public void doRender(EntityTNTPrimed entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        if(Soar.instance.modManager.getModByClass(TNTTimerMod.class).isToggled()) {
+            RenderTNTPrimedHook.doRender((RenderTNTPrimed) (Object) this, entity, x, y, z, partialTicks);
+        }
+
         BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)x, (float)y + 0.5F, (float)z);

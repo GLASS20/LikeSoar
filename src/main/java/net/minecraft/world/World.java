@@ -11,6 +11,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import me.eldodebug.soar.utils.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.BlockLiquid;
@@ -19,6 +21,7 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
@@ -516,6 +519,9 @@ public abstract class World implements IBlockAccess {
     }
 
     public int getLight(BlockPos pos) {
+        if (this.canFullbright()) {
+            return 15;
+        }
         if (pos.getY() < 0) {
             return 0;
         }
@@ -533,6 +539,9 @@ public abstract class World implements IBlockAccess {
     }
 
     public int getLight(BlockPos pos, boolean checkNeighbors) {
+        if (this.canFullbright()) {
+            return 15;
+        }
         if (pos.getX() >= -30000000 && pos.getZ() >= -30000000 && pos.getX() < 30000000 && pos.getZ() < 30000000) {
             if (checkNeighbors && this.getBlockState(pos).getBlock().getUseNeighborBrightness()) {
                 int i1 = this.getLight(pos.up(), false);
@@ -616,6 +625,9 @@ public abstract class World implements IBlockAccess {
     }
 
     public int getLightFromNeighborsFor(EnumSkyBlock type, BlockPos pos) {
+        if (this.canFullbright()) {
+            return 15;
+        }
         if (this.provider.getHasNoSky() && type == EnumSkyBlock.SKY) {
             return 0;
         }
@@ -2335,6 +2347,9 @@ public abstract class World implements IBlockAccess {
      * gets the light level at the supplied position
      */
     private int getRawLight(BlockPos pos, EnumSkyBlock lightType) {
+        if (this.canFullbright()) {
+            return 15;
+        }
         if (lightType == EnumSkyBlock.SKY && this.canSeeSky(pos)) {
             return 15;
         }
@@ -2377,6 +2392,10 @@ public abstract class World implements IBlockAccess {
     }
 
     public boolean checkLightFor(EnumSkyBlock lightType, BlockPos pos) {
+        if (this.canFullbright()) {
+            return true;
+        }
+
         if (!this.isAreaLoaded(pos, 17, false)) {
             return false;
         }
@@ -3231,5 +3250,9 @@ public abstract class World implements IBlockAccess {
         int j = z * 16 + 8 - blockpos.getZ();
         int k = 128;
         return i >= -k && i <= k && j >= -k && j <= k;
+    }
+
+    private boolean canFullbright() {
+        return Minecraft.getMinecraft().isCallingFromMinecraftThread() && ClientUtils.isFullbright();
     }
 }

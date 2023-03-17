@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +55,10 @@ public class SoundManager {
 
     /** A counter for how long the sound manager has been running */
     private int playTime = 0;
-    private final Map<String, ISound> playingSounds = HashBiMap.<String, ISound>create();
+    public final Map<String, ISound> playingSounds = HashBiMap.<String, ISound>create();
     private final Map<ISound, String> invPlayingSounds;
     private Map<ISound, SoundPoolEntry> playingSoundPoolEntries;
+    private final List<String> pausedSounds = new ArrayList<>();
     private final Multimap<SoundCategory, String> categorySounds;
     private final List<ITickableSound> tickableSounds;
     private final Map<ISound, Integer> delayedSounds;

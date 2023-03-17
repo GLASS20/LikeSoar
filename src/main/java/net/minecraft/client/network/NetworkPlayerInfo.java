@@ -4,6 +4,8 @@ import com.google.common.base.Objects;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.mods.impl.SkinProtectMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
@@ -81,6 +83,10 @@ public class NetworkPlayerInfo {
     }
 
     public ResourceLocation getLocationSkin() {
+        if(Soar.instance.modManager.getModByClass(SkinProtectMod.class).isToggled()) {
+            return (new ResourceLocation("soar/mods/skinprotect/skin.png"));
+        }
+
         if (this.locationSkin == null) {
             this.loadPlayerTextures();
         }

@@ -53,6 +53,10 @@ public class VisGraph {
     public Set<EnumFacing> func_178609_b(BlockPos pos) {
         return this.func_178604_a(getIndex(pos));
     }
+    private boolean limitScan = false;
+    public void setLimitScan(boolean limitScan) {
+        this.limitScan = limitScan;
+    }
 
     private Set<EnumFacing> func_178604_a(int p_178604_1_) {
         Set<EnumFacing> set = EnumSet.<EnumFacing>noneOf(EnumFacing.class);
@@ -63,6 +67,10 @@ public class VisGraph {
         while (!((Queue)queue).isEmpty()) {
             int i = ((Integer)queue.poll()).intValue();
             this.func_178610_a(i, set);
+
+            if (this.limitScan && set.size() > 1) {
+                return set;
+            }
 
             for (EnumFacing enumfacing : EnumFacing.VALUES) {
                 int j = this.func_178603_a(i, enumfacing);

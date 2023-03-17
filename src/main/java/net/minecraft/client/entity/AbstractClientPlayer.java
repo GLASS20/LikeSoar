@@ -2,6 +2,9 @@ package net.minecraft.client.entity;
 
 import com.mojang.authlib.GameProfile;
 import java.io.File;
+
+import me.eldodebug.soar.Soar;
+import me.eldodebug.soar.management.events.impl.EventFovUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;
@@ -83,6 +86,14 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
     }
 
     public ResourceLocation getLocationCape() {
+        if(Soar.instance.cosmeticManager == null) {
+            return null;
+        }
+
+        if(!Soar.instance.cosmeticManager.getCurrentCpae().equals("None")) {
+            return (Soar.instance.cosmeticManager.getCosmeticByName(Soar.instance.cosmeticManager.getCurrentCpae()).getCape());
+        }
+
         if (!Config.isShowCapes()) {
             return null;
         }
@@ -154,7 +165,11 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
             f *= 1.0F - f1 * 0.15F;
         }
 
-        return Reflector.ForgeHooksClient_getOffsetFOV.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getOffsetFOV, new Object[] {this, Float.valueOf(f)}): f;
+        EventFovUpdate event = new EventFovUpdate((AbstractClientPlayer) (Object)this, (Reflector.ForgeHooksClient_getOffsetFOV.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getOffsetFOV, new Object[] {this, Float.valueOf(f)}): f));
+        event.call();
+
+        return event.getFov();
+        // return Reflector.ForgeHooksClient_getOffsetFOV.exists() ? Reflector.callFloat(Reflector.ForgeHooksClient_getOffsetFOV, new Object[] {this, Float.valueOf(f)}): f;
     }
 
     public String getNameClear() {

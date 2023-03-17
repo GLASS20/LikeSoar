@@ -117,8 +117,8 @@ public abstract class Entity implements ICommandSender {
      */
     public boolean isCollided;
     public boolean velocityChanged;
-    protected boolean isInWeb;
-    private boolean isOutsideBorder;
+    public boolean isInWeb;
+    public boolean isOutsideBorder;
 
     /**
      * gets set by setEntityDead, so this must be the flag whether an Entity is dead (inactive may be better term)
@@ -223,6 +223,12 @@ public abstract class Entity implements ICommandSender {
 
     /** Which dimension the player is in (-1 = the Nether, 0 = normal world) */
     public int dimension;
+
+    private boolean culled;
+
+    private long cachedDisplayName;
+    private IChatComponent cachedDisplayNameIChat;
+
 
     /** The position of the last portal the entity was in */
     protected BlockPos lastPortalPos;
@@ -1021,6 +1027,9 @@ public abstract class Entity implements ICommandSender {
      * Attempts to create sprinting particles if the entity is sprinting and not in water.
      */
     public void spawnRunningParticles() {
+        if (!this.onGround) {
+            return;
+        }
         if (this.isSprinting() && !this.isInWater()) {
             this.createRunningParticles();
         }
@@ -2245,9 +2254,14 @@ public abstract class Entity implements ICommandSender {
      * Get the formatted ChatComponent that will be used for the sender's username in chat
      */
     public IChatComponent getDisplayName() {
+        if (System.currentTimeMillis() - cachedDisplayName < 50L) {
+            return (cachedDisplayNameIChat);
+        }
         ChatComponentText chatcomponenttext = new ChatComponentText(this.getName());
         chatcomponenttext.getChatStyle().setChatHoverEvent(this.getHoverEvent());
         chatcomponenttext.getChatStyle().setInsertion(this.getUniqueID().toString());
+        cachedDisplayNameIChat = chatcomponenttext;
+        cachedDisplayName = System.currentTimeMillis();
         return chatcomponenttext;
     }
 
@@ -2429,5 +2443,13 @@ public abstract class Entity implements ICommandSender {
         }
 
         EnchantmentHelper.applyArthropodEnchantments(entityLivingBaseIn, entityIn);
+    }
+
+    public boolean isCulled() {
+        return this.culled;
+    }
+
+    public void setCulled(boolean culled) {
+        this.culled = culled;
     }
 }

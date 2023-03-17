@@ -3,6 +3,8 @@ package net.minecraft.client.renderer;
 import com.google.common.collect.Lists;
 import java.util.BitSet;
 import java.util.List;
+
+import me.eldodebug.soar.management.events.impl.EventPreRenderChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -43,6 +45,8 @@ public abstract class ChunkRenderContainer {
     public void preRenderChunk(RenderChunk renderChunkIn) {
         BlockPos blockpos = renderChunkIn.getPosition();
         GlStateManager.translate((float)((double)blockpos.getX() - this.viewEntityX), (float)((double)blockpos.getY() - this.viewEntityY), (float)((double)blockpos.getZ() - this.viewEntityZ));
+        EventPreRenderChunk event = new EventPreRenderChunk(renderChunkIn);
+        event.call();
     }
 
     public void addRenderChunk(RenderChunk renderChunkIn, EnumWorldBlockLayer layer) {

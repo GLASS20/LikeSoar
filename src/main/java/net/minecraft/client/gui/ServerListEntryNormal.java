@@ -134,7 +134,11 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry {
 
         if (this.server.getBase64EncodedIconData() != null && !this.server.getBase64EncodedIconData().equals(this.field_148299_g)) {
             this.field_148299_g = this.server.getBase64EncodedIconData();
-            this.prepareServerIcon();
+            try {
+                prepareServerIcon();
+            } catch (Exception e) {
+                server.setBase64EncodedIconData(null);
+            }
             this.owner.getServerList().saveServerList();
         }
 
