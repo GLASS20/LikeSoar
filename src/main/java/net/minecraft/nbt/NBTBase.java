@@ -93,7 +93,7 @@ public abstract class NBTBase {
         return this.getId();
     }
 
-    public String getString() {
+    protected String getString() {
         return this.toString();
     }
 

@@ -64,9 +64,7 @@ public class NBTTagCompound extends NBTBase {
      * Stores the given tag into the map with the given string key. This is mostly used to store tag lists.
      */
     public void setTag(String key, NBTBase value) {
-        if (value == null) {
-            throw new IllegalArgumentException("Invalid null NBT value with key " + key);
-        }
+        this.tagMap.put(key, value);
     }
 
     /**
@@ -184,7 +182,7 @@ public class NBTTagCompound extends NBTBase {
      */
     public byte getByte(String key) {
         try {
-            return !this.hasKey(key, 99) ? 0 : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getByte();
+            return !this.hasKey(key, 99) ? 0 : ((NBTPrimitive)this.tagMap.get(key)).getByte();
         }
         catch (ClassCastException var3) {
             return (byte)0;
@@ -196,7 +194,7 @@ public class NBTTagCompound extends NBTBase {
      */
     public short getShort(String key) {
         try {
-            return !this.hasKey(key, 99) ? 0 : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getShort();
+            return !this.hasKey(key, 99) ? 0 : ((NBTPrimitive)this.tagMap.get(key)).getShort();
         }
         catch (ClassCastException var3) {
             return (short)0;
@@ -208,7 +206,7 @@ public class NBTTagCompound extends NBTBase {
      */
     public int getInteger(String key) {
         try {
-            return !this.hasKey(key, 99) ? 0 : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getInt();
+            return !this.hasKey(key, 99) ? 0 : ((NBTPrimitive)this.tagMap.get(key)).getInt();
         }
         catch (ClassCastException var3) {
             return 0;
@@ -220,7 +218,7 @@ public class NBTTagCompound extends NBTBase {
      */
     public long getLong(String key) {
         try {
-            return !this.hasKey(key, 99) ? 0L : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getLong();
+            return !this.hasKey(key, 99) ? 0L : ((NBTPrimitive)this.tagMap.get(key)).getLong();
         }
         catch (ClassCastException var3) {
             return 0L;
@@ -232,7 +230,7 @@ public class NBTTagCompound extends NBTBase {
      */
     public float getFloat(String key) {
         try {
-            return !this.hasKey(key, 99) ? 0.0F : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getFloat();
+            return !this.hasKey(key, 99) ? 0.0F : ((NBTPrimitive)this.tagMap.get(key)).getFloat();
         }
         catch (ClassCastException var3) {
             return 0.0F;
@@ -244,7 +242,7 @@ public class NBTTagCompound extends NBTBase {
      */
     public double getDouble(String key) {
         try {
-            return !this.hasKey(key, 99) ? 0.0D : ((NBTBase.NBTPrimitive)this.tagMap.get(key)).getDouble();
+            return !this.hasKey(key, 99) ? 0.0D : ((NBTPrimitive)this.tagMap.get(key)).getDouble();
         }
         catch (ClassCastException var3) {
             return 0.0D;
