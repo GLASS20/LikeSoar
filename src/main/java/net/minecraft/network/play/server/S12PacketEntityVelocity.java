@@ -1,13 +1,14 @@
 package net.minecraft.network.play.server;
 
 import java.io.IOException;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
 
 public class S12PacketEntityVelocity implements Packet<INetHandlerPlayClient> {
-    private int entityID;
+    public int entityID;
     private int motionX;
     private int motionY;
     private int motionZ;
@@ -47,9 +48,9 @@ public class S12PacketEntityVelocity implements Packet<INetHandlerPlayClient> {
             motionZIn = d0;
         }
 
-        this.motionX = (int)(motionXIn * 8000.0D);
-        this.motionY = (int)(motionYIn * 8000.0D);
-        this.motionZ = (int)(motionZIn * 8000.0D);
+        this.motionX = (int) (motionXIn * 8000.0D);
+        this.motionY = (int) (motionYIn * 8000.0D);
+        this.motionZ = (int) (motionZIn * 8000.0D);
     }
 
     /**
@@ -93,5 +94,17 @@ public class S12PacketEntityVelocity implements Packet<INetHandlerPlayClient> {
 
     public int getMotionZ() {
         return this.motionZ;
+    }
+
+    public void setMotionX(int motionX) {
+        this.motionX = motionX;
+    }
+
+    public void setMotionY(int motionY) {
+        this.motionY = motionY;
+    }
+
+    public void setMotionZ(int motionZ) {
+        this.motionZ = motionZ;
     }
 }

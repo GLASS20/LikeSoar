@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ChamsMod extends Mod {
     public ChamsMod() {
-        super("ChamsMod","Render", ModCategory.HACK);
+        super("Chams","Render", ModCategory.HACK);
     }
 
     @Override

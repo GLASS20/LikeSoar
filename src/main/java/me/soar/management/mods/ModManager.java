@@ -117,6 +117,7 @@ public class ModManager {
 		mods.add(new RightClickMod());
 		mods.add(new AutoToolMod());
 		mods.add(new ChamsMod());
+		mods.add(new VelocityMod());
 	}
 	
 	public Mod getModByName(String name) {
