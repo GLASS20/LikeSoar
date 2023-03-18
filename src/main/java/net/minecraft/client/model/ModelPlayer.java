@@ -1,8 +1,5 @@
 package net.minecraft.client.model;
 
-import me.soar.utils.wing.WingModel;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
@@ -15,7 +12,6 @@ public class ModelPlayer extends ModelBiped {
     private ModelRenderer bipedCape;
     private ModelRenderer bipedDeadmau5Head;
     private boolean smallArms;
-    private WingModel wingModel = new WingModel();
 
     public ModelPlayer(float p_i46304_1_, boolean p_i46304_2_) {
         super(p_i46304_1_, 0.0F, 64, 64);
@@ -96,10 +92,6 @@ public class ModelPlayer extends ModelBiped {
         }
 
         GlStateManager.popMatrix();
-
-        if(entityIn.equals(Minecraft.getMinecraft().thePlayer)) {
-            wingModel.renderWing((AbstractClientPlayer) entityIn);
-        }
     }
 
     public void renderDeadmau5Head(float p_178727_1_) {
@@ -148,23 +140,13 @@ public class ModelPlayer extends ModelBiped {
         this.bipedDeadmau5Head.showModel = invisible;
     }
 
-    /*public void postRenderArm(float scale) {
+    public void postRenderArm(float scale) {
         if (this.smallArms) {
             ++this.bipedRightArm.rotationPointX;
             this.bipedRightArm.postRender(scale);
             --this.bipedRightArm.rotationPointX;
         }
         else {
-            this.bipedRightArm.postRender(scale);
-        }
-    }*/
-
-    public void postRenderArm(float scale) {
-        if (this.smallArms) {
-            this.bipedRightArm.rotationPointX += 0.5F;
-            this.bipedRightArm.postRender(scale);
-            this.bipedRightArm.rotationPointZ -= 0.5F;
-        } else {
             this.bipedRightArm.postRender(scale);
         }
     }

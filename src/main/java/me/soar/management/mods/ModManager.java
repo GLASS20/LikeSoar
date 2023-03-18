@@ -2,7 +2,7 @@ package me.soar.management.mods;
 
 import java.util.ArrayList;
 
-import me.eldodebug.soar.management.mods.impl.*;
+import me.soar.management.mods.impl.*;
 import me.soar.management.mods.impl.hacks.AutoClickHackMod;
 import me.soar.management.mods.impl.hacks.ReachHackMod;
 import me.soar.management.mods.impl.*;
