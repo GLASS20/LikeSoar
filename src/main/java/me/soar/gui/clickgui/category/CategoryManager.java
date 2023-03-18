@@ -2,12 +2,7 @@ package me.soar.gui.clickgui.category;
 
 import java.util.ArrayList;
 
-import me.soar.gui.clickgui.category.impl.ConfigCategory;
-import me.soar.gui.clickgui.category.impl.CosmeticCategory;
-import me.soar.gui.clickgui.category.impl.EditHUDCategory;
-import me.soar.gui.clickgui.category.impl.FeatureCategory;
-import me.soar.gui.clickgui.category.impl.MusicPlayerCategory;
-import me.soar.gui.clickgui.category.impl.SettingsCategory;
+import me.soar.gui.clickgui.category.impl.*;
 
 public class CategoryManager {
 
@@ -15,6 +10,7 @@ public class CategoryManager {
 
 	public CategoryManager() {
 		categories.add(new FeatureCategory());
+		categories.add(new HacksCategory());
 		categories.add(new ConfigCategory());
 		categories.add(new CosmeticCategory());
 		categories.add(new EditHUDCategory());

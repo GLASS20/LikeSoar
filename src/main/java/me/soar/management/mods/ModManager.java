@@ -3,9 +3,9 @@ package me.soar.management.mods;
 import java.util.ArrayList;
 
 import me.soar.management.mods.impl.*;
-import me.soar.management.mods.impl.hacks.AutoClickHackMod;
-import me.soar.management.mods.impl.hacks.ReachHackMod;
-import me.soar.management.mods.impl.*;
+import me.soar.management.mods.impl.hacks.AutoClickMod;
+import me.soar.management.mods.impl.hacks.ReachMod;
+import me.soar.management.mods.impl.hacks.RightClickMod;
 
 public class ModManager {
 
@@ -114,8 +114,9 @@ public class ModManager {
 		mods.add(new ZoomMod());
 
 
-		mods.add(new ReachHackMod());
-		mods.add(new AutoClickHackMod());
+		mods.add(new ReachMod());
+		mods.add(new AutoClickMod());
+		mods.add(new RightClickMod());
 	}
 	
 	public Mod getModByName(String name) {

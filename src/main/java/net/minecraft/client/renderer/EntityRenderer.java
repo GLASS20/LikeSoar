@@ -16,7 +16,7 @@ import me.soar.management.mods.impl.MinimalBobbingMod;
 import me.soar.management.mods.impl.MinimalDamageShakeMod;
 import me.soar.management.mods.impl.MotionBlurMod;
 import me.soar.management.mods.impl.OldAnimationsMod;
-import me.soar.management.mods.impl.hacks.ReachHackMod;
+import me.soar.management.mods.impl.hacks.ReachMod;
 import me.soar.utils.shader.MotionBlurUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -451,8 +451,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             this.mc.mcProfiler.startSection("pick");
             this.mc.pointedEntity = null;
 
-            double d0 = Soar.instance.modManager.getModByName("Reach Hack").isToggled() ? ((ReachHackMod) Soar.instance.modManager.getModByName("Reach Hack")).getReach() : (double) this.mc.playerController.getBlockReachDistance();
-            this.mc.objectMouseOver = entity.rayTrace(Soar.instance.modManager.getModByName("Reach Hack").isToggled() ? ((ReachHackMod) Soar.instance.modManager.getModByName("Reach Hack")).getReach() : d0, partialTicks);
+            double d0 = Soar.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach() : (double) this.mc.playerController.getBlockReachDistance();
+            this.mc.objectMouseOver = entity.rayTrace(Soar.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach() : d0, partialTicks);
             double d1 = d0;
             Vec3 vec3 = entity.getPositionEyes(partialTicks);
             boolean flag = false;
@@ -467,8 +467,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 d1 = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
             }
 
-            if (Soar.instance.modManager.getModByName("Reach Hack").isToggled()) {
-                d1 = ((ReachHackMod) Soar.instance.modManager.getModByName("Reach Hack")).getReach();
+            if (Soar.instance.modManager.getModByName("Reach").isToggled()) {
+                d1 = ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach();
 
                 final MovingObjectPosition movingObjectPosition = entity.rayTrace(d1, partialTicks);
 
@@ -513,7 +513,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 }
             }
 
-            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (Soar.instance.modManager.getModByName("Reach Hack").isToggled() ? ((ReachHackMod) Soar.instance.modManager.getModByName("Reach Hack")).getReach() : 3.0D)) {
+            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (Soar.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach() : 3.0D)) {
                 this.pointedEntity = null;
                 this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, (EnumFacing) null, new BlockPos(vec33));
             }

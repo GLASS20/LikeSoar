@@ -2,6 +2,7 @@ package me.soar.gui.clickgui.category.impl;
 
 import java.util.ArrayList;
 
+import me.soar.management.mods.ModCategory;
 import me.soar.management.settings.Setting;
 import me.soar.utils.GlUtils;
 import me.soar.utils.animation.normal.Animation;
@@ -36,6 +37,10 @@ public class FeatureCategory extends Category{
 	private ArrayList<Comp> comps = new ArrayList<>();
 	public int modeIndex;
 
+	public FeatureCategory(String name) {
+		super(name);
+	}
+
 	public FeatureCategory() {
 		super("Feature");
 	}
@@ -59,7 +64,7 @@ public class FeatureCategory extends Category{
 
 		for(Mod m : Soar.instance.modManager.getMods()) {
 
-			if(!m.isHide()) {
+			if(!m.isHide() && !m.getCategory().equals(ModCategory.HACK)) {
 				if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), clickGUI.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), clickGUI.searchWord.getText())) : true) {
 					RoundedUtils.drawRound(this.getX() + 95, this.getY() + offset + scrollAnimation.getValue(), 200, 26, 6, ColorUtils.getBackgroundColor(4));
 					FontUtils.regular20.drawString(m.getName(), this.getX() + 105, this.getY() + 10.5F + offset + scrollAnimation.getValue(), ColorUtils.getFontColor(2).getRGB());
@@ -154,7 +159,7 @@ public class FeatureCategory extends Category{
 		ClickGUI clickGUI = Soar.instance.guiManager.getClickGUI();
 
 		for(Mod m : Soar.instance.modManager.getMods()) {
-			if(!m.isHide()) {
+			if(!m.isHide() && !m.getCategory().equals(ModCategory.HACK)) {
 				if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), clickGUI.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), clickGUI.searchWord.getText())) : true) {
 
 					if(MouseUtils.isInside(mouseX, mouseY, this.getX() + 270, this.getY() + offset + scrollAnimation.getValue(), 26, 26) && canToggle && !openModSetting) {

@@ -10,9 +10,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemSword;
 
-public class AutoClickHackMod extends Mod {
-    public AutoClickHackMod() {
-        super("AutoClick Hack", "Hacker uu", ModCategory.OTHER);
+public class AutoClickMod extends Mod {
+    public AutoClickMod() {
+        super("AutoClick", "Hacker uu", ModCategory.HACK);
     }
 
     @Override
@@ -21,6 +21,7 @@ public class AutoClickHackMod extends Mod {
         this.addSliderSetting("Cps B", this, 8, 1, 20, true);
         this.addBooleanSetting("AutoBlock", this, true);
         this.addSliderSetting("AutoBlock Delay", this, 120, 100, 200, true);
+        this.addBooleanSetting("Only Swords",this,false);
     }
 
     public int getMaxCps() {
@@ -39,8 +40,17 @@ public class AutoClickHackMod extends Mod {
     public void onTick(EventTick tick) {
         boolean autoBlock = Soar.instance.settingsManager.getSettingByName(this,"AutoBlock").getValBoolean();
         long autoblockDelay = Soar.instance.settingsManager.getSettingByName(this,"AutoBlock Delay").getValInt();
+        boolean onlySwords = Soar.instance.settingsManager.getSettingByName(this,"Only Swords").getValBoolean();
 
         if(mc.gameSettings.keyBindAttack.isKeyDown()) {
+            if (mc.thePlayer.inventory.getCurrentItem() == null) {
+                if (onlySwords) {
+                    return;
+                }
+            } else if (onlySwords && !(mc.thePlayer.inventory.getCurrentItem().getItem() instanceof ItemSword)) {
+                return;
+            }
+
             if (System.currentTimeMillis() - leftLastSwing >= leftDelay) {
                 mc.thePlayer.swingItem();
 

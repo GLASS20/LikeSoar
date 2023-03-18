@@ -4,9 +4,9 @@ import me.soar.Soar;
 import me.soar.management.mods.Mod;
 import me.soar.management.mods.ModCategory;
 
-public class ReachHackMod extends Mod {
-    public ReachHackMod() {
-        super("Reach Hack","Hacker uuu", ModCategory.OTHER);
+public class ReachMod extends Mod {
+    public ReachMod() {
+        super("Reach","Hacker uuu", ModCategory.HACK);
     }
     @Override
     public void setup() {

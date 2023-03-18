@@ -7,12 +7,10 @@ import java.util.List;
 
 import me.soar.gui.clickgui.category.Category;
 import me.soar.gui.clickgui.category.CategoryManager;
-import me.soar.gui.clickgui.category.impl.CosmeticCategory;
-import me.soar.gui.clickgui.category.impl.FeatureCategory;
-import me.soar.gui.clickgui.category.impl.MusicPlayerCategory;
-import me.soar.gui.clickgui.category.impl.SettingsCategory;
+import me.soar.gui.clickgui.category.impl.*;
 import me.soar.management.events.EventTarget;
 import me.soar.management.events.impl.EventRenderShadow;
+import me.soar.management.mods.ModCategory;
 import me.soar.utils.GlUtils;
 import me.soar.utils.animation.normal.Animation;
 import me.soar.utils.animation.normal.Direction;
@@ -147,6 +145,24 @@ public class ClickGUI extends GuiScreen{
 			searchMode = false;
 		}
 
+		if(!selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) {
+			HacksCategory.openModSetting = false;
+		}
+
+		if(selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
+			if(!HacksCategory.openModSetting && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
+				searchMode = true;
+				searchWord.setFocused(true);
+				searchWord.setText("");
+				HacksCategory.scrollY = 0;
+				Soar.instance.musicManager.setScrollY(0);
+			}
+		}
+
+		if(HacksCategory.openModSetting || (!selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class)) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
+			searchMode = false;
+		}
+
 		searchAnimation.setAnimation(searchMode ? 6 : -30, 17);
 		RoundedUtils.drawRound(sr.getScaledWidth() / 2 - 95, searchAnimation.getValue(), 190, 21, 6, ColorUtils.getBackgroundColor(4));
 
@@ -167,7 +183,7 @@ public class ClickGUI extends GuiScreen{
 
 		for(Category c : categoryManager.getCategories()) {
 
-			boolean featureCategory = selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class));
+			boolean featureCategory = selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class));
 			boolean settingsCategory = selectedCategory.equals(categoryManager.getCategoryByClass(SettingsCategory.class));
 
 			float addX = (featureCategory) ? 88 : settingsCategory ? 95F : 0;
@@ -209,7 +225,7 @@ public class ClickGUI extends GuiScreen{
 		this.drawModDescription(mouseX, mouseY);
 		GlUtils.stopScale();
 
-		upAnimation.setAnimation(introAnimation.getValue() == 1.0F && (selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) ? 6 : -30, 16);
+		upAnimation.setAnimation(introAnimation.getValue() == 1.0F && (selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) ? 6 : -30, 16);
 
 		RoundedUtils.drawRound(upAnimation.getValue(), sr.getScaledHeight() - 30, 24, 24, 6, ColorUtils.getBackgroundColor(2));
 		FontUtils.icon24.drawString("O", upAnimation.getValue() + 6, sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
@@ -269,6 +285,18 @@ public class ClickGUI extends GuiScreen{
 			}
 		}
 
+		if(selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
+			if(MouseUtils.isInside(mouseX, mouseY, upAnimation.getValue(), sr.getScaledHeight()  - 30, 24, 24)) {
+				if(!HacksCategory.openModSetting) {
+					searchMode = true;
+					searchWord.setFocused(true);
+					searchWord.setText("");
+					HacksCategory.scrollY = 0;
+					Soar.instance.musicManager.setScrollY(0);
+				}
+			}
+		}
+
 		searchWord.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
@@ -308,15 +336,16 @@ public class ClickGUI extends GuiScreen{
 		if(keyCode == 1) {
 			if(FeatureCategory.openModSetting) {
 				FeatureCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
-			}else {
-				if(searchMode) {
-					searchMode = false;
-				}else {
-					close = true;
-				}
+			}
+			if (HacksCategory.openModSetting) {
+				HacksCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
+			}
+			if(searchMode) {
+				searchMode = false;
+			} else {
+				close = true;
 			}
 		}
-
 		searchWord.textboxKeyTyped(typedChar, keyCode);
 	}
 
@@ -356,6 +385,28 @@ public class ClickGUI extends GuiScreen{
 							m.selectAnimation.setAnimation(isSelect && m.selectTimer.delay(1300) && !FeatureCategory.openModSetting ? opacity : 0, 16);
 
 							if(!isSelect || FeatureCategory.openModSetting) {
+								m.selectTimer.reset();
+							}
+
+							RoundedUtils.drawGradientRoundLR(mouseX + 6, mouseY, (float) FontUtils.regular20.getStringWidth(m.getDescription()) + 10, (float) FontUtils.regular20.getHeight() + 5, 6, ColorUtils.getClientColor(0, (int) m.selectAnimation.getValue()), ColorUtils.getClientColor(90, (int) m.selectAnimation.getValue()));
+							FontUtils.regular20.drawString(m.getDescription(), mouseX + 10.5F, mouseY + 3.5F, new Color(255, 255, 255, (int) m.selectAnimation.getValue() + (m.selectAnimation.getValue() > 109 ? 80 : 0)).getRGB());
+
+							offset+=35;
+						}
+					}
+				}
+			}
+
+			if(selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) {
+				for(Mod m : Soar.instance.modManager.getMods()) {
+					if(!m.isHide()) {
+						if(this.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), this.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), this.searchWord.getText())) : true) {
+							boolean isSelect = MouseUtils.isInside(mouseX, mouseY, this.getX() + 95, this.getY() + offset + HacksCategory.scrollAnimation.getValue(), 200, 26);
+							int opacity = 160;
+
+							m.selectAnimation.setAnimation(isSelect && m.selectTimer.delay(1300) && !HacksCategory.openModSetting ? opacity : 0, 16);
+
+							if(!isSelect || HacksCategory.openModSetting) {
 								m.selectTimer.reset();
 							}
 
