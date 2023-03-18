@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.ChatMod;
-import me.eldodebug.soar.utils.GlUtils;
-import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
+import me.soar.Soar;
+import me.soar.management.mods.impl.ChatMod;
+import me.soar.utils.GlUtils;
+import me.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;

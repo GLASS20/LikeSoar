@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import java.util.BitSet;
 import java.util.List;
 
-import me.eldodebug.soar.management.events.impl.EventPreRenderChunk;
+import me.soar.management.events.impl.EventPreRenderChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;

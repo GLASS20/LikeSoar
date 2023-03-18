@@ -2,8 +2,8 @@ package net.minecraft.client.renderer;
 
 import java.util.Collection;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.InventoryMod;
+import me.soar.Soar;
+import me.soar.management.mods.impl.InventoryMod;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;

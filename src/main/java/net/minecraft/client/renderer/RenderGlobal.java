@@ -22,11 +22,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.BlockOverlayMod;
-import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
-import me.eldodebug.soar.utils.color.ColorUtils;
-import me.eldodebug.soar.utils.render.RenderUtils;
+import me.soar.Soar;
+import me.soar.management.mods.impl.BlockOverlayMod;
+import me.soar.utils.animation.simple.SimpleAnimation;
+import me.soar.utils.color.ColorUtils;
+import me.soar.utils.render.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockEnderChest;

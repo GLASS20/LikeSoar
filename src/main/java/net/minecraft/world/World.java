@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
-import me.eldodebug.soar.utils.ClientUtils;
+import me.soar.utils.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.BlockLiquid;

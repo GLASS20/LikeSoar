@@ -2,15 +2,13 @@ package net.minecraft.client.renderer.entity;
 
 import java.util.Random;
 
-import me.eldodebug.soar.hooks.RenderEntityItemHook;
+import me.soar.hooks.RenderEntityItemHook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderEntityItem extends Render<EntityItem> {

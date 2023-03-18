@@ -1,6 +1,5 @@
 package net.minecraft.client.renderer;
 
-import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
@@ -8,17 +7,17 @@ import java.nio.FloatBuffer;
 import java.util.*;
 import java.util.concurrent.Callable;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.events.impl.EventCameraRotation;
-import me.eldodebug.soar.management.events.impl.EventPlayerHeadRotation;
-import me.eldodebug.soar.management.events.impl.EventRender3D;
-import me.eldodebug.soar.management.events.impl.EventZoomFov;
-import me.eldodebug.soar.management.mods.impl.MinimalBobbingMod;
-import me.eldodebug.soar.management.mods.impl.MinimalDamageShakeMod;
-import me.eldodebug.soar.management.mods.impl.MotionBlurMod;
-import me.eldodebug.soar.management.mods.impl.OldAnimationsMod;
-import me.eldodebug.soar.management.mods.impl.hacks.ReachHackMod;
-import me.eldodebug.soar.utils.shader.MotionBlurUtils;
+import me.soar.Soar;
+import me.soar.management.events.impl.EventCameraRotation;
+import me.soar.management.events.impl.EventPlayerHeadRotation;
+import me.soar.management.events.impl.EventRender3D;
+import me.soar.management.events.impl.EventZoomFov;
+import me.soar.management.mods.impl.MinimalBobbingMod;
+import me.soar.management.mods.impl.MinimalDamageShakeMod;
+import me.soar.management.mods.impl.MotionBlurMod;
+import me.soar.management.mods.impl.OldAnimationsMod;
+import me.soar.management.mods.impl.hacks.ReachHackMod;
+import me.soar.utils.shader.MotionBlurUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;

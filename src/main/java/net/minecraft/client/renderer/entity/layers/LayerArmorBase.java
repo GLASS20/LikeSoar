@@ -3,8 +3,8 @@ package net.minecraft.client.renderer.entity.layers;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.OldAnimationsMod;
+import me.soar.Soar;
+import me.soar.management.mods.impl.OldAnimationsMod;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;

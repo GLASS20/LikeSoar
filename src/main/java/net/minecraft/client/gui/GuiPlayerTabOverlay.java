@@ -6,9 +6,9 @@ import com.mojang.authlib.GameProfile;
 import java.util.Comparator;
 import java.util.List;
 
-import me.eldodebug.soar.Soar;
-import me.eldodebug.soar.management.mods.impl.TabEditorMod;
-import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
+import me.soar.Soar;
+import me.soar.management.mods.impl.TabEditorMod;
+import me.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;

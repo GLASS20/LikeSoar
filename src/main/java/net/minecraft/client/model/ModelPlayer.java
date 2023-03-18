@@ -1,6 +1,6 @@
 package net.minecraft.client.model;
 
-import me.eldodebug.soar.utils.wing.WingModel;
+import me.soar.utils.wing.WingModel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;

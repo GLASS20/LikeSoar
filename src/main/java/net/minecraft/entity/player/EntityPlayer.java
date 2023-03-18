@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import me.eldodebug.soar.management.events.impl.EventAttackEntity;
+import me.soar.management.events.impl.EventAttackEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
