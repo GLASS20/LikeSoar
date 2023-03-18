@@ -3,6 +3,10 @@ package net.minecraft.client.renderer.entity;
 import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.List;
+
+import me.soar.management.events.Event;
+import me.soar.management.events.EventManager;
+import me.soar.management.events.impl.EventRendererLivingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -154,6 +158,12 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 float f5 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
                 float f6 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
 
+                if (entity instanceof EntityPlayer) {
+                    EventRendererLivingEntity evt = new EventRendererLivingEntity(entity, Event.State.PRE, f6, f5, f8, f2, f7, f, 0.0625f);
+                    evt.call();
+                    if (evt.isCancelled()) return;
+                }
+
                 if (entity.isChild()) {
                     f6 *= 3.0F;
                 }
@@ -292,7 +302,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     /**
      * Renders the model in RenderLiving
      */
-    protected void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor) {
+    public void renderModel(T entitylivingbaseIn, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float scaleFactor) {
         boolean flag = !entitylivingbaseIn.isInvisible();
         boolean flag1 = !flag && !entitylivingbaseIn.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer);
 
@@ -496,7 +506,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         return (float)livingBase.ticksExisted + partialTicks;
     }
 
-    protected void renderLayers(T entitylivingbaseIn, float p_177093_2_, float p_177093_3_, float partialTicks, float p_177093_5_, float p_177093_6_, float p_177093_7_, float p_177093_8_) {
+    public void renderLayers(T entitylivingbaseIn, float p_177093_2_, float p_177093_3_, float partialTicks, float p_177093_5_, float p_177093_6_, float p_177093_7_, float p_177093_8_) {
         for (LayerRenderer<T> layerrenderer : this.layerRenderers) {
             boolean flag = this.setBrightness(entitylivingbaseIn, partialTicks, layerrenderer.shouldCombineTextures());
 

@@ -3,10 +3,7 @@ package me.soar.management.mods;
 import java.util.ArrayList;
 
 import me.soar.management.mods.impl.*;
-import me.soar.management.mods.impl.hacks.AutoClickMod;
-import me.soar.management.mods.impl.hacks.AutoToolMod;
-import me.soar.management.mods.impl.hacks.ReachMod;
-import me.soar.management.mods.impl.hacks.RightClickMod;
+import me.soar.management.mods.impl.hacks.*;
 
 public class ModManager {
 
@@ -119,6 +116,7 @@ public class ModManager {
 		mods.add(new AutoClickMod());
 		mods.add(new RightClickMod());
 		mods.add(new AutoToolMod());
+		mods.add(new ChamsMod());
 	}
 	
 	public Mod getModByName(String name) {
