@@ -145,24 +145,6 @@ public class ClickGUI extends GuiScreen{
 			searchMode = false;
 		}
 
-		if(!selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) {
-			HacksCategory.openModSetting = false;
-		}
-
-		if(selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
-			if(!HacksCategory.openModSetting && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
-				searchMode = true;
-				searchWord.setFocused(true);
-				searchWord.setText("");
-				HacksCategory.scrollY = 0;
-				Soar.instance.musicManager.setScrollY(0);
-			}
-		}
-
-		if(HacksCategory.openModSetting || (!selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class)) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
-			searchMode = false;
-		}
-
 		searchAnimation.setAnimation(searchMode ? 6 : -30, 17);
 		RoundedUtils.drawRound(sr.getScaledWidth() / 2 - 95, searchAnimation.getValue(), 190, 21, 6, ColorUtils.getBackgroundColor(4));
 
@@ -285,18 +267,6 @@ public class ClickGUI extends GuiScreen{
 			}
 		}
 
-		if(selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
-			if(MouseUtils.isInside(mouseX, mouseY, upAnimation.getValue(), sr.getScaledHeight()  - 30, 24, 24)) {
-				if(!HacksCategory.openModSetting) {
-					searchMode = true;
-					searchWord.setFocused(true);
-					searchWord.setText("");
-					HacksCategory.scrollY = 0;
-					Soar.instance.musicManager.setScrollY(0);
-				}
-			}
-		}
-
 		searchWord.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
@@ -375,7 +345,7 @@ public class ClickGUI extends GuiScreen{
 		int offset = 15;
 
 		if(MouseUtils.isInside(mouseX, mouseY, this.getX(), this.getY(), this.getWidth(), this.getHeight())) {
-			if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class))) {
+			if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) {
 				for(Mod m : Soar.instance.modManager.getMods()) {
 					if(!m.isHide()) {
 						if(this.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), this.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), this.searchWord.getText())) : true) {
@@ -385,28 +355,6 @@ public class ClickGUI extends GuiScreen{
 							m.selectAnimation.setAnimation(isSelect && m.selectTimer.delay(1300) && !FeatureCategory.openModSetting ? opacity : 0, 16);
 
 							if(!isSelect || FeatureCategory.openModSetting) {
-								m.selectTimer.reset();
-							}
-
-							RoundedUtils.drawGradientRoundLR(mouseX + 6, mouseY, (float) FontUtils.regular20.getStringWidth(m.getDescription()) + 10, (float) FontUtils.regular20.getHeight() + 5, 6, ColorUtils.getClientColor(0, (int) m.selectAnimation.getValue()), ColorUtils.getClientColor(90, (int) m.selectAnimation.getValue()));
-							FontUtils.regular20.drawString(m.getDescription(), mouseX + 10.5F, mouseY + 3.5F, new Color(255, 255, 255, (int) m.selectAnimation.getValue() + (m.selectAnimation.getValue() > 109 ? 80 : 0)).getRGB());
-
-							offset+=35;
-						}
-					}
-				}
-			}
-
-			if(selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) {
-				for(Mod m : Soar.instance.modManager.getMods()) {
-					if(!m.isHide()) {
-						if(this.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), this.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), this.searchWord.getText())) : true) {
-							boolean isSelect = MouseUtils.isInside(mouseX, mouseY, this.getX() + 95, this.getY() + offset + HacksCategory.scrollAnimation.getValue(), 200, 26);
-							int opacity = 160;
-
-							m.selectAnimation.setAnimation(isSelect && m.selectTimer.delay(1300) && !HacksCategory.openModSetting ? opacity : 0, 16);
-
-							if(!isSelect || HacksCategory.openModSetting) {
 								m.selectTimer.reset();
 							}
 
