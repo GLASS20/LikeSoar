@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 
-import me.soar.Soar;
-import me.soar.management.mods.impl.ChatMod;
-import me.soar.utils.MathUtils;
+import like.soar.Soar;
+import like.soar.management.mods.impl.ChatMod;
+import like.soar.utils.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;

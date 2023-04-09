@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-import me.soar.Soar;
-import me.soar.management.events.impl.EventLivingUpdate;
-import me.soar.management.mods.impl.SlowSwingMod;
+import like.soar.Soar;
+import like.soar.management.events.impl.EventLivingUpdate;
+import like.soar.management.mods.impl.SlowSwingMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

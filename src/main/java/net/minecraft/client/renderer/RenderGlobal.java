@@ -22,11 +22,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import me.soar.Soar;
-import me.soar.management.mods.impl.BlockOverlayMod;
-import me.soar.utils.animation.simple.SimpleAnimation;
-import me.soar.utils.color.ColorUtils;
-import me.soar.utils.render.RenderUtils;
+import like.soar.Soar;
+import like.soar.management.mods.impl.BlockOverlayMod;
+import like.soar.utils.animation.simple.SimpleAnimation;
+import like.soar.utils.color.ColorUtils;
+import like.soar.utils.render.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockEnderChest;

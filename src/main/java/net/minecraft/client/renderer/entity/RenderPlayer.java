@@ -1,9 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
-import me.soar.Soar;
-import me.soar.management.mods.impl.HypixelMod;
-import me.soar.utils.server.HypixelUtils;
-import me.soar.utils.server.ServerUtils;
+import like.soar.Soar;
+import like.soar.management.mods.impl.HypixelMod;
+import like.soar.utils.server.HypixelUtils;
+import like.soar.utils.server.ServerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;

@@ -8,8 +8,8 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import me.soar.hooks.ChunkHook;
-import me.soar.utils.ClientUtils;
+import like.soar.hooks.ChunkHook;
+import like.soar.utils.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

@@ -3,8 +3,8 @@ package net.minecraft.block;
 import java.util.List;
 import java.util.Random;
 
-import me.soar.Soar;
-import me.soar.management.mods.impl.ClearGlassMod;
+import like.soar.Soar;
+import like.soar.management.mods.impl.ClearGlassMod;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

@@ -3,8 +3,8 @@ package net.minecraft.client.entity;
 import com.mojang.authlib.GameProfile;
 import java.io.File;
 
-import me.soar.Soar;
-import me.soar.management.events.impl.EventFovUpdate;
+import like.soar.Soar;
+import like.soar.management.events.impl.EventFovUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;

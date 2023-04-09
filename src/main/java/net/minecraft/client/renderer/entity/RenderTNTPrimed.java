@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
-import me.soar.Soar;
-import me.soar.hooks.RenderTNTPrimedHook;
-import me.soar.management.mods.impl.TNTTimerMod;
+import like.soar.Soar;
+import like.soar.hooks.RenderTNTPrimedHook;
+import like.soar.management.mods.impl.TNTTimerMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;

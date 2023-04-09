@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
 
-import me.soar.Soar;
-import me.soar.management.mods.impl.ChatMod;
-import me.soar.utils.GlUtils;
-import me.soar.utils.animation.simple.SimpleAnimation;
+import like.soar.Soar;
+import like.soar.management.mods.impl.ChatMod;
+import like.soar.utils.GlUtils;
+import like.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;

@@ -1,11 +1,11 @@
 package net.minecraft.client.renderer;
 
-import me.soar.Soar;
-import me.soar.management.events.impl.EventTransformFirstPersonItem;
-import me.soar.management.mods.impl.ClearWaterMod;
-import me.soar.management.mods.impl.OldAnimationsMod;
-import me.soar.management.mods.impl.OverlayEditorMod;
-import me.soar.management.mods.impl.SmallHeldItemsMod;
+import like.soar.Soar;
+import like.soar.management.events.impl.EventTransformFirstPersonItem;
+import like.soar.management.mods.impl.ClearWaterMod;
+import like.soar.management.mods.impl.OldAnimationsMod;
+import like.soar.management.mods.impl.OverlayEditorMod;
+import like.soar.management.mods.impl.SmallHeldItemsMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

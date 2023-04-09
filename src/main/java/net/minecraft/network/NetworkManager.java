@@ -33,8 +33,8 @@ import java.util.Queue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.crypto.SecretKey;
 
-import me.soar.management.events.impl.EventReceivePacket;
-import me.soar.management.events.impl.EventSendPacket;
+import like.soar.management.events.impl.EventReceivePacket;
+import like.soar.management.events.impl.EventSendPacket;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.CryptManager;

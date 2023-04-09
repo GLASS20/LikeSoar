@@ -15,8 +15,8 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
-import me.soar.Soar;
-import me.soar.management.events.impl.EventSwitchTexture;
+import like.soar.Soar;
+import like.soar.management.events.impl.EventSwitchTexture;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.StitcherException;
 import net.minecraft.client.resources.IResource;
