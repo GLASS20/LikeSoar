@@ -61,8 +61,8 @@ public class SessionInfoMod extends Mod{
         FontUtils.regular_bold24.drawCenteredString("Session Info", this.getX() + (140 / 2), this.getY() + 4.5F, this.getFontColor().getRGB());
         
         FontUtils.regular_bold20.drawString("Play Time: " + time, this.getX() + 4.5F, this.getY() + 23.5F, this.getFontColor().getRGB());
-        FontUtils.regular_bold20.drawString("Wins: " + win, this.getX() + 4.5F, this.getY() + 23.5 + 14, this.getFontColor().getRGB());
-        FontUtils.regular_bold20.drawString("Kills: " + killCount, this.getX() + 4.5F, this.getY() + 23.5 + 28, this.getFontColor().getRGB());
+        FontUtils.regular_bold20.drawString("Wins: " + win, this.getX() + 4.5F, this.getY() + 23.5F + 14, this.getFontColor().getRGB());
+        FontUtils.regular_bold20.drawString("Kills: " + killCount, this.getX() + 4.5F, this.getY() + 23.5F + 28, this.getFontColor().getRGB());
         
         this.setWidth(140);
         this.setHeight(64);

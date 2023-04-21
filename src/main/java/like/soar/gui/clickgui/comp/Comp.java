@@ -6,7 +6,7 @@ import like.soar.management.mods.Mod;
 
 public class Comp {
 
-    public double x, y, width, height;
+    public float x, y, width, height;
     public FeatureCategory parent;
     public Mod mod;
     public Setting setting;

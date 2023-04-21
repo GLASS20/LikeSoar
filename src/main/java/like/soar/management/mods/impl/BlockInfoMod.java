@@ -67,7 +67,7 @@ public class BlockInfoMod extends Mod{
 			if(!block.equals(Blocks.portal) && !block.equals(Blocks.end_portal)) {
 				this.drawBackground(this.getX(), this.getY(), 80, 80);
 				
-				FontUtils.regular_bold20.drawStringWithUnicode(block.getLocalizedName(), this.getX() + (80 / 2) - (FontUtils.regular_bold20.getStringWidth(block.getLocalizedName()) / 2), this.getY() + 4.5F, this.getFontColor().getRGB(), false);
+				FontUtils.regular_bold20.drawString(block.getLocalizedName(), this.getX() + (80 / 2) - (FontUtils.regular_bold20.getStringWidth(block.getLocalizedName()) / 2), this.getY() + 4.5F, this.getFontColor().getRGB());
 				
 				GlUtils.startScale(this.getX(), this.getY(), 80, 80, 1.8F);
 				RenderHelper.enableGUIStandardItemLighting();

@@ -1,5 +1,6 @@
 package like.soar.ui.font;
 
+import like.soar.utils.font.FontUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -55,6 +56,10 @@ public final class FontDrawer {
         }
     }
 
+    public FontDrawer(Font font) {
+        this(font, true, false);
+    }
+
     public FontDrawer(Font font, boolean antiAliasing, boolean fractionalMetrics) {
         this.font = font;
         this.fontSize = font.getSize();
@@ -103,10 +108,7 @@ public final class FontDrawer {
             }
         }
 
-//        return ret / 2;
-
         int scaledFactor = new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor();
-
         return ret / scaledFactor;
     }
 
@@ -127,30 +129,68 @@ public final class FontDrawer {
     }
 
     public int getHeight() {
-        return fontSize;
+        return halfHeight;
     }
 
     public int getHalfHeight() {
         return halfHeight;
     }
 
-    public void drawCenteredStringWithShadow(String s, double x, double y, int color) {
-        drawStringWithShadow(s, x - (getStringWidth(s) / 2.0), y, color);
+    public int drawCenteredStringWithShadow(String s, float x, float y, int color) {
+        return drawStringWithShadow(s, x - (getStringWidth(s) / 2.0F), y, color);
     }
 
-    public void drawCenteredString(String s, double x, double y, int color) {
-        drawString(s, x - getStringWidth(s) / 2.0, y, color);
+    public int drawCenteredString(String s, float x, float y, int color) {
+        return drawString(s, x - getStringWidth(s) / 2.0F, y, color);
     }
 
-    public void drawStringWithShadowDirectly(String s, double x, double y, int color) {
+    public int drawStringWithShadowDirectly(String s, float x, float y, int color) {
         final int alpha = ColorUtils.getAlpha(color);
 
-        drawStringDirectly(s, x + 0.5, y + 0.5, alpha < 200 ? ColorUtils.reAlpha(SHADOW_COLOR, alpha) : SHADOW_COLOR);
-        drawStringDirectly(s, x, y, color);
+        return Math.max(renderStringDirectly(s, x + 0.5F, y + 0.5F, alpha < 200 ? ColorUtils.reAlpha(SHADOW_COLOR, alpha) : SHADOW_COLOR), renderStringDirectly(s, x, y, color));
     }
 
-    public void drawStringDirectly(String s, double x, double y, int color) {
-        if (s == null || s.isEmpty()) return;
+    public void drawStringWithClientColor(String text, float x, float y, int opacity, boolean shadow) {
+
+        float xTmp = x;
+        boolean hasReachedSS = false;
+        boolean hasFinished = false;
+        int i = 0;
+
+        for(char textChar : text.toCharArray()) {
+
+            String tmp = String.valueOf(textChar);
+
+            if (Character.toString(textChar).equalsIgnoreCase("��")) {
+                hasReachedSS = true;
+            }
+
+            if (!hasReachedSS) {
+                if(shadow) {
+                    this.drawStringWithShadow(tmp, xTmp, y, like.soar.utils.color.ColorUtils.getClientColor(i, opacity).getRGB());
+                }else {
+                    this.drawString(tmp, xTmp, y, like.soar.utils.color.ColorUtils.getClientColor(i, opacity).getRGB());
+                }
+
+                xTmp += this.getStringWidth(String.valueOf(textChar));
+
+                text = text.substring(1);
+            } else if (!hasFinished) {
+
+                this.drawString(text, xTmp, y, -1);
+                hasFinished = true;
+            }
+
+            i-=20;
+        }
+    }
+
+    public void drawStringWithClientColor(String text, float x, float y, boolean shadow) {
+        this.drawStringWithClientColor(text, x, y, 255, shadow);
+    }
+
+    public int renderStringDirectly(String s, float x, float y, int color) {
+        if (s == null || s.isEmpty()) return 0;
 
         if ((color & -67108864) == 0) {
             color |= -16777216;
@@ -171,30 +211,31 @@ public final class FontDrawer {
         }
 
         postDraw();
+
+        return (int) x;
     }
 
-    public void drawStringWithOutline(String s, double x, double y, int color) {
-        drawString(s, x + 0.5, y, 0);
-        drawString(s, x - 0.5, y, 0);
-        drawString(s, x, y + 0.5, 0);
-        drawString(s, x, y - 0.5, 0);
+    public void drawStringWithOutline(String s, float x, float y, int color) {
+        drawString(s, x + 0.5F, y, 0);
+        drawString(s, x - 0.5F, y, 0);
+        drawString(s, x, y + 0.5F, 0);
+        drawString(s, x, y - 0.5F, 0);
         drawString(s, x, y, color);
     }
 
-    public void drawStringWithShadow(String s, double x, double y, int color) {
+    public int drawStringWithShadow(String s, float x, float y, int color) {
         final int alpha = ColorUtils.getAlpha(color);
-
-        drawString(s, x + 0.5, y + 0.5, alpha < 200 ? ColorUtils.reAlpha(SHADOW_COLOR, alpha) : SHADOW_COLOR, true);
-        drawString(s, x, y, color, false);
+        return Math.max(renderString(s, x + 0.5F, y + 0.5F, alpha < 200 ? ColorUtils.reAlpha(SHADOW_COLOR, alpha) : SHADOW_COLOR, true), renderString(s, x, y, color, false));
     }
 
-    public void drawString(String s,double x,double y,int color) {
-        drawString(s, x, y, color, false);
+    public int drawString(String s, float x, float y,int color) {
+        return renderString(s, x, y, color, false);
     }
 
-    public void drawString(String s,double x,double y,int color,boolean shadow) {
-        if (s == null || s.isEmpty()) return;
+    private int renderString(String s, float x, float y, int color, boolean shadow) {
+        if (s == null || s.isEmpty()) return 0;
 
+        FontUtils.init();
         FontManager.init();
 
         if ((color & -67108864) == 0) {
@@ -204,7 +245,7 @@ public final class FontDrawer {
         float scaledFactor = (float) new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor();
 
         x *= scaledFactor;
-        y = (y - 2.0) * scaledFactor;
+        y = (y - 2.0F) * scaledFactor;
 
         preDraw();
         GLUtils.color(color);
@@ -297,6 +338,8 @@ public final class FontDrawer {
         }
 
         postDraw();
+
+        return (int) x;
     }
 
     private void drawCharWithShadow(char c, double x, double y, int color) {
@@ -429,7 +472,8 @@ public final class FontDrawer {
         public Glyph(BufferedImage image, int width) {
             this.textureID = TextureUtil.uploadTextureImageAllocate(TextureUtil.glGenTextures(), image, true, true);
             this.width = width;
-            this.halfWidth = width / 2;
+            int factor = new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor();
+            this.halfWidth = width / factor;
         }
 
         public void draw(double x, double y,boolean italic) {

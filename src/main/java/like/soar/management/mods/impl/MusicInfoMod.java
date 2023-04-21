@@ -20,7 +20,7 @@ public class MusicInfoMod extends Mod{
 
 	public static MusicInfoMod instance = new MusicInfoMod();
 	
-	public double addX = 0;
+	public float addX = 0;
 	private TimerUtils timer = new TimerUtils();
 	private TimerUtils timer2 = new TimerUtils();
 	private boolean back = false;

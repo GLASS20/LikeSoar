@@ -11,7 +11,7 @@ import like.soar.management.mods.Mod;
 
 public class CompCombo extends Comp {
 
-    public CompCombo(double x, double y, FeatureCategory parent, Mod mod, Setting setting) {
+    public CompCombo(float x, float y, FeatureCategory parent, Mod mod, Setting setting) {
         this.x = x;
         this.y = y;
         this.parent = parent;
