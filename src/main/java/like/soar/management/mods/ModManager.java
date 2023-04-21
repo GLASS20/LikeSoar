@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import like.soar.management.mods.impl.*;
 import like.soar.management.mods.impl.hacks.*;
-import me.soar.management.mods.impl.*;
-import me.soar.management.mods.impl.hacks.*;
 
 public class ModManager {
 

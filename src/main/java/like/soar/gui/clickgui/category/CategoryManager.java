@@ -3,7 +3,6 @@ package like.soar.gui.clickgui.category;
 import java.util.ArrayList;
 
 import like.soar.gui.clickgui.category.impl.*;
-import me.soar.gui.clickgui.category.impl.*;
 
 public class CategoryManager {
 

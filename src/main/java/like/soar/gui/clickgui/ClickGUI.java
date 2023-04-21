@@ -21,7 +21,6 @@ import like.soar.utils.mouse.MouseUtils;
 import like.soar.utils.render.ClickEffect;
 import like.soar.utils.render.RoundedUtils;
 import like.soar.utils.render.StencilUtils;
-import me.soar.gui.clickgui.category.impl.*;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 
