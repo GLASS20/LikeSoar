@@ -35,20 +35,20 @@ jar {
             "Main-Class": "net.minecraft.client.main.Main",
     )
 
-    from {
-        configurations.include.collect {
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
+//    from {
+//        configurations.include.collect {
+//            it.isDirectory() ? it : zipTree(it)
+//        }
+//    }
 
-    duplicatesStrategy DuplicatesStrategy.EXCLUDE
+//    duplicatesStrategy DuplicatesStrategy.EXCLUDE
 
-    exclude "LICENSE.txt"
+//    exclude "LICENSE.txt"
+//
+//    exclude "META-INF/maven/**"
+//    exclude "META-INF/versions/**"
+//
+//    exclude "org/junit/**"
 
-    exclude "META-INF/maven/**"
-    exclude "META-INF/versions/**"
-
-    exclude "org/junit/**"
-
-    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+//    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
 }
