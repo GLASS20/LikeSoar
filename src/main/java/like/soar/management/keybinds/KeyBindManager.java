@@ -1,14 +1,13 @@
 package like.soar.management.keybinds;
 
-import java.util.Arrays;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.lwjgl.input.Keyboard;
-
 import like.soar.mixin.SoarTweaker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
+import org.apache.commons.lang3.ArrayUtils;
+import org.lwjgl.input.Keyboard;
+
+import java.util.Arrays;
 
 public class KeyBindManager {
 
@@ -18,6 +17,7 @@ public class KeyBindManager {
 	public KeyBinding FREELOOK = new KeyBinding("Freelook", Keyboard.KEY_Z, "Soar");
 	public KeyBinding SCREENSHOT_VIEWER = new KeyBinding("Screenshot Viewer", Keyboard.KEY_M, "Soar");
 	public KeyBinding CLICKGUI = new KeyBinding("Click GUI", Keyboard.KEY_RSHIFT, "Soar");
+	public KeyBinding HACKCLICKGUI = new KeyBinding("Hack Click GUI", Keyboard.KEY_RSHIFT, "Soar");
 	public KeyBinding EDITHUD = new KeyBinding("Edit HUD", Keyboard.KEY_H, "Soar");
 	public KeyBinding TAPLOOK = new KeyBinding("Taplook", Keyboard.KEY_L, "Soar");
 	
@@ -31,6 +31,7 @@ public class KeyBindManager {
 		}
 		
 		this.registerKeyBind(CLICKGUI);
+		this.registerKeyBind(HACKCLICKGUI);
 		this.registerKeyBind(EDITHUD);
 		this.registerKeyBind(SCREENSHOT_VIEWER);
 		this.registerKeyBind(STOPWATCH);

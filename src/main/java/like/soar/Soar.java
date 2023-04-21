@@ -1,10 +1,7 @@
 package like.soar;
 
-import java.util.Random;
-
 import com.logisticscraft.occlusionculling.DataProvider;
 import com.logisticscraft.occlusionculling.OcclusionCullingInstance;
-
 import io.netty.buffer.Unpooled;
 import like.soar.gui.GuiEditHUD;
 import like.soar.management.account.AccountManager;
@@ -14,6 +11,7 @@ import like.soar.management.cosmetics.CosmeticManager;
 import like.soar.management.discord.DiscordManager;
 import like.soar.management.events.EventManager;
 import like.soar.management.events.EventTarget;
+import like.soar.management.events.impl.*;
 import like.soar.management.file.FileManager;
 import like.soar.management.gui.GuiManager;
 import like.soar.management.image.ImageManager;
@@ -33,19 +31,15 @@ import like.soar.utils.culling.CullTask;
 import like.soar.utils.font.FontUtils;
 import like.soar.utils.server.HypixelUtils;
 import like.soar.utils.server.ServerUtils;
-import like.soar.management.events.impl.EventKey;
-import like.soar.management.events.impl.EventPreMotionUpdate;
-import like.soar.management.events.impl.EventReceivePacket;
-import like.soar.management.events.impl.EventRespawn;
-import like.soar.management.events.impl.EventSendPacket;
-import like.soar.management.events.impl.EventTick;
-import like.soar.management.events.impl.EventUpdate;
+import me.glass20.modules.ModuleManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.BlockPos;
+
+import java.util.Random;
 
 public class Soar {
 
@@ -67,6 +61,7 @@ public class Soar {
 	public MusicManager musicManager;
 	public AccountManager accountManager;
 	public QuickPlayManager quickPlayManager;
+	public ModuleManager moduleManager;
 	
 	private boolean loaded;
 	private long playTime;
@@ -91,6 +86,7 @@ public class Soar {
 		musicManager = new MusicManager();
 		accountManager = new AccountManager();
 		quickPlayManager = new QuickPlayManager();
+		moduleManager = new ModuleManager();
 		
 		FontUtils.init();
 		
@@ -103,9 +99,10 @@ public class Soar {
 		}
 		
 		startCull();
-		
+
 		mc.gameSettings.loadOptions();
 		DayEventUtils.resetHudDesign();
+		moduleManager.registerModules();
 	}
 	
 	public void stopClient() {

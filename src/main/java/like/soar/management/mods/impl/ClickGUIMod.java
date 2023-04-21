@@ -1,8 +1,8 @@
 package like.soar.management.mods.impl;
 
+import like.soar.Soar;
 import like.soar.management.events.EventTarget;
 import like.soar.management.events.impl.EventKey;
-import like.soar.Soar;
 import like.soar.management.mods.Mod;
 import like.soar.management.mods.ModCategory;
 
@@ -22,6 +22,9 @@ public class ClickGUIMod extends Mod{
 	public void onKey(EventKey event) {
 		if(event.getKey() == Soar.instance.keyBindManager.CLICKGUI.getKeyCode()) {
 	    	mc.displayGuiScreen(Soar.instance.guiManager.getClickGUI());
+		}
+		if(event.getKey() == Soar.instance.keyBindManager.HACKCLICKGUI.getKeyCode()) {
+			mc.displayGuiScreen(Soar.instance.guiManager.getgClickGUI());
 		}
 	}
 	
