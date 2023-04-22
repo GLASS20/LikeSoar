@@ -192,15 +192,16 @@ public final class FontDrawer {
     public int renderStringDirectly(String s, float x, float y, int color) {
         if (s == null || s.isEmpty()) return 0;
 
-        if ((color & -67108864) == 0) {
-            color |= -16777216;
-        }
+//        if ((color & -67108864) == 0) {
+//            color |= -16777216;
+//        }
 
         preDraw();
         GLUtils.color(color);
 
-        x *= 2.0;
-        y *= 2.0;
+        float factor = (float) (new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor());
+        x *= factor;
+        y = (y - 2.0F) * factor;
 
         for (int i = 0; i < s.length(); i++) {
             final Glyph glyph = getGlyph(s.charAt(i));
@@ -242,10 +243,9 @@ public final class FontDrawer {
             color |= -16777216;
         }
 
-        float scaledFactor = (float) new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor();
-
-        x *= scaledFactor;
-        y = (y - 2.0F) * scaledFactor;
+        float factor = (float) (new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor());
+        x *= factor;
+        y = (y - 2.0F) * factor;
 
         preDraw();
         GLUtils.color(color);
