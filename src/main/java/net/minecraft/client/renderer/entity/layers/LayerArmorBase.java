@@ -3,8 +3,8 @@ package net.minecraft.client.renderer.entity.layers;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.OldAnimationsMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.OldAnimationsMod;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
@@ -45,8 +45,8 @@ public abstract class LayerArmorBase<T extends ModelBase> implements LayerRender
     }
 
     public boolean shouldCombineTextures() {
-        if(Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() &&
-                Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Armor Damage").getValBoolean()) {
+        if(NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() &&
+                NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Armor Damage").getValBoolean()) {
             return true;
         }
         return false;

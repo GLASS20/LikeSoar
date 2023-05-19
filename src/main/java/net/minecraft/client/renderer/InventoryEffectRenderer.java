@@ -2,8 +2,8 @@ package net.minecraft.client.renderer;
 
 import java.util.Collection;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.InventoryMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.InventoryMod;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
@@ -42,7 +42,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer {
     protected void updateActivePotionEffects()
     {
         if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()){
-            if(Soar.instance.modManager.getModByClass(InventoryMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(InventoryMod.class, "Prevent Potion Shift").getValBoolean()) {
+            if(NekoCat.instance.modManager.getModByClass(InventoryMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(InventoryMod.class, "Prevent Potion Shift").getValBoolean()) {
                 this.guiLeft = (this.width - this.xSize) / 2;
             }else {
                 this.guiLeft = 160 + (this.width - this.xSize - 200) / 2;

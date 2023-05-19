@@ -2,7 +2,7 @@ package net.minecraft.client.renderer.entity;
 
 import java.util.Random;
 
-import like.soar.hooks.RenderEntityItemHook;
+import me.liycxc.hooks.RenderEntityItemHook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;

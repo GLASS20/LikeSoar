@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
-import like.soar.Soar;
-import like.soar.hooks.RenderTNTPrimedHook;
-import like.soar.management.mods.impl.TNTTimerMod;
+import me.liycxc.NekoCat;
+import me.liycxc.hooks.RenderTNTPrimedHook;
+import me.liycxc.gui.management.mods.impl.TNTTimerMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,7 +22,7 @@ public class RenderTNTPrimed extends Render<EntityTNTPrimed> {
      * Renders the desired {@code T} type Entity.
      */
     public void doRender(EntityTNTPrimed entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        if(Soar.instance.modManager.getModByClass(TNTTimerMod.class).isToggled()) {
+        if(NekoCat.instance.modManager.getModByClass(TNTTimerMod.class).isToggled()) {
             RenderTNTPrimedHook.doRender((RenderTNTPrimed) (Object) this, entity, x, y, z, partialTicks);
         }
 

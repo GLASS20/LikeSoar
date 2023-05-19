@@ -15,8 +15,8 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
-import like.soar.Soar;
-import like.soar.management.events.impl.EventSwitchTexture;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.events.impl.EventSwitchTexture;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.StitcherException;
 import net.minecraft.client.resources.IResource;
@@ -422,7 +422,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 TextureUtils.saveGlTexture("debug/" + this.basePath.replaceAll("/", "_"), this.getGlTextureId(), this.mipmapLevels, stitcher.getCurrentWidth(), stitcher.getCurrentHeight());
             }
 
-            if(Soar.instance.eventManager != null) {
+            if(NekoCat.instance.eventManager != null) {
                 EventSwitchTexture event = new EventSwitchTexture();
                 event.call();
             }

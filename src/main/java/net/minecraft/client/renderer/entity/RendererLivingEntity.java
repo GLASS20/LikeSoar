@@ -4,8 +4,8 @@ import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.List;
 
-import like.soar.management.events.Event;
-import like.soar.management.events.impl.EventRendererLivingEntity;
+import me.liycxc.gui.management.events.Event;
+import me.liycxc.gui.management.events.impl.EventRendererLivingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;

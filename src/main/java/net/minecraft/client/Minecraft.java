@@ -36,16 +36,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
 
-import like.soar.Soar;
-import like.soar.gui.GuiSplashScreen;
-import like.soar.hooks.MinecraftHook;
-import like.soar.management.events.impl.EventKey;
-import like.soar.management.events.impl.EventRenderTick;
-import like.soar.management.events.impl.EventScrollMouse;
-import like.soar.management.events.impl.EventTick;
-import like.soar.management.mods.impl.FPSLimiterMod;
-import like.soar.management.mods.impl.FPSSpooferMod;
-import like.soar.management.mods.impl.HitDelayFixMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.GuiSplashScreen;
+import me.liycxc.hooks.MinecraftHook;
+import me.liycxc.gui.management.events.impl.EventKey;
+import me.liycxc.gui.management.events.impl.EventRenderTick;
+import me.liycxc.gui.management.events.impl.EventScrollMouse;
+import me.liycxc.gui.management.events.impl.EventTick;
+import me.liycxc.gui.management.mods.impl.FPSLimiterMod;
+import me.liycxc.gui.management.mods.impl.FPSSpooferMod;
+import me.liycxc.gui.management.mods.impl.HitDelayFixMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -559,7 +559,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         this.ingameGUI = new GuiIngame(this);
         GuiSplashScreen.setProgress(17);
 
-        Soar.instance.startClient();
+        NekoCat.instance.startClient();
 
         if (this.serverName != null) {
             this.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), this, this.serverName, this.serverPort));
@@ -608,7 +608,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private void createDisplay() throws LWJGLException {
         Display.setResizable(true);
         // Display.setTitle("Minecraft 1.8.9");
-        Display.setTitle(Soar.instance.getName() + " Client v" + Soar.instance.getVersion() + " for " + "Minecraft 1.8.9");
+        Display.setTitle(NekoCat.instance.getName() + " Client v" + NekoCat.instance.getVersion() + " for " + "Minecraft 1.8.9");
 
         try {
             Display.create((new PixelFormat()).withDepthBits(24));
@@ -961,7 +961,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         }
 
         if(guiScreenIn instanceof GuiMainMenu) {
-            displayGuiScreen(Soar.instance.guiManager.getGuiMainMenu());
+            displayGuiScreen(NekoCat.instance.guiManager.getGuiMainMenu());
         }
     }
 
@@ -1167,7 +1167,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public int getLimitFramerate() {
-        if(Soar.instance.modManager.getModByClass(FPSLimiterMod.class).isToggled()) {
+        if(NekoCat.instance.modManager.getModByClass(FPSLimiterMod.class).isToggled()) {
             return this.theWorld == null && this.currentScreen != null ? 60 : (this.currentScreen instanceof Gui ? 60 : this.gameSettings.limitFramerate);
         }
 
@@ -1337,7 +1337,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Called when the window is closing. Sets 'running' to false which allows the game loop to exit cleanly.
      */
     public void shutdown() {
-        Soar.instance.stopClient();
+        NekoCat.instance.stopClient();
         this.running = false;
     }
 
@@ -1407,7 +1407,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     private void clickMouse() {
-        if(Soar.instance.modManager.getModByClass(HitDelayFixMod.class).isToggled()) {
+        if(NekoCat.instance.modManager.getModByClass(HitDelayFixMod.class).isToggled()) {
             leftClickCounter = 0;
         }
         if (this.leftClickCounter <= 0) {
@@ -2891,8 +2891,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     }
 
     public static int getDebugFPS() {
-        if(Soar.instance.modManager.getModByClass(FPSSpooferMod.class).isToggled()) {
-            return Soar.instance.settingsManager.getSettingByClass(FPSSpooferMod.class, "Multiplication").getValInt() * debugFPS;
+        if(NekoCat.instance.modManager.getModByClass(FPSSpooferMod.class).isToggled()) {
+            return NekoCat.instance.settingsManager.getSettingByClass(FPSSpooferMod.class, "Multiplication").getValInt() * debugFPS;
         }
         return debugFPS;
 //        return debugFPS;

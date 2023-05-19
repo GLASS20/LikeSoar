@@ -6,9 +6,9 @@ import com.mojang.authlib.GameProfile;
 import java.util.Comparator;
 import java.util.List;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.TabEditorMod;
-import like.soar.utils.animation.simple.SimpleAnimation;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.TabEditorMod;
+import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -163,7 +163,7 @@ public class GuiPlayerTabOverlay extends Gui {
 
                 if (flag) {
                     EntityPlayer entityplayer;
-                    if(Soar.instance.modManager.getModByClass(TabEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(TabEditorMod.class, "Remove Player Head").getValBoolean()) {
+                    if(NekoCat.instance.modManager.getModByClass(TabEditorMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(TabEditorMod.class, "Remove Player Head").getValBoolean()) {
                         entityplayer = null;
                     }
 
@@ -350,6 +350,6 @@ public class GuiPlayerTabOverlay extends Gui {
     }
 
     private boolean showHeads() {
-        return !(Soar.instance.modManager.getModByClass(TabEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(TabEditorMod.class, "Remove Player Head").getValBoolean());
+        return !(NekoCat.instance.modManager.getModByClass(TabEditorMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(TabEditorMod.class, "Remove Player Head").getValBoolean());
     }
 }

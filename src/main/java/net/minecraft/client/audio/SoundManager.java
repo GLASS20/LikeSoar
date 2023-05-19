@@ -235,7 +235,7 @@ public class SoundManager {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e);
         }
 
         Iterator<Entry<ISound, Integer>> iterator1 = this.delayedSounds.entrySet().iterator();

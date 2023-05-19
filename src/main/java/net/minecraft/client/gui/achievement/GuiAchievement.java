@@ -1,7 +1,7 @@
 package net.minecraft.client.gui.achievement;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.OverlayEditorMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.OverlayEditorMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -66,7 +66,7 @@ public class GuiAchievement extends Gui {
     }
 
     public void updateAchievementWindow() {
-        if(Soar.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Disable Achievements").getValBoolean()) {
+        if(NekoCat.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Disable Achievements").getValBoolean()) {
             return;
         }
 

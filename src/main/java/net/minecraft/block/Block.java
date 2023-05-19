@@ -1,10 +1,7 @@
 package net.minecraft.block;
 
-import java.util.List;
-import java.util.Random;
-
-import like.soar.Soar;
-import like.soar.management.mods.impl.ClearGlassMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.ClearGlassMod;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -22,19 +19,13 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ObjectIntIdentityMap;
-import net.minecraft.util.RegistryNamespacedDefaultedByKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.List;
+import java.util.Random;
 
 public class Block {
 
@@ -411,7 +402,7 @@ public class Block {
     }
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-        return !Soar.instance.modManager.getModByClass(ClearGlassMod.class).isToggled() && shouldSideBeRenderedAfter(worldIn, pos, side);
+        return !NekoCat.instance.modManager.getModByClass(ClearGlassMod.class).isToggled() && shouldSideBeRenderedAfter(worldIn, pos, side);
     }
 
     public boolean shouldSideBeRenderedAfter(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {

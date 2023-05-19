@@ -14,9 +14,9 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.Map.Entry;
 
-import like.soar.hooks.NetHandlerPlayClientHook;
-import like.soar.management.events.impl.EventDamageEntity;
-import like.soar.management.events.impl.EventRespawn;
+import me.liycxc.hooks.NetHandlerPlayClientHook;
+import me.liycxc.gui.management.events.impl.EventDamageEntity;
+import me.liycxc.gui.management.events.impl.EventRespawn;
 import net.minecraft.block.Block;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;

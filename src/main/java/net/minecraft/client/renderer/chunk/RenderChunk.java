@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantLock;
 
-import like.soar.management.events.impl.EventRenderChunkPosition;
+import me.liycxc.gui.management.events.impl.EventRenderChunkPosition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockRedstoneWire;

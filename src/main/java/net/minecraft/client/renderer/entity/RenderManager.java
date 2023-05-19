@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import java.util.Collections;
 import java.util.Map;
 
-import like.soar.management.events.impl.EventRenderHitbox;
+import me.liycxc.gui.management.events.impl.EventRenderHitbox;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;

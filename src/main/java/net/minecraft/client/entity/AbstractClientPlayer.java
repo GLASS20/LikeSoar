@@ -1,10 +1,8 @@
 package net.minecraft.client.entity;
 
 import com.mojang.authlib.GameProfile;
-import java.io.File;
-
-import like.soar.Soar;
-import like.soar.management.events.impl.EventFovUpdate;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.events.impl.EventFovUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;
@@ -25,6 +23,8 @@ import net.minecraft.world.WorldSettings;
 import net.optifine.player.CapeUtils;
 import net.optifine.player.PlayerConfigurations;
 import net.optifine.reflect.Reflector;
+
+import java.io.File;
 
 public abstract class AbstractClientPlayer extends EntityPlayer {
     private NetworkPlayerInfo playerInfo;
@@ -86,12 +86,12 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
     }
 
     public ResourceLocation getLocationCape() {
-        if(Soar.instance.cosmeticManager == null) {
+        if(NekoCat.instance.cosmeticManager == null) {
             return null;
         }
 
-        if(!Soar.instance.cosmeticManager.getCurrentCpae().equals("None")) {
-            return (Soar.instance.cosmeticManager.getCosmeticByName(Soar.instance.cosmeticManager.getCurrentCpae()).getCape());
+        if(!NekoCat.instance.cosmeticManager.getCurrentCpae().equals("None")) {
+            return (NekoCat.instance.cosmeticManager.getCosmeticByName(NekoCat.instance.cosmeticManager.getCurrentCpae()).getCape());
         }
 
         if (!Config.isShowCapes()) {

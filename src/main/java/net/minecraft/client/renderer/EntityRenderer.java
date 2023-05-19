@@ -2,33 +2,24 @@ package net.minecraft.client.renderer;
 
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.*;
-import java.util.concurrent.Callable;
-
-import like.soar.Soar;
-import like.soar.management.events.impl.EventCameraRotation;
-import like.soar.management.events.impl.EventPlayerHeadRotation;
-import like.soar.management.events.impl.EventRender3D;
-import like.soar.management.events.impl.EventZoomFov;
-import like.soar.management.mods.impl.MinimalBobbingMod;
-import like.soar.management.mods.impl.MinimalDamageShakeMod;
-import like.soar.management.mods.impl.MotionBlurMod;
-import like.soar.management.mods.impl.OldAnimationsMod;
-import like.soar.management.mods.impl.hacks.ReachMod;
-import like.soar.utils.shader.MotionBlurUtils;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.events.impl.EventCameraRotation;
+import me.liycxc.gui.management.events.impl.EventPlayerHeadRotation;
+import me.liycxc.gui.management.events.impl.EventRender3D;
+import me.liycxc.gui.management.events.impl.EventZoomFov;
+import me.liycxc.gui.management.mods.impl.MinimalBobbingMod;
+import me.liycxc.gui.management.mods.impl.MinimalDamageShakeMod;
+import me.liycxc.gui.management.mods.impl.MotionBlurMod;
+import me.liycxc.gui.management.mods.impl.OldAnimationsMod;
+import me.liycxc.gui.management.mods.impl.hacks.ReachMod;
+import me.liycxc.utils.shader.MotionBlurUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiDownloadTerrain;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.MapItemRenderer;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.culling.ClippingHelper;
@@ -64,20 +55,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.src.Config;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MouseFilter;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSettings;
@@ -104,6 +82,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.util.*;
+import java.util.concurrent.Callable;
 
 public class EntityRenderer implements IResourceManagerReloadListener {
     private static final Logger logger = LogManager.getLogger();
@@ -451,8 +434,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             this.mc.mcProfiler.startSection("pick");
             this.mc.pointedEntity = null;
 
-            double d0 = Soar.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach() : (double) this.mc.playerController.getBlockReachDistance();
-            this.mc.objectMouseOver = entity.rayTrace(Soar.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach() : d0, partialTicks);
+            double d0 = NekoCat.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach() : (double) this.mc.playerController.getBlockReachDistance();
+            this.mc.objectMouseOver = entity.rayTrace(NekoCat.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach() : d0, partialTicks);
             double d1 = d0;
             Vec3 vec3 = entity.getPositionEyes(partialTicks);
             boolean flag = false;
@@ -467,8 +450,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 d1 = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
             }
 
-            if (Soar.instance.modManager.getModByName("Reach").isToggled()) {
-                d1 = ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach();
+            if (NekoCat.instance.modManager.getModByName("Reach").isToggled()) {
+                d1 = ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach();
 
                 final MovingObjectPosition movingObjectPosition = entity.rayTrace(d1, partialTicks);
 
@@ -513,7 +496,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 }
             }
 
-            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (Soar.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) Soar.instance.modManager.getModByName("Reach")).getReach() : 3.0D)) {
+            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (NekoCat.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach() : 3.0D)) {
                 this.pointedEntity = null;
                 this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, (EnumFacing) null, new BlockPos(vec33));
             }
@@ -686,7 +669,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
         float f = entity.getEyeHeight();
 
-        if(Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Sneak").getValBoolean() && entity instanceof EntityPlayer) {
+        if(NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Sneak").getValBoolean() && entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
             float height = player.getEyeHeight();
             if(player.isSneaking()) {
@@ -870,13 +853,13 @@ public class EntityRenderer implements IResourceManagerReloadListener {
         }
 
         // this.hurtCameraEffect(partialTicks);
-        if(!Soar.instance.modManager.getModByClass(MinimalDamageShakeMod.class).isToggled()) {
+        if(!NekoCat.instance.modManager.getModByClass(MinimalDamageShakeMod.class).isToggled()) {
             this.hurtCameraEffect(f);
         }
 
         if (this.mc.gameSettings.viewBobbing) {
             // this.setupViewBobbing(partialTicks);
-            if(!Soar.instance.modManager.getModByClass(MinimalBobbingMod.class).isToggled()) {
+            if(!NekoCat.instance.modManager.getModByClass(MinimalBobbingMod.class).isToggled()) {
                 this.setupViewBobbing(f);
             }
         }
@@ -931,8 +914,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     }
 
     public void renderHand(float p_renderHand_1_, int p_renderHand_2_, boolean p_renderHand_3_, boolean p_renderHand_4_, boolean p_renderHand_5_) {
-        if(mc.thePlayer != null && Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() &&
-                Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean()
+        if(mc.thePlayer != null && NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() &&
+                NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean()
                 && mc.objectMouseOver != null
                 && mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK
                 && mc.thePlayer != null
@@ -1289,7 +1272,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
                     ShaderGroup motionBlur = MotionBlurUtils.instance.getShader();
 
-                    if(Soar.instance.modManager.getModByClass(MotionBlurMod.class).isToggled()) {
+                    if(NekoCat.instance.modManager.getModByClass(MotionBlurMod.class).isToggled()) {
                         if (motionBlur != null){
                             shaders.add(motionBlur);
                         }

@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
 }
 
-group = 'like.soar'
+group = 'me.soar'
 version = '1.0-SNAPSHOT'
 
 sourceCompatibility = targetCompatibility = 1.8

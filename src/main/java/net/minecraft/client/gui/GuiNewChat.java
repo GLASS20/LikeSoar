@@ -4,9 +4,9 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.ChatMod;
-import like.soar.utils.MathUtils;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.ChatMod;
+import me.liycxc.utils.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +32,7 @@ public class GuiNewChat extends Gui {
 
     private void updatePercentage(long diff) {
         if (percentComplete < 1) {
-            percentComplete += (Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth Speed").getValDouble() / 1000) * (float) diff;
+            percentComplete += (NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth Speed").getValDouble() / 1000) * (float) diff;
         }
         percentComplete = MathUtils.clamp(percentComplete, 0, 1);
     }
@@ -65,7 +65,7 @@ public class GuiNewChat extends Gui {
                 int l = MathHelper.ceiling_float_int((float)this.getChatWidth() / f1);
                 // GlStateManager.pushMatrix();
                 float y = 0;
-                if (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth").getValBoolean() && !this.isScrolled) {
+                if (NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth").getValBoolean() && !this.isScrolled) {
                     y += (9 - 9 * animationPercent) * this.getChatScale();
                 }
                 GlStateManager.translate(0, y, 0);
@@ -76,7 +76,7 @@ public class GuiNewChat extends Gui {
                 for (int i1 = 0; i1 + this.scrollPos < this.drawnChatLines.size() && i1 < i; ++i1) {
                     ChatLine chatline = (ChatLine)this.drawnChatLines.get(i1 + this.scrollPos);
 
-                    if (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth").getValBoolean() && lineBeingDrawn <= newLines) {
+                    if (NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Smooth").getValBoolean() && lineBeingDrawn <= newLines) {
                         int opacity = (i1 + this.scrollPos >> 24) & 0xFF;
                         opacity *= animationPercent;
                         chatline = (ChatLine) this.drawnChatLines.get((i1 + this.scrollPos & ~(0xFF << 24)) | (opacity << 24));
@@ -106,8 +106,8 @@ public class GuiNewChat extends Gui {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
                                 // drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
-                                boolean transparent = !Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() || (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() &&
-                                        !Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Transparent background").getValBoolean());
+                                boolean transparent = !NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() || (NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() &&
+                                        !NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Transparent background").getValBoolean());
 
                                 if (transparent) {
                                     drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
@@ -135,8 +135,8 @@ public class GuiNewChat extends Gui {
                         int k3 = j3 > 0 ? 170 : 96;
                         int l3 = this.isScrolled ? 13382451 : 3355562;
 
-                        boolean transparent = !Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() || (Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() &&
-                                !Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Transparent background").getValBoolean());
+                        boolean transparent = !NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() || (NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() &&
+                                !NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Transparent background").getValBoolean());
 
                         if (transparent) {
                             drawRect(0, -j3, 2, -j3 - k1, l3 + (k3 << 24));

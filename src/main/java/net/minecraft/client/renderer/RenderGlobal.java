@@ -22,11 +22,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.BlockOverlayMod;
-import like.soar.utils.animation.simple.SimpleAnimation;
-import like.soar.utils.color.ColorUtils;
-import like.soar.utils.render.RenderUtils;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.BlockOverlayMod;
+import me.liycxc.utils.animation.simple.SimpleAnimation;
+import me.liycxc.utils.color.ColorUtils;
+import me.liycxc.utils.render.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockEnderChest;
@@ -2300,7 +2300,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             GlStateManager.enableBlend();
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
             GlStateManager.color(0.0F, 0.0F, 0.0F, 0.4F);
-            if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Outline").getValBoolean()) {
+            if (NekoCat.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Outline").getValBoolean()) {
                 ColorUtils.setColor(ColorUtils.getClientColor(1).getRGB());
             }
             GL11.glLineWidth(2.0F);
@@ -2311,7 +2311,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
 
             GlStateManager.depthMask(false);
-            if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Depth").getValBoolean()) {
+            if (NekoCat.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Depth").getValBoolean()) {
                 GlStateManager.disableDepth();
             }
 
@@ -2332,8 +2332,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 }
 
                 drawSelectionBoundingBox(axisalignedbb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-d0, -d1, -d2));
-                if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Fill").getValBoolean()) {
-                    ColorUtils.setColor(new Color(ColorUtils.getClientColor(0).getRed(), ColorUtils.getClientColor(0).getGreen(), ColorUtils.getClientColor(0).getBlue(), (int) (Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Opacity").getValFloat() * 255)).getRGB());
+                if (NekoCat.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Fill").getValBoolean()) {
+                    ColorUtils.setColor(new Color(ColorUtils.getClientColor(0).getRed(), ColorUtils.getClientColor(0).getGreen(), ColorUtils.getClientColor(0).getBlue(), (int) (NekoCat.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Opacity").getValFloat() * 255)).getRGB());
 
                     double x = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double)partialTicks;
                     double y = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double)partialTicks;
@@ -2348,7 +2348,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
 
             GlStateManager.depthMask(true);
-            if (Soar.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Depth").getValBoolean()) {
+            if (NekoCat.instance.modManager.getModByClass(BlockOverlayMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(BlockOverlayMod.class, "Depth").getValBoolean()) {
                 GlStateManager.enableDepth();
             }
             GlStateManager.enableTexture2D();

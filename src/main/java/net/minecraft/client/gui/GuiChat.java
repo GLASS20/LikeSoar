@@ -1,24 +1,20 @@
 package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
-import java.io.IOException;
-import java.util.List;
-
-import like.soar.Soar;
-import like.soar.management.mods.impl.ChatMod;
-import like.soar.utils.GlUtils;
-import like.soar.utils.animation.simple.SimpleAnimation;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.ChatMod;
+import me.liycxc.utils.GlUtils;
+import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.network.play.client.C14PacketTabComplete;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GuiChat extends GuiScreen {
     private static final Logger logger = LogManager.getLogger();
@@ -261,7 +257,7 @@ public class GuiChat extends GuiScreen {
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        if(Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Bar Animation").getValBoolean()) {
+        if(NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Bar Animation").getValBoolean()) {
             animation.setAnimation(30, 20);
             GlUtils.startTranslate(0, 29 - (int) animation.getValue());
         }
@@ -274,7 +270,7 @@ public class GuiChat extends GuiScreen {
             this.handleComponentHover(ichatcomponent, mouseX, mouseY);
         }
 
-        if(Soar.instance.modManager.getModByClass(ChatMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(ChatMod.class, "Bar Animation").getValBoolean()) {
+        if(NekoCat.instance.modManager.getModByClass(ChatMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(ChatMod.class, "Bar Animation").getValBoolean()) {
             GlUtils.stopTranslate();
         }
 

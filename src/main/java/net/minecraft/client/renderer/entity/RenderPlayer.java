@@ -1,9 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.HypixelMod;
-import like.soar.utils.server.HypixelUtils;
-import like.soar.utils.server.ServerUtils;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.HypixelMod;
+import me.liycxc.utils.server.HypixelUtils;
+import me.liycxc.utils.server.ServerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -139,7 +139,7 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer> {
 
         super.renderOffsetLivingLabel(entityIn, x, y, z, str, p_177069_9_, p_177069_10_);
 
-        boolean toggle = Soar.instance.modManager.getModByClass(HypixelMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(HypixelMod.class, "Level Head").getValBoolean();
+        boolean toggle = NekoCat.instance.modManager.getModByClass(HypixelMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(HypixelMod.class, "Level Head").getValBoolean();
 
         if(toggle && ServerUtils.isHypixel()) {
             String levelhead = HypixelUtils.getHypixelLevel(entityIn == Minecraft.getMinecraft().thePlayer, entityIn.getDisplayName().getFormattedText(), entityIn.getUniqueID());

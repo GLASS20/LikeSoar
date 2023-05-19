@@ -3,16 +3,16 @@ package net.minecraft.client.gui;
 import java.awt.*;
 import java.util.Random;
 
-import like.soar.Soar;
-import like.soar.hooks.GuiIngameHook;
-import like.soar.management.events.impl.EventRenderBossbar;
-import like.soar.management.events.impl.EventRenderCrosshair;
-import like.soar.management.events.impl.EventRenderScoreboard;
-import like.soar.management.events.impl.EventRenderSelectedItem;
-import like.soar.management.mods.impl.HotbarMod;
-import like.soar.management.mods.impl.OldAnimationsMod;
-import like.soar.management.mods.impl.OverlayEditorMod;
-import like.soar.utils.animation.simple.SimpleAnimation;
+import me.liycxc.NekoCat;
+import me.liycxc.hooks.GuiIngameHook;
+import me.liycxc.gui.management.events.impl.EventRenderBossbar;
+import me.liycxc.gui.management.events.impl.EventRenderCrosshair;
+import me.liycxc.gui.management.events.impl.EventRenderScoreboard;
+import me.liycxc.gui.management.events.impl.EventRenderSelectedItem;
+import me.liycxc.gui.management.mods.impl.HotbarMod;
+import me.liycxc.gui.management.mods.impl.OldAnimationsMod;
+import me.liycxc.gui.management.mods.impl.OverlayEditorMod;
+import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -348,9 +348,9 @@ public class GuiIngame extends Gui {
 
         if (this.mc.getRenderViewEntity() instanceof EntityPlayer) {
 
-            boolean animation = Soar.instance.settingsManager.getSettingByClass(HotbarMod.class, "Animation").getValBoolean();
-            int animationSpeed = Soar.instance.settingsManager.getSettingByClass(HotbarMod.class, "Speed").getValInt();
-            String mode = Soar.instance.settingsManager.getSettingByClass(HotbarMod.class, "Design").getValString();
+            boolean animation = NekoCat.instance.settingsManager.getSettingByClass(HotbarMod.class, "Animation").getValBoolean();
+            int animationSpeed = NekoCat.instance.settingsManager.getSettingByClass(HotbarMod.class, "Speed").getValInt();
+            String mode = NekoCat.instance.settingsManager.getSettingByClass(HotbarMod.class, "Design").getValString();
 
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(widgetsTexPath);
@@ -362,7 +362,7 @@ public class GuiIngame extends Gui {
             simpleAnimation.setAnimation(entityplayer.inventory.currentItem * 20, animationSpeed);
             int itemX = i - 91 + (animation ? (int) simpleAnimation.getValue() : (entityplayer.inventory.currentItem * 20));
 
-            if(Soar.instance.modManager.getModByClass(HotbarMod.class).isToggled()) {
+            if(NekoCat.instance.modManager.getModByClass(HotbarMod.class).isToggled()) {
 
                 switch(mode) {
                     case "Vanilla":
@@ -750,7 +750,7 @@ public class GuiIngame extends Gui {
 
                 if (flag)
                 {
-                    if((!Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled()) || (Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled()) && !Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Health").getValBoolean()) {
+                    if((!NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled()) || (NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled()) && !NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Health").getValBoolean()) {
                         if (i6 * 2 + 1 < j)
                         {
                             this.drawTexturedModalRect(i4, j4, j6 + 54, 9 * k4, 9, 9);
@@ -1188,8 +1188,8 @@ public class GuiIngame extends Gui {
     }
 
     private void renderPumpkinOverlay(ScaledResolution scaledRes) {
-        if(Soar.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled()) {
-            if(Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Hide Pumpkin").getValBoolean()) {
+        if(NekoCat.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled()) {
+            if(NekoCat.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Hide Pumpkin").getValBoolean()) {
                 return;
             }
         }

@@ -1,11 +1,11 @@
 package net.minecraft.client.renderer;
 
-import like.soar.Soar;
-import like.soar.management.events.impl.EventTransformFirstPersonItem;
-import like.soar.management.mods.impl.ClearWaterMod;
-import like.soar.management.mods.impl.OldAnimationsMod;
-import like.soar.management.mods.impl.OverlayEditorMod;
-import like.soar.management.mods.impl.SmallHeldItemsMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.events.impl.EventTransformFirstPersonItem;
+import me.liycxc.gui.management.mods.impl.ClearWaterMod;
+import me.liycxc.gui.management.mods.impl.OldAnimationsMod;
+import me.liycxc.gui.management.mods.impl.OverlayEditorMod;
+import me.liycxc.gui.management.mods.impl.SmallHeldItemsMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -344,11 +344,11 @@ public class ItemRenderer {
      * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
      */
     public void renderItemInFirstPerson(float partialTicks) {
-        if(Soar.instance.modManager.getModByClass(SmallHeldItemsMod.class).isToggled()) {
+        if(NekoCat.instance.modManager.getModByClass(SmallHeldItemsMod.class).isToggled()) {
 
-            double x = Soar.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "X").getValDouble();
-            double y = Soar.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "Y").getValDouble();
-            double z = Soar.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "Z").getValDouble();
+            double x = NekoCat.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "X").getValDouble();
+            double y = NekoCat.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "Y").getValDouble();
+            double z = NekoCat.instance.settingsManager.getSettingByClass(SmallHeldItemsMod.class, "Z").getValDouble();
 
             GlStateManager.translate(x, y, z);
         }
@@ -374,25 +374,25 @@ public class ItemRenderer {
 
                     switch (enumaction) {
                         case NONE:
-                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                            transformFirstPersonItem(f, NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
                                     mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             break;
 
                         case EAT:
                         case DRINK:
                             this.performDrinking(abstractclientplayer, partialTicks);
-                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                            transformFirstPersonItem(f, NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
                                     mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             break;
 
                         case BLOCK:
-                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                            transformFirstPersonItem(f, NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
                                     mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             this.doBlockTransformations();
                             break;
 
                         case BOW:
-                            transformFirstPersonItem(f, Soar.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
+                            transformFirstPersonItem(f, NekoCat.instance.modManager.getModByClass(OldAnimationsMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OldAnimationsMod.class, "Block Hit").getValBoolean() ?
                                     mc.thePlayer.getSwingProgress((mc).getTimer().renderPartialTicks) : 0.0F);
                             this.doBowTransformations(partialTicks, abstractclientplayer);
                     }
@@ -499,7 +499,7 @@ public class ItemRenderer {
      * @param partialTicks Partial ticks
      */
     private void renderWaterOverlayTexture(float partialTicks) {
-        if (Soar.instance.modManager.getModByClass(ClearWaterMod.class).isToggled()) {
+        if (NekoCat.instance.modManager.getModByClass(ClearWaterMod.class).isToggled()) {
             return;
         }
         if (!Config.isShaders() || Shaders.isUnderwaterOverlay()) {
@@ -538,8 +538,8 @@ public class ItemRenderer {
      */
     private void renderFireInFirstPerson(float partialTicks) {
         GlStateManager.pushMatrix();
-        if(Soar.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled() && Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Fire").getValBoolean()) {
-            GlStateManager.translate(0, Soar.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Fire Height").getValFloat(), 0);
+        if(NekoCat.instance.modManager.getModByClass(OverlayEditorMod.class).isToggled() && NekoCat.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Fire").getValBoolean()) {
+            GlStateManager.translate(0, NekoCat.instance.settingsManager.getSettingByClass(OverlayEditorMod.class, "Fire Height").getValFloat(), 0);
         }
 
         Tessellator tessellator = Tessellator.getInstance();

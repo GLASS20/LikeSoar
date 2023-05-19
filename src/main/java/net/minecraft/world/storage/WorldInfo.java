@@ -2,8 +2,8 @@ package net.minecraft.world.storage;
 
 import java.util.concurrent.Callable;
 
-import like.soar.Soar;
-import like.soar.management.mods.impl.TimeChangerMod;
+import me.liycxc.NekoCat;
+import me.liycxc.gui.management.mods.impl.TimeChangerMod;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -414,8 +414,8 @@ public class WorldInfo {
      * Set current world time
      */
     public void setWorldTime(long time) {
-        boolean toggle = Soar.instance.modManager.getModByClass(TimeChangerMod.class).isToggled();
-        long customTime = (long) Soar.instance.settingsManager.getSettingByClass(TimeChangerMod.class, "Time").getValDouble();
+        boolean toggle = NekoCat.instance.modManager.getModByClass(TimeChangerMod.class).isToggled();
+        long customTime = (long) NekoCat.instance.settingsManager.getSettingByClass(TimeChangerMod.class, "Time").getValDouble();
         this.worldTime = toggle ? customTime : time;
     }
 
