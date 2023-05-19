@@ -1,12 +1,10 @@
 package me.liycxc.gui.mainmenu;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
 import me.liycxc.NekoCat;
 import me.liycxc.gui.GuiAccountManager;
 import me.liycxc.gui.GuiPleaseLogin;
 import me.liycxc.gui.credit.GuiCredit;
 import me.liycxc.gui.management.mods.impl.ClientMod;
-import me.liycxc.ui.font.FontManager;
 import me.liycxc.utils.DayEventUtils;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.animation.normal.Animation;
@@ -103,7 +101,7 @@ public class GuiSoarMainMenu extends GuiScreen{
 
 		RoundedUtils.drawRound(sr.getScaledWidth() / 2 - addX, sr.getScaledHeight() / 2 - addY, addX * 2, addY * 2, 6, bg3Color);
 
-		FontUtils.regular_bold40.drawStringWithClientColor(NekoCat.instance.getName(), (sr.getScaledWidth() / 2 - addX) - FontUtils.regular_bold40.getStringWidth(NekoCat.instance.getName()) + 115, sr.getScaledHeight() / 2 - 80, false);
+		FontUtils.regular_bold40.drawStringWithClientColor(NekoCat.instance.getName(), (sr.getScaledWidth() / 2 - addX) - FontUtils.regular_bold40.getStringWidth(NekoCat.instance.getName()) + 107, sr.getScaledHeight() / 2 - 80, false);
 
 		for(SoarMainMenuButton b : menus) {
 
@@ -121,7 +119,7 @@ public class GuiSoarMainMenu extends GuiScreen{
 		super.drawScreen(mouseX, mouseY, partialTicks);
 
 		//Copyright
-//        FontUtils.regular20.drawString("Copyright Mojang AB. Do not distribute!", sr.getScaledWidth() - FontUtils.regular_bold20.getStringWidth("Copyright Mojang AB. Do not distribute!") + 4, sr.getScaledHeight() - FontUtils.regular_bold20.getHeight() - 3, font2Color.getRGB());
+        FontUtils.regular20.drawString("Copyright Mojang AB. Do not distribute!", sr.getScaledWidth() - FontUtils.regular_bold20.getStringWidth("Copyright Mojang AB. Do not distribute!") + 4, sr.getScaledHeight() - FontUtils.regular_bold20.getHeight() - 3, font2Color.getRGB());
         
         if(clickEffects.size() > 0) {
             Iterator<ClickEffect> clickEffectIterator= clickEffects.iterator();
@@ -132,8 +130,8 @@ public class GuiSoarMainMenu extends GuiScreen{
             }
         }
 
-		String test = ChatFormatting.OBFUSCATED + "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 使用开源的更莎黑体，测试中文渲染，日文：の";
-		FontManager.test18.drawString(test, width - FontManager.test18.getStringWidth(test), height - FontManager.test18.getHalfHeight(), -1);
+		// String test = ChatFormatting.OBFUSCATED + "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 使用开源的更莎黑体，测试中文渲染，日文：の";
+		// FontManager.test18.drawString(test, width - FontManager.test18.getStringWidth(test), height - FontManager.test18.getHalfHeight(), -1);
 	}
 
 	@Override
