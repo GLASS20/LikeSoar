@@ -1,12 +1,10 @@
 package me.liycxc.gui.mainmenu;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.liycxc.NekoCat;
+import me.liycxc.gui.GuiAccountManager;
+import me.liycxc.gui.GuiPleaseLogin;
+import me.liycxc.gui.credit.GuiCredit;
 import me.liycxc.gui.management.mods.impl.ClientMod;
 import me.liycxc.ui.font.FontManager;
 import me.liycxc.utils.DayEventUtils;
@@ -19,16 +17,14 @@ import me.liycxc.utils.font.FontUtils;
 import me.liycxc.utils.mouse.MouseUtils;
 import me.liycxc.utils.render.ClickEffect;
 import me.liycxc.utils.render.RoundedUtils;
-import me.liycxc.gui.GuiAccountManager;
-import me.liycxc.gui.GuiPleaseLogin;
-import me.liycxc.gui.credit.GuiCredit;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiOptions;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSelectWorld;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class GuiSoarMainMenu extends GuiScreen{
 
@@ -107,7 +103,7 @@ public class GuiSoarMainMenu extends GuiScreen{
 
 		RoundedUtils.drawRound(sr.getScaledWidth() / 2 - addX, sr.getScaledHeight() / 2 - addY, addX * 2, addY * 2, 6, bg3Color);
 
-		FontUtils.regular_bold40.drawStringWithClientColor("NekoCat Client", (sr.getScaledWidth() / 2 - addX) - FontUtils.regular_bold40.getStringWidth("NekoCat Client") + 115, sr.getScaledHeight() / 2 - 80, false);
+		FontUtils.regular_bold40.drawStringWithClientColor(NekoCat.instance.getName(), (sr.getScaledWidth() / 2 - addX) - FontUtils.regular_bold40.getStringWidth("NekoCat Client") + 115, sr.getScaledHeight() / 2 - 80, false);
 
 		for(SoarMainMenuButton b : menus) {
 
