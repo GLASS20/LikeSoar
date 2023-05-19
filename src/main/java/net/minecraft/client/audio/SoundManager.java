@@ -1,12 +1,20 @@
 package net.minecraft.client.audio;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import io.netty.util.internal.ThreadLocalRandom;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+import paulscode.sound.*;
+import paulscode.sound.codecs.CodecJOrbis;
+import paulscode.sound.libraries.LibraryLWJGLOpenAL;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -18,22 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
-import paulscode.sound.SoundSystem;
-import paulscode.sound.SoundSystemConfig;
-import paulscode.sound.SoundSystemException;
-import paulscode.sound.SoundSystemLogger;
-import paulscode.sound.Source;
-import paulscode.sound.codecs.CodecJOrbis;
-import paulscode.sound.libraries.LibraryLWJGLOpenAL;
 
 public class SoundManager {
 
@@ -207,40 +199,43 @@ public class SoundManager {
         }
 
         Iterator<Entry<String, ISound>> iterator = this.playingSounds.entrySet().iterator();
+        try {
+            while (iterator.hasNext()) {
+                Entry<String, ISound> entry = (Entry)iterator.next();
+                String s1 = (String)entry.getKey();
+                ISound isound = (ISound)entry.getValue();
 
-        while (iterator.hasNext()) {
-            Entry<String, ISound> entry = (Entry)iterator.next();
-            String s1 = (String)entry.getKey();
-            ISound isound = (ISound)entry.getValue();
+                if (!this.sndSystem.playing(s1)) {
+                    int i = ((Integer)this.playingSoundsStopTime.get(s1)).intValue();
 
-            if (!this.sndSystem.playing(s1)) {
-                int i = ((Integer)this.playingSoundsStopTime.get(s1)).intValue();
+                    if (i <= this.playTime) {
+                        int j = isound.getRepeatDelay();
 
-                if (i <= this.playTime) {
-                    int j = isound.getRepeatDelay();
+                        if (isound.canRepeat() && j > 0) {
+                            this.delayedSounds.put(isound, Integer.valueOf(this.playTime + j));
+                        }
 
-                    if (isound.canRepeat() && j > 0) {
-                        this.delayedSounds.put(isound, Integer.valueOf(this.playTime + j));
-                    }
+                        iterator.remove();
+                        logger.debug(LOG_MARKER, "Removed channel {} because it\'s not playing anymore", new Object[] {s1});
+                        this.sndSystem.removeSource(s1);
+                        this.playingSoundsStopTime.remove(s1);
+                        this.playingSoundPoolEntries.remove(isound);
 
-                    iterator.remove();
-                    logger.debug(LOG_MARKER, "Removed channel {} because it\'s not playing anymore", new Object[] {s1});
-                    this.sndSystem.removeSource(s1);
-                    this.playingSoundsStopTime.remove(s1);
-                    this.playingSoundPoolEntries.remove(isound);
+                        try {
+                            this.categorySounds.remove(this.sndHandler.getSound(isound.getSoundLocation()).getSoundCategory(), s1);
+                        }
+                        catch (RuntimeException var8) {
+                            ;
+                        }
 
-                    try {
-                        this.categorySounds.remove(this.sndHandler.getSound(isound.getSoundLocation()).getSoundCategory(), s1);
-                    }
-                    catch (RuntimeException var8) {
-                        ;
-                    }
-
-                    if (isound instanceof ITickableSound) {
-                        this.tickableSounds.remove(isound);
+                        if (isound instanceof ITickableSound) {
+                            this.tickableSounds.remove(isound);
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         Iterator<Entry<ISound, Integer>> iterator1 = this.delayedSounds.entrySet().iterator();
