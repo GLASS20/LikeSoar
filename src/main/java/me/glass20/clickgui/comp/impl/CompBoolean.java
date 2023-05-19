@@ -37,10 +37,10 @@ public class CompBoolean extends Comp {
     	
     	GlUtils.startScale((float) (parent.getX() + x - 70 + parent.getX() + x - 70 + 10) / 2, (float) (parent.getY() + y + parent.getY() + y + 10) / 2, animation.getValue());
     	RoundedUtils.drawRound((float) (parent.getX() + x - 70), (float) (parent.getY() + y), 10, 10, 3, ColorUtils.getClientColor(0, (int) animation2.getValue()));
-        FontUtils.icon20.drawString("H", (parent.getX() + x - 70), (parent.getY() + y + 3), new Color(255, 255, 255).getRGB());
+        FontUtils.icon20.drawString("H", (float) (parent.getX() + x - 70), (float) (parent.getY() + y + 3), new Color(255, 255, 255).getRGB());
         GlUtils.stopScale();
 
-        FontUtils.regular20.drawString(setting.getName(), (int)(parent.getX() + x - 55), (parent.getY() + y + 2), ColorUtils.getFontColor(2).getRGB());
+        FontUtils.regular20.drawString(setting.getName(), (float) (parent.getX() + x - 55), (float) (parent.getY() + y + 2), ColorUtils.getFontColor(2).getRGB());
     }
 
     @Override

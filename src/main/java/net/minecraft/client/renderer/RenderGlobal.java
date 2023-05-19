@@ -1789,7 +1789,6 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 }
                 else {
                     float f9 = partialTicks;
-                    partialTicks = 0.0F;
                     GlStateManager.disableCull();
                     float f10 = (float)(this.mc.getRenderViewEntity().lastTickPosY + (this.mc.getRenderViewEntity().posY - this.mc.getRenderViewEntity().lastTickPosY) * (double)partialTicks);
                     int i = 32;

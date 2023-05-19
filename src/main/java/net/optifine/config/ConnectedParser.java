@@ -372,8 +372,32 @@ public class ConnectedParser {
         }
     }
 
-    public static Comparable parseValue(String str, Class cls) {
-        return (Comparable)(cls == String.class ? str : (cls == Boolean.class ? Boolean.valueOf(str) : (cls == Float.class ? Float.valueOf(str) : (cls == Double.class ? Double.valueOf(str) : (cls == Integer.class ? Integer.valueOf(str) : (cls == Long.class ? Long.valueOf(str) : null))))));
+    public static Comparable parseValue(String str, Class cls)
+    {
+        if (cls == String.class)
+        {
+            return str;
+        }
+        else if (cls == Boolean.class)
+        {
+            return Boolean.valueOf(str);
+        }
+        else if (cls == Float.class)
+        {
+            return Float.valueOf(str);
+        }
+        else if (cls == Double.class)
+        {
+            return Double.valueOf(str);
+        }
+        else if (cls == Integer.class)
+        {
+            return Integer.valueOf(str);
+        }
+        else
+        {
+            return cls == Long.class ? Long.valueOf(str) : null;
+        }
     }
 
     public boolean matchState(IBlockState bs, Map<IProperty, List<Comparable>> mapPropValues) {

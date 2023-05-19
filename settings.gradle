@@ -1,0 +1,13 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url = "https://jitpack.io/" }
+    }
+    plugins {
+        id "org.jetbrains.kotlin.jvm" version kotlin_version
+    }
+}
+
+rootProject.name = 'LikeSoar'
+

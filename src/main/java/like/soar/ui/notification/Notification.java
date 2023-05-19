@@ -57,9 +57,9 @@ public class Notification {
         }
         
     	RoundedUtils.drawGradientRound((float) (sr.getScaledWidth() - offset), sr.getScaledHeight() - 40, (float) (FontUtils.regular_bold20.getStringWidth(messsage) + 1), 29, 6, ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4));
-        FontUtils.regular_bold26.drawString(title, sr.getScaledWidth() - offset + 3, sr.getScaledHeight() - 38, ColorUtils.getFontColor(2).getRGB());
+        FontUtils.regular_bold26.drawString(title, (float) (sr.getScaledWidth() - offset + 3), sr.getScaledHeight() - 38, ColorUtils.getFontColor(2).getRGB());
         
-        FontUtils.regular20.drawString(messsage, sr.getScaledWidth() - offset + 3, sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
+        FontUtils.regular20.drawString(messsage, (float) (sr.getScaledWidth() - offset + 3), sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
     }
     
     @EventTarget

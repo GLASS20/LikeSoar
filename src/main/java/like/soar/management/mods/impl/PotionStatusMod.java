@@ -133,9 +133,9 @@ public class PotionStatusMod extends Mod{
 	                String s = Potion.getDurationString(potioneffect);
 	                
 	                if(compact) {
-		                FontUtils.regular_bold20.drawStringWithUnicode(s1, x + offsetX - 2, (y + i2) - offsetY + 3F, this.getFontColor().getRGB(), false);
+		                FontUtils.regular_bold20.drawString(s1, x + offsetX - 2, (y + i2) - offsetY + 3F, this.getFontColor().getRGB());
 	                }else {
-		                FontUtils.regular_bold20.drawStringWithUnicode(s1, x + offsetX + 3, (y + i2) - offsetY + 2, this.getFontColor().getRGB(), false);
+		                FontUtils.regular_bold20.drawString(s1, x + offsetX + 3, (y + i2) - offsetY + 2, this.getFontColor().getRGB());
 		                FontUtils.regular20.drawString(s, x + offsetX + 3, (y + i2 + 11) - offsetY + 2, this.getFontColor().getRGB());
 	                }
 

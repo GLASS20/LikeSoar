@@ -353,7 +353,7 @@ public class ClickGui extends GuiScreen {
                             }
 
                             RoundedUtils.drawGradientRoundLR(mouseX + 6, mouseY, (float) FontUtils.regular20.getStringWidth(m.getDescription()) + 10, (float) FontUtils.regular20.getHeight() + 5, 6, ColorUtils.getClientColor(0, (int) m.selectAnimation.getValue()), ColorUtils.getClientColor(90, (int) m.selectAnimation.getValue()));
-                            FontUtils.regular20.drawString(m.getDescription(), mouseX + 10.5F, mouseY + 3.5F, new Color(255, 255, 255, (int) m.selectAnimation.getValue() + (m.selectAnimation.getValue() > 109 ? 80 : 0)).getRGB());
+                            FontUtils.regular20.renderStringDirectly(m.getDescription(), mouseX + 10.5F, mouseY + 3.5F, new Color(255, 255, 255, (int) m.selectAnimation.getValue() + (m.selectAnimation.getValue() > 109 ? 80 : 0)).getRGB());
 
                             offset+=35;
                         }

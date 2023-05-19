@@ -18,7 +18,7 @@ public class CompCheckBox extends Comp {
 	private SimpleAnimation animation = new SimpleAnimation(0.0F);
 	private SimpleAnimation animation2 = new SimpleAnimation(0.0F);
 	
-    public CompCheckBox(double x, double y, FeatureCategory parent, Mod mod, Setting setting) {
+    public CompCheckBox(float x, float y, FeatureCategory parent, Mod mod, Setting setting) {
         this.x = x;
         this.y = y;
         this.parent = parent;

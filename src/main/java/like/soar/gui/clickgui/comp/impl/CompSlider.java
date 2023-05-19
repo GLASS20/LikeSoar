@@ -20,7 +20,7 @@ public class CompSlider extends Comp {
     private double renderWidth2;
     private SimpleAnimation animation = new SimpleAnimation(0.0F);
     
-    public CompSlider(double x, double y, FeatureCategory parent, Mod mod, Setting setting) {
+    public CompSlider(float x, float y, FeatureCategory parent, Mod mod, Setting setting) {
         this.x = x;
         this.y = y;
         this.parent = parent;

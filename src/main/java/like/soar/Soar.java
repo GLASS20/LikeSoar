@@ -23,6 +23,7 @@ import like.soar.management.music.MusicManager;
 import like.soar.management.quickplay.QuickPlayManager;
 import like.soar.management.settings.SettingsManager;
 import like.soar.mixin.SoarTweaker;
+import like.soar.ui.font.FontManager;
 import like.soar.utils.DayEventUtils;
 import like.soar.utils.OSType;
 import like.soar.utils.TargetUtils;
@@ -89,6 +90,7 @@ public class Soar {
 		moduleManager = new ModuleManager();
 		
 		FontUtils.init();
+		FontManager.init();
 		
 		eventManager.register(this);
 		
