@@ -5,6 +5,7 @@ import me.liycxc.modules.kinds.combat.Reach;
 import me.liycxc.modules.kinds.render.Chams;
 import me.liycxc.modules.kinds.utilty.AutoTool;
 import me.liycxc.modules.kinds.utilty.RightClick;
+import me.liycxc.modules.kinds.utilty.invManager.InvManager;
 import me.liycxc.modules.kinds.utilty.irc.IRC;
 import me.liycxc.utils.Logger;
 
@@ -24,6 +25,7 @@ public class ModuleManager {
         registerModule(new Reach());
         registerModule(new RightClick());
         registerModule(new Chams());
+        registerModule(new InvManager());
     }
 
     public void registerModule(Module module) {

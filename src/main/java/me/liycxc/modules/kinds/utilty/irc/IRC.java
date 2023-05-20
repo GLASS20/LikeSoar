@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters;
 import lombok.Setter;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
+import me.liycxc.modules.kinds.utilty.irc.utils.*;
 import me.liycxc.utils.Logger;
 import me.liycxc.utils.PlayerUtils;
 import net.minecraft.util.StringUtils;
@@ -23,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static me.liycxc.modules.kinds.utilty.irc.ServerUtils.getTime;
+import static me.liycxc.modules.kinds.utilty.irc.utils.ServerUtils.getTime;
 
 public class IRC extends Module {
     public IRC() {
@@ -85,7 +86,7 @@ public class IRC extends Module {
                                 return;
                             }
                             // Send to server
-                            ServerUtils.messagesCollection.insertOne(new Document().append("qqNumber",MineUser.qqNumber).append("qqName", MineUser.qqName).append("Message",sendMessage).append("time",getTime()).append("times",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(getTime()))));
+                            ServerUtils.messagesCollection.insertOne(new Document().append("qqNumber", MineUser.qqNumber).append("qqName", MineUser.qqName).append("Message",sendMessage).append("time",getTime()).append("times",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(getTime()))));
                             Logger.log("[IRC Send] " + sendMessage);
                         }
                         // Clean waiting messages xD

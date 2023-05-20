@@ -1,6 +1,6 @@
-package me.liycxc.modules.kinds.utilty.irc;
+package me.liycxc.modules.kinds.utilty.irc.utils;
 
-import static me.liycxc.modules.kinds.utilty.irc.ServerUtils.getTime;
+import static me.liycxc.modules.kinds.utilty.irc.utils.ServerUtils.getTime;
 
 public final class MSTimer {
 

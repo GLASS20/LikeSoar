@@ -244,7 +244,7 @@ public final class FontDrawer {
 
         float factor = (float) (new ScaledResolution(Minecraft.getMinecraft()).getScaleFactor());
         x *= factor;
-        y = (y - 2.0F) * factor;
+        y = (y - 3.4F) * factor;
 
         preDraw();
         GLUtils.color(color);

@@ -124,11 +124,11 @@ public class ClickGui extends GuiScreen {
             }
         }
 
-        if(!selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class))) {
+        if(!categoryManager.isModule(selectedCategory,categoryManager)) {
             FeatureCategory.openModSetting = false;
         }
 
-        if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
+        if(categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
             if(!FeatureCategory.openModSetting && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
                 searchMode = true;
                 searchWord.setFocused(true);
@@ -138,7 +138,7 @@ public class ClickGui extends GuiScreen {
             }
         }
 
-        if(FeatureCategory.openModSetting || (!selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
+        if(FeatureCategory.openModSetting || (!categoryManager.isModule(selectedCategory,categoryManager) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
             searchMode = false;
         }
 
@@ -162,7 +162,7 @@ public class ClickGui extends GuiScreen {
 
         for(Category c : categoryManager.getCategories()) {
 
-            boolean featureCategory = selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class));
+            boolean featureCategory = categoryManager.isModule(selectedCategory,categoryManager);
             boolean settingsCategory = selectedCategory.equals(categoryManager.getCategoryByClass(SettingsCategory.class));
 
             float addX = (featureCategory) ? 88 : settingsCategory ? 95F : 0;
@@ -204,7 +204,7 @@ public class ClickGui extends GuiScreen {
         this.drawModDescription(mouseX, mouseY);
         GlUtils.stopScale();
 
-        upAnimation.setAnimation(introAnimation.getValue() == 1.0F && (selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) ? 6 : -30, 16);
+        upAnimation.setAnimation(introAnimation.getValue() == 1.0F && (categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) ? 6 : -30, 16);
 
         RoundedUtils.drawRound(upAnimation.getValue(), sr.getScaledHeight() - 30, 24, 24, 6, ColorUtils.getBackgroundColor(2));
         FontUtils.icon24.drawString("O", upAnimation.getValue() + 6, sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
@@ -252,7 +252,7 @@ public class ClickGui extends GuiScreen {
             offset+=25;
         }
 
-        if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
+        if(categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
             if(MouseUtils.isInside(mouseX, mouseY, upAnimation.getValue(), sr.getScaledHeight()  - 30, 24, 24)) {
                 if(!FeatureCategory.openModSetting) {
                     searchMode = true;
@@ -339,7 +339,7 @@ public class ClickGui extends GuiScreen {
         int offset = 15;
 
         if(MouseUtils.isInside(mouseX, mouseY, this.getX(), this.getY(), this.getWidth(), this.getHeight())) {
-            if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class))) {
+            if(categoryManager.isModule(selectedCategory,categoryManager)) {
                 for(Mod m : NekoCat.instance.modManager.getMods()) {
                     if(!m.isHide()) {
                         if(this.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), this.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), this.searchWord.getText())) : true) {

@@ -2,7 +2,7 @@ package me.liycxc.modules;
 
 import lombok.Getter;
 import me.liycxc.NekoCat;
-import me.liycxc.modules.kinds.utilty.irc.ServerUtils;
+import me.liycxc.modules.kinds.utilty.irc.utils.ServerUtils;
 import me.liycxc.utils.PlayerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

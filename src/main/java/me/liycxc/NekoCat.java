@@ -29,9 +29,12 @@ import me.liycxc.utils.font.FontManager;
 import me.liycxc.utils.font.FontUtils;
 import me.liycxc.utils.server.HypixelUtils;
 import me.liycxc.utils.server.ServerUtils;
+import net.ccbluex.liquidbounce.utils.InventoryUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C0EPacketClickWindow;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.BlockPos;
@@ -214,6 +217,16 @@ public class NekoCat {
                 (packet).setData(new PacketBuffer(Unpooled.buffer()).writeString("NekoCat Client v" + version));
             }
         }
+
+		if (event.getPacket() instanceof C0EPacketClickWindow || event.getPacket() instanceof C08PacketPlayerBlockPlacement) {
+			InventoryUtils.INV_TIMER.reset();
+		}
+
+		if (event.getPacket() instanceof C08PacketPlayerBlockPlacement) {
+			InventoryUtils.CLICK_TIMER.reset();
+		} else if (event.getPacket() instanceof C0EPacketClickWindow){
+			InventoryUtils.CLICK_TIMER.reset();
+		}
 	}
     
     @EventTarget

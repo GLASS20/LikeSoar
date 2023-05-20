@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class ItemBucket extends Item {
 
     /** field for checking if the bucket has been filled. */
-    private Block isFull;
+    public Block isFull;
 
     public ItemBucket(Block containedBlock) {
         this.maxStackSize = 1;

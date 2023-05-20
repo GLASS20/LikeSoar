@@ -3,10 +3,6 @@ package net.minecraft.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Random;
-import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentDurability;
@@ -24,14 +20,13 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.StatList;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
+
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Random;
 
 public final class ItemStack {
     public static final DecimalFormat DECIMALFORMAT = new DecimalFormat("#.###");
@@ -58,6 +53,7 @@ public final class ItemStack {
     private boolean canDestroyCacheResult;
     private Block canPlaceOnCacheBlock;
     private boolean canPlaceOnCacheResult;
+    private long itemDelay;
 
     public ItemStack(Block blockIn) {
         this((Block)blockIn, 1);
@@ -87,6 +83,7 @@ public final class ItemStack {
         this.item = itemIn;
         this.stackSize = amount;
         this.itemDamage = meta;
+        this.itemDelay = System.currentTimeMillis();
 
         if (this.itemDamage < 0) {
             this.itemDamage = 0;
@@ -916,5 +913,9 @@ public final class ItemStack {
             this.canPlaceOnCacheResult = false;
             return false;
         }
+    }
+
+    public long getItemDelay() {
+        return itemDelay;
     }
 }

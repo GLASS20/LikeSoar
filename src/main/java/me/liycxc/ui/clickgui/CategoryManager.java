@@ -36,4 +36,8 @@ public class CategoryManager {
     public Category getCategoryByClass(Class<?> categoryClass) {
         return categories.stream().filter(category -> category.getClass().equals(categoryClass)).findFirst().orElse(null);
     }
+
+    public boolean isModule(Category category,CategoryManager categoryManager) {
+        return (category.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || category.equals(categoryManager.getCategoryByClass(CombatModules.class)) || category.equals(categoryManager.getCategoryByClass(MovementModules.class)) || category.equals(categoryManager.getCategoryByClass(RenderModules.class)) || category.equals(categoryManager.getCategoryByClass(UtiltyModules.class)));
+    }
 }

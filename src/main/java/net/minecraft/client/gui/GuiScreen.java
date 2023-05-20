@@ -6,7 +6,7 @@ import com.google.common.collect.Sets;
 import lombok.Getter;
 import lombok.Setter;
 import me.liycxc.modules.ModuleCommand;
-import me.liycxc.modules.kinds.utilty.irc.ServerUtils;
+import me.liycxc.modules.kinds.utilty.irc.utils.ServerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.client.renderer.GlStateManager;
