@@ -204,7 +204,6 @@ public class UtiltyModules extends FeatureCategory {
             if (m.getModuleCategory()!=ModuleCategory.Util) {
                 continue;
             }
-            // if(!m.isHide()) {
             if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.moduleName, clickGUI.searchWord.getText())) : true) {
 
                 if(MouseUtils.isInside(mouseX, mouseY, this.getX() + 270, this.getY() + offset + scrollAnimation.getValue(), 26, 26) && canToggle && !openModSetting) {

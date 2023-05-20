@@ -8,6 +8,10 @@ import me.liycxc.pvp.clickgui.category.impl.MusicPlayerCategory;
 import me.liycxc.pvp.clickgui.category.impl.SettingsCategory;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;
+import me.liycxc.ui.clickgui.impl.features.CombatModules;
+import me.liycxc.ui.clickgui.impl.features.MovementModules;
+import me.liycxc.ui.clickgui.impl.features.RenderModules;
+import me.liycxc.ui.clickgui.impl.features.UtiltyModules;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;
@@ -126,19 +130,27 @@ public class ClickGui extends GuiScreen {
 
         if(!categoryManager.isModule(selectedCategory,categoryManager)) {
             FeatureCategory.openModSetting = false;
+            CombatModules.openModSetting = false;
+            MovementModules.openModSetting = false;
+            RenderModules.openModSetting = false;
+            UtiltyModules.openModSetting = false;
         }
 
         if(categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
-            if(!FeatureCategory.openModSetting && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
+            if(!(FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting) && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
                 searchMode = true;
                 searchWord.setFocused(true);
                 searchWord.setText("");
                 FeatureCategory.scrollY = 0;
+                CombatModules.scrollY = 0;
+                MovementModules.scrollY = 0;
+                RenderModules.scrollY = 0;
+                UtiltyModules.scrollY = 0;
                 NekoCat.instance.musicManager.setScrollY(0);
             }
         }
 
-        if(FeatureCategory.openModSetting || (!categoryManager.isModule(selectedCategory,categoryManager) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
+        if(FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting || (!categoryManager.isModule(selectedCategory,categoryManager) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
             searchMode = false;
         }
 
@@ -254,7 +266,7 @@ public class ClickGui extends GuiScreen {
 
         if(categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
             if(MouseUtils.isInside(mouseX, mouseY, upAnimation.getValue(), sr.getScaledHeight()  - 30, 24, 24)) {
-                if(!FeatureCategory.openModSetting) {
+                if(!(FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting)) {
                     searchMode = true;
                     searchWord.setFocused(true);
                     searchWord.setText("");
@@ -304,6 +316,18 @@ public class ClickGui extends GuiScreen {
             if(FeatureCategory.openModSetting) {
                 FeatureCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
             }
+            if (CombatModules.openModSetting) {
+                CombatModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
+            }
+            if (MovementModules.openModSetting) {
+                MovementModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
+            }
+            if (RenderModules.openModSetting) {
+                RenderModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
+            }
+            if (UtiltyModules.openModSetting) {
+                UtiltyModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
+            }
             if(searchMode) {
                 searchMode = false;
             } else {
@@ -346,9 +370,9 @@ public class ClickGui extends GuiScreen {
                             boolean isSelect = MouseUtils.isInside(mouseX, mouseY, this.getX() + 95, this.getY() + offset + FeatureCategory.scrollAnimation.getValue(), 200, 26);
                             int opacity = 160;
 
-                            m.selectAnimation.setAnimation(isSelect && m.selectTimer.delay(1300) && !FeatureCategory.openModSetting ? opacity : 0, 16);
+                            m.selectAnimation.setAnimation(isSelect && m.selectTimer.delay(1300) && !(FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting) ? opacity : 0, 16);
 
-                            if(!isSelect || FeatureCategory.openModSetting) {
+                            if(!isSelect || FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting) {
                                 m.selectTimer.reset();
                             }
 

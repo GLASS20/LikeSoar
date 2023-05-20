@@ -204,7 +204,6 @@ public class CombatModules extends FeatureCategory {
             if (m.getModuleCategory()!=ModuleCategory.Combat) {
                 continue;
             }
-            // if(!m.isHide()) {
             if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.moduleName, clickGUI.searchWord.getText())) : true) {
 
                 if(MouseUtils.isInside(mouseX, mouseY, this.getX() + 270, this.getY() + offset + scrollAnimation.getValue(), 26, 26) && canToggle && !openModSetting) {

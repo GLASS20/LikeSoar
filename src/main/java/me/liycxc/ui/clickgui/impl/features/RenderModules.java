@@ -202,11 +202,9 @@ public class RenderModules extends FeatureCategory {
         ClickGui clickGUI = NekoCat.instance.guiManager.getgClickGUI();
 
         for(Module m : NekoCat.instance.moduleManager.getModules()) {
-            if (m.getModuleCategory()!=ModuleCategory.Render
-) {
+            if (m.getModuleCategory()!=ModuleCategory.Render) {
                 continue;
             }
-            // if(!m.isHide()) {
             if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.moduleName, clickGUI.searchWord.getText())) : true) {
 
                 if(MouseUtils.isInside(mouseX, mouseY, this.getX() + 270, this.getY() + offset + scrollAnimation.getValue(), 26, 26) && canToggle && !openModSetting) {
