@@ -258,6 +258,11 @@ public class EntityPlayerSP extends AbstractClientPlayer {
         this.sendQueue.addToSendQueue(new C0APacketAnimation());
     }
 
+    public void swingItemNoPacket() {
+        super.swingItem();
+        // this.sendQueue.addToSendQueue(new C0APacketAnimation());
+    }
+
     public void respawnPlayer() {
         this.sendQueue.addToSendQueue(new C16PacketClientStatus(C16PacketClientStatus.EnumState.PERFORM_RESPAWN));
     }

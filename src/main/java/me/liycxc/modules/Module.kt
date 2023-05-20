@@ -3,6 +3,7 @@ package me.liycxc.modules
 import me.liycxc.NekoCat
 import me.liycxc.utils.TimerUtils
 import me.liycxc.utils.animation.simple.SimpleAnimation
+import net.minecraft.client.Minecraft
 
 open class Module {
     @JvmField
@@ -13,6 +14,9 @@ open class Module {
     var fontAnimation = arrayOf(
         SimpleAnimation(0.0f), SimpleAnimation(0.0f), SimpleAnimation(0.0f)
     )
+
+    @JvmField
+    var mc = Minecraft.getMinecraft()
     @JvmField
     var buttonAnimation = SimpleAnimation(0.0f)
     @JvmField

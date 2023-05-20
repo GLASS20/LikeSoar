@@ -1,4 +1,4 @@
-package me.liycxc.user;
+package me.liycxc.modules.kinds.utilty.irc;
 
 import net.minecraft.util.StringUtils;
 
