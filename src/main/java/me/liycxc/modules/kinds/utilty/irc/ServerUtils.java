@@ -28,21 +28,26 @@ public class ServerUtils {
     public static String messageRoom = "Room-1";
 
     public static void ConnectServer() {
-        connectionString = new ConnectionString("mongodb+srv://Homo:Homo114514Fuckyou@homoccc.nvr1n7n.mongodb.net/?retryWrites=true&w=majority");
-        settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .serverApi(ServerApi.builder()
-                        .version(ServerApiVersion.V1)
-                        .build())
-                .build();
-        mongoClient = MongoClients.create(settings);
+        try {
+            connectionString = new ConnectionString("mongodb+srv://Homo:Homo114514Fuckyou@homoccc.nvr1n7n.mongodb.net/?retryWrites=true&w=majority");
+            settings = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .serverApi(ServerApi.builder()
+                            .version(ServerApiVersion.V1)
+                            .build())
+                    .build();
+            mongoClient = MongoClients.create(settings);
 
-        MongoDatabase database = mongoClient.getDatabase("message");
-        database.runCommand(new Document("ping", 1));
-        messagesCollection = database.getCollection("1");
-        messageRoom = "1";
-        Logger.log("Pinged your deployment. You successfully connected to MongoDB!");
-        PlayerUtils.tellPlayerIrc("We successfully connected to server.");
+            MongoDatabase database = mongoClient.getDatabase("message");
+            database.runCommand(new Document("ping", 1));
+            messagesCollection = database.getCollection("1");
+            messageRoom = "1";
+            Logger.log("Pinged your deployment. You successfully connected to MongoDB!");
+            PlayerUtils.tellPlayerIrc("We successfully connected to server.");
+            IRC.setServerStatus(true);
+        } catch (Exception e){
+            IRC.setServerStatus(false);
+        }
     }
 
     public static void sendMessage(String string) {
@@ -64,6 +69,9 @@ public class ServerUtils {
         } catch (Exception e) {
             Logger.error("Oops, cant get meituan time api");
         }
-        return jsonObject.getLongValue("data");
+        if (jsonObject != null) {
+            return jsonObject.getLongValue("data");
+        }
+        return -1;
     }
 }

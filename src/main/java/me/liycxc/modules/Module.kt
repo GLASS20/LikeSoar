@@ -42,13 +42,13 @@ open class Module {
         this.toggled = toggled
     }
 
-    fun onInitialize() {}
+    open fun onInitialize() {}
     fun onWorld() {}
     open fun onEnable() {
         NekoCat.instance.eventManager.register(this)
     }
 
-    fun onDisable() {
+    open fun onDisable() {
         NekoCat.instance.eventManager.unregister(this)
     }
 

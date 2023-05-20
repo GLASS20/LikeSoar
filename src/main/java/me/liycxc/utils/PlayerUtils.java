@@ -153,6 +153,11 @@ public class PlayerUtils {
             mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + "IRC" + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + string));
     }
 
+    public static void tellPlayerIrcMessage(String name,String message) {
+        if (message != null && mc.thePlayer != null)
+            mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + name + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + message));
+    }
+
     public void portMove(float yaw, float multiplyer, float up) {
         double moveX = -Math.sin(Math.toRadians((double) yaw)) * (double) multiplyer;
         double moveZ = Math.cos(Math.toRadians((double) yaw)) * (double) multiplyer;

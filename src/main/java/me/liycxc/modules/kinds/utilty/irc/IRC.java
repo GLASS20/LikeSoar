@@ -1,7 +1,9 @@
 package me.liycxc.modules.kinds.utilty.irc;
 
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventTick;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
+import lombok.Setter;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.Logger;
@@ -13,6 +15,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -22,28 +26,66 @@ public class IRC extends Module {
         super("IRC","Realtime Chat", ModuleCategory.Util);
     }
 
-    private boolean serverStatus = false;
-    private ArrayList<String> locMessages = new ArrayList<>();
+    @Setter
+    private static boolean serverStatus = false;
+    private final ArrayList<ObjectId> locMessages = new ArrayList<>();
+    private final MSTimer timer = new MSTimer();
+    private final Thread messageGetter = new Thread("Message Getter") {
+        @Override
+        public void run() {
+            if (!serverStatus) {
+                ServerUtils.ConnectServer();
+            }
+            if (!serverStatus) {
+                return;
+            }
+            timer.reset();
+            while (serverStatus) {
+                try {
+                    if (timer.hasTimePassed(800L)) {
+                        FindIterable<Document> findIterable = ServerUtils.messagesCollection.find(Filters.gte("time",timer.time - 3000));
+                        MongoCursor<Document> mongoCursor = findIterable.iterator();
 
+                        while (mongoCursor.hasNext()) {
+                            Document document = mongoCursor.next();
+                            if (!document.isEmpty()) {
+                                if (!locMessages.contains(document.getObjectId("_id"))) {
+                                    locMessages.add(document.getObjectId("_id"));
+                                    PlayerUtils.tellPlayerIrcMessage(document.get("UserName").toString(),document.get("Message").toString());
+                                }
+                            }
+                        }
+
+                        mongoCursor.close();
+                        timer.reset();
+                    }
+                }catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onInitialize() {
+        messageGetter.start();
+
+        if (!this.getToggled()) {
+            messageGetter.suspend();
+        }
+    }
     @Override
     public void onEnable() {
         qqLogin();
+        messageGetter.resume();
+        super.onEnable();
     }
 
-    @EventTarget
-    public void onTick(EventTick tick) {
-        if (!serverStatus) {
-
-        }
-        new Thread() {
-            @Override
-            public void run() {
-                // TODO: Echo messages
-                super.run();
-            }
-        };
+    @Override
+    public void onDisable() {
+        messageGetter.suspend();
+        super.onDisable();
     }
-
     /**
      * Getting QQ Name and QQ Number
      * table: MineUser
@@ -60,7 +102,7 @@ public class IRC extends Module {
             if (StringUtils.isNullOrEmpty(PenguinUtils.QQNumber)) {
                 PlayerUtils.tellPlayerIrc("Cant get QQ data, module down");
                 Logger.warn("No app's login account or cant get data");
-                this.toggle();
+                this.setToggled(false);
             } else {
                 PlayerUtils.tellPlayerIrc("QQ Number: " + PenguinUtils.QQNumber);
                 MineUser.qqNumber = PenguinUtils.QQNumber;
@@ -77,8 +119,8 @@ public class IRC extends Module {
                         returnData = EntityUtils.toString(res.getEntity(), Charset.forName("GBK"));
                         String qqName = returnData.substring(returnData.substring(0,returnData.lastIndexOf("\"")).lastIndexOf("\"") + 1,returnData.lastIndexOf("\""));
 
-                        // Someone use we cant sees untied text, so we call then "null" not null
-                        MineUser.qqName = StringUtils.isNullOrEmpty(qqName.replaceAll("\\p{C}", "")) ? "null" : qqName.replaceAll("\\p{C}", "");
+                        // Someone use we cant sees untied text, so call then's number
+                        MineUser.qqName = StringUtils.isNullOrEmpty(qqName.replaceAll("\\p{C}", "")) ? MineUser.qqNumber : qqName.replaceAll("\\p{C}", "");
                     } else {
                         Logger.error("Oops, HttpStatus is " + res.getStatusLine().getStatusCode());
                     }
@@ -92,6 +134,4 @@ public class IRC extends Module {
             Logger.log("QQ data is ready");
         }
     }
-
-
 }
