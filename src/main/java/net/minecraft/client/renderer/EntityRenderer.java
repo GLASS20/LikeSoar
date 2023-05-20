@@ -7,11 +7,11 @@ import me.liycxc.events.impl.EventCameraRotation;
 import me.liycxc.events.impl.EventPlayerHeadRotation;
 import me.liycxc.events.impl.EventRender3D;
 import me.liycxc.events.impl.EventZoomFov;
+import me.liycxc.modules.kinds.combat.Reach;
 import me.liycxc.pvp.management.mods.impl.MinimalBobbingMod;
 import me.liycxc.pvp.management.mods.impl.MinimalDamageShakeMod;
 import me.liycxc.pvp.management.mods.impl.MotionBlurMod;
 import me.liycxc.pvp.management.mods.impl.OldAnimationsMod;
-import me.liycxc.pvp.management.mods.impl.hacks.ReachMod;
 import me.liycxc.utils.shader.MotionBlurUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
@@ -434,8 +434,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
             this.mc.mcProfiler.startSection("pick");
             this.mc.pointedEntity = null;
 
-            double d0 = NekoCat.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach() : (double) this.mc.playerController.getBlockReachDistance();
-            this.mc.objectMouseOver = entity.rayTrace(NekoCat.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach() : d0, partialTicks);
+            double d0 = NekoCat.instance.moduleManager.getModule("Reach").getToggled() ? ((Reach)NekoCat.instance.moduleManager.getModule("Reach")).getReach() : (double) this.mc.playerController.getBlockReachDistance();
+            this.mc.objectMouseOver = entity.rayTrace(NekoCat.instance.moduleManager.getModule("Reach").getToggled() ? ((Reach)NekoCat.instance.moduleManager.getModule("Reach")).getReach() : d0, partialTicks);
             double d1 = d0;
             Vec3 vec3 = entity.getPositionEyes(partialTicks);
             boolean flag = false;
@@ -450,8 +450,8 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 d1 = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
             }
 
-            if (NekoCat.instance.modManager.getModByName("Reach").isToggled()) {
-                d1 = ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach();
+            if (NekoCat.instance.moduleManager.getModule("Reach").getToggled()) {
+                d1 = ((Reach)NekoCat.instance.moduleManager.getModule("Reach")).getReach();
 
                 final MovingObjectPosition movingObjectPosition = entity.rayTrace(d1, partialTicks);
 
@@ -496,7 +496,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
                 }
             }
 
-            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (NekoCat.instance.modManager.getModByName("Reach").isToggled() ? ((ReachMod) NekoCat.instance.modManager.getModByName("Reach")).getReach() : 3.0D)) {
+            if (this.pointedEntity != null && flag && vec3.distanceTo(vec33) > (NekoCat.instance.moduleManager.getModule("Reach").getToggled() ? ((Reach)NekoCat.instance.moduleManager.getModule("Reach")).getReach() : 3.0D)) {
                 this.pointedEntity = null;
                 this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, (EnumFacing) null, new BlockPos(vec33));
             }

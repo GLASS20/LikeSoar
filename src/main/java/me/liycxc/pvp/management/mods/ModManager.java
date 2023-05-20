@@ -1,7 +1,6 @@
 package me.liycxc.pvp.management.mods;
 
 import me.liycxc.pvp.management.mods.impl.*;
-import me.liycxc.pvp.management.mods.impl.hacks.*;
 
 import java.util.ArrayList;
 
@@ -110,14 +109,6 @@ public class ModManager {
 		mods.add(new WeatherDisplayMod());
 		mods.add(new WingsMod());
 		mods.add(new ZoomMod());
-
-
-		mods.add(new ReachMod());
-		mods.add(new AutoClickMod());
-		mods.add(new RightClickMod());
-		mods.add(new AutoToolMod());
-		mods.add(new ChamsMod());
-		mods.add(new VelocityMod());
 	}
 	
 	public Mod getModByName(String name) {

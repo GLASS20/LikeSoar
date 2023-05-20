@@ -3,6 +3,7 @@ package me.liycxc.ui.clickgui;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;
 import me.liycxc.ui.clickgui.impl.features.CombatModules;
 import me.liycxc.ui.clickgui.impl.features.MovementModules;
+import me.liycxc.ui.clickgui.impl.features.RenderModules;
 import me.liycxc.ui.clickgui.impl.features.UtiltyModules;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class CategoryManager {
         categories.add(new FeatureCategory());
         categories.add(new CombatModules());
         categories.add(new MovementModules());
+        categories.add(new RenderModules());
         categories.add(new UtiltyModules());
 //        categories.add(new EditHUDCategory());
 //        categories.add(new ConfigCategory());

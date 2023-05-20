@@ -1,11 +1,11 @@
-package me.liycxc.pvp.management.mods.impl.hacks;
+package me.liycxc.modules.kinds.utilty;
 
-import me.liycxc.NekoCat;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventSendPacket;
 import me.liycxc.events.impl.EventUpdate;
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.pvp.management.mods.ModCategory;
+import me.liycxc.modules.BoolValue;
+import me.liycxc.modules.Module;
+import me.liycxc.modules.ModuleCategory;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -19,19 +19,16 @@ import net.minecraft.util.BlockPos;
 import java.util.Iterator;
 import java.util.Objects;
 
-public class AutoToolMod extends Mod {
-    public AutoToolMod() {
-        super("AutoTool","Hacker uuuu", ModCategory.HACK);
+public class AutoTool extends Module {
+    public AutoTool() {
+        super("AutoTool","Fast change you hand's item", ModuleCategory.Util);
     }
 
-    @Override
-    public void setup() {
-        this.addBooleanSetting("AutoWeapon",this,true);
-    }
+    public BoolValue AutoWeapon = new BoolValue("AutoWeapon",true);
 
     public Entity getItems(double range)
     {
-        Entity tempEntity = null;
+        net.minecraft.entity.Entity tempEntity = null;
         double dist = range;
         for(Iterator iterator = mc.theWorld.loadedEntityList.iterator(); iterator.hasNext();)
         {
@@ -54,7 +51,7 @@ public class AutoToolMod extends Mod {
     @EventTarget
     public void onAttack(EventSendPacket e)
     {
-        if (NekoCat.instance.settingsManager.getSettingByName(this,"AutoWeapon").getValBoolean() && (e.getPacket() instanceof C02PacketUseEntity) && ((C02PacketUseEntity)e.getPacket()).getAction().equals(net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK))
+        if (AutoWeapon.get() && (e.getPacket() instanceof C02PacketUseEntity) && ((C02PacketUseEntity)e.getPacket()).getAction().equals(net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK))
         {
             boolean checks = !mc.thePlayer.isEating();
             if (checks)

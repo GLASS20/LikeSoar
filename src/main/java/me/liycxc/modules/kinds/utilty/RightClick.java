@@ -1,32 +1,31 @@
-package me.liycxc.pvp.management.mods.impl.hacks;
+package me.liycxc.modules.kinds.utilty;
 
-import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
-import me.liycxc.pvp.management.mods.ModCategory;
-import me.liycxc.NekoCat;
+import me.liycxc.modules.BoolValue;
+import me.liycxc.modules.IntegerValue;
+import me.liycxc.modules.Module;
+import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.TimerUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 
-public class RightClickMod extends Mod {
-    public RightClickMod() {
-        super("RightClick","Hacker uuuu", ModCategory.HACK);
+public class RightClick extends Module {
+    public RightClick() {
+        super("RightClick","AutoClick when you right mouse down", ModuleCategory.Util);
     }
 
-    @Override
-    public void setup() {
-        this.addSliderSetting("Cps A", this, 10, 1, 30, true);
-        this.addSliderSetting("Cps B", this, 15, 1, 30, true);
-        this.addBooleanSetting("Only Blocks",this,true);
-    }
+    public IntegerValue cpsA = new IntegerValue("A CPS",10,1,30);
+    public IntegerValue cpsB = new IntegerValue("B CPS",10,1,30);
+    public BoolValue onlyBlock = new BoolValue("Only Blocks",true);
+
 
     public int getMaxCps() {
-        return Math.max(NekoCat.instance.settingsManager.getSettingByName(this, "Cps A").getValInt(), NekoCat.instance.settingsManager.getSettingByName(this, "Cps B").getValInt());
+        return Math.max(cpsA.get(),cpsB.get());
     }
 
     public int getMinCps() {
-        return Math.min(NekoCat.instance.settingsManager.getSettingByName(this, "Cps A").getValInt(), NekoCat.instance.settingsManager.getSettingByName(this, "Cps B").getValInt());
+        return Math.min(cpsA.get(),cpsB.get());
     }
 
     private long rightDelay = TimerUtils.randomClickDelay(getMinCps(), getMaxCps());
@@ -34,7 +33,7 @@ public class RightClickMod extends Mod {
 
     @EventTarget
     public void onTick(EventTick tick) {
-        boolean onlyBlocks = NekoCat.instance.settingsManager.getSettingByName(this,"Only Blocks").getValBoolean();
+        boolean onlyBlocks = onlyBlock.get();
         if (mc.gameSettings.keyBindUseItem.isKeyDown() && !mc.thePlayer.isUsingItem() && System.currentTimeMillis() - rightLastSwing >= rightDelay) {
             if (mc.thePlayer.inventory.getCurrentItem() == null) {
                 if (onlyBlocks) {
@@ -48,4 +47,6 @@ public class RightClickMod extends Mod {
             rightDelay = TimerUtils.randomClickDelay(getMinCps(), getMaxCps());
         }
     }
+
+
 }

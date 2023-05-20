@@ -14,16 +14,12 @@ public class AutoClick extends Module {
     
     private IntegerValue aCps = new IntegerValue("A CPS",8,1,20);
     private IntegerValue bCps = new IntegerValue("B CPS",8,1,20);
-    private BoolValue rightClick = new BoolValue("Right Click",false);
     private BoolValue leftClick = new BoolValue("Left Click",true);
     private ListValue autoBlock = new ListValue("AutoBlock",new String[]{"None", "Legit", "Fast"},"None",() -> leftClick.get());
     private IntegerValue autoblockDelay = new IntegerValue("AutoBlock Delay",120,100,300,() -> leftClick.get() && autoBlock.get().equals("Legit"));
 
     private long leftDelay = TimerUtils.randomClickDelay(minCps(),maxCps());
     private long leftLastSwing = 0L;
-    
-    private long rightDelay = TimerUtils.randomClickDelay(minCps(),maxCps());
-    private long rightLastSwing = 0L;
 
     private TimerUtils timeHelper = new TimerUtils();
     
@@ -74,15 +70,6 @@ public class AutoClick extends Module {
                 leftLastSwing = System.currentTimeMillis();
                 leftDelay = TimerUtils.randomClickDelay(minCps(), maxCps());
             }
-        }
-
-        // Right Click
-        if (mc.gameSettings.keyBindUseItem.isKeyDown() && !mc.thePlayer.isUsingItem() && rightClick.get() && System.currentTimeMillis() - rightLastSwing >= rightDelay) {
-            // Minecraft Click Handling
-            KeyBinding.onTick(mc.gameSettings.keyBindUseItem.getKeyCode());
-
-            rightLastSwing = System.currentTimeMillis();
-            rightDelay = TimerUtils.randomClickDelay(minCps(),maxCps());
         }
     }
     

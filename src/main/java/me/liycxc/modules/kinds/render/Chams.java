@@ -1,42 +1,36 @@
-package me.liycxc.pvp.management.mods.impl.hacks;
+package me.liycxc.modules.kinds.render;
 
-import me.liycxc.NekoCat;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventRendererLivingEntity;
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.pvp.management.mods.ModCategory;
+import me.liycxc.modules.BoolValue;
+import me.liycxc.modules.ListValue;
+import me.liycxc.modules.Module;
+import me.liycxc.modules.ModuleCategory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
 
-public class ChamsMod extends Mod {
-    public ChamsMod() {
-        super("Chams","Render", ModCategory.HACK);
+public class Chams extends Module {
+    public Chams() {
+        super("Chams","Like esp in csgo", ModuleCategory.Render);
     }
 
-    @Override
-    public void setup() {
-        ArrayList<String> opti = new ArrayList<>();
-        opti.add("Normal");
-        opti.add("Colored");
-        this.addModeSetting("Mode", this, "Normal", opti);
-        this.addBooleanSetting("TeamColor", this, false);
-        this.addBooleanSetting("Flat", this, false);
-    }
+    public ListValue modeValue = new ListValue("Mode",new String[]{"Normal","Colored"},"Normal");
+    public BoolValue teamColor = new BoolValue("TeamColor",false);
+    public BoolValue flatValue = new BoolValue("Flat",false);
 
     @EventTarget
     public void onRenderLivingEntity(EventRendererLivingEntity evt) {
         Color color = Color.RED;
         String mode;
-        mode = NekoCat.instance.settingsManager.getSettingByName(this,"Mode").getValString();
+        mode = modeValue.get();
         boolean flat;
-        flat = NekoCat.instance.settingsManager.getSettingByName(this,"Flat").getValBoolean();
+        flat = flatValue.get();
         boolean teamCol;
-        teamCol = NekoCat.instance.settingsManager.getSettingByName(this,"TeamColor").getValBoolean();
+        teamCol = teamColor.get();
 
         if (evt.getEntity() != mc.thePlayer) {
             if (evt.isPre()) {

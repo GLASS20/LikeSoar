@@ -1,7 +1,10 @@
 package me.liycxc.modules;
 
 import me.liycxc.modules.kinds.combat.AutoClick;
-import me.liycxc.modules.kinds.combat.Test;
+import me.liycxc.modules.kinds.combat.Reach;
+import me.liycxc.modules.kinds.render.Chams;
+import me.liycxc.modules.kinds.utilty.AutoTool;
+import me.liycxc.modules.kinds.utilty.RightClick;
 import me.liycxc.modules.kinds.utilty.irc.IRC;
 import me.liycxc.utils.Logger;
 
@@ -15,9 +18,12 @@ public class ModuleManager {
     }
 
     public void registerModules() {
-        registerModule(new Test());
         registerModule(new IRC());
         registerModule(new AutoClick());
+        registerModule(new AutoTool());
+        registerModule(new Reach());
+        registerModule(new RightClick());
+        registerModule(new Chams());
     }
 
     public void registerModule(Module module) {
