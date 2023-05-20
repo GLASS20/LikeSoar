@@ -50,8 +50,14 @@ public class ServerUtils {
         }
     }
 
+    /**
+     * Add message to IRC sendMessages
+     * then send to server
+     */
     public static void sendMessage(String string) {
 
+
+        IRC.sendMessages.add(string);
     }
 
     public static long getTime() {

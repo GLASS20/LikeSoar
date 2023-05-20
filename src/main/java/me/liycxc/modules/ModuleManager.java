@@ -27,6 +27,15 @@ public class ModuleManager {
         Logger.log("Finished initialize module: " + module.moduleName);
     }
 
+    public Module getModule(String name) {
+        for (Module i : modules) {
+            if (i.moduleName.equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Module> getModules() {
         return modules;
     }
