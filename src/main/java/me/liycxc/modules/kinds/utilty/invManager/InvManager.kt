@@ -3,9 +3,9 @@ import me.liycxc.events.EventTarget
 import me.liycxc.events.impl.EventUpdate
 import me.liycxc.modules.*
 import me.liycxc.modules.kinds.utilty.invManager.utils.ArmorPiece
+import me.liycxc.modules.kinds.utilty.invManager.utils.InventoryUtils
 import me.liycxc.modules.kinds.utilty.invManager.utils.ItemUtils
 import me.liycxc.utils.*
-import net.ccbluex.liquidbounce.utils.InventoryUtils
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.init.Blocks
