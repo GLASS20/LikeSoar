@@ -1,9 +1,14 @@
 package me.liycxc.ui.clickgui.comp.impl;
 
+import me.liycxc.NekoCat;
 import me.liycxc.modules.ListValue;
 import me.liycxc.modules.Module;
 import me.liycxc.ui.clickgui.comp.Comp;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;
+import me.liycxc.ui.clickgui.impl.features.CombatModules;
+import me.liycxc.ui.clickgui.impl.features.MovementModules;
+import me.liycxc.ui.clickgui.impl.features.RenderModules;
+import me.liycxc.ui.clickgui.impl.features.UtiltyModules;
 import me.liycxc.utils.color.ColorUtils;
 import me.liycxc.utils.font.FontUtils;
 import me.liycxc.utils.mouse.MouseUtils;
@@ -30,7 +35,23 @@ public class CompList extends Comp {
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + FeatureCategory.scrollVAnimation.getValue(), 70, 10) && mouseButton == 0) {
+        float ad = 0;
+        if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(FeatureCategory.class))) {
+            ad = FeatureCategory.scrollVAnimation.getValue();
+        }
+        if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(CombatModules.class))) {
+            ad = CombatModules.scrollVAnimation.getValue();
+        }
+        if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(MovementModules.class))) {
+            ad = MovementModules.scrollVAnimation.getValue();
+        }
+        if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(RenderModules.class))) {
+            ad = RenderModules.scrollVAnimation.getValue();
+        }
+        if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(UtiltyModules.class))) {
+            ad = UtiltyModules.scrollVAnimation.getValue();
+        }
+        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + ad, 70, 10) && mouseButton == 0) {
             int max = ((ListValue) setting).getValues().length;
             if (parent.modeIndex + 1 >= max) {
                 parent.modeIndex = 0;
