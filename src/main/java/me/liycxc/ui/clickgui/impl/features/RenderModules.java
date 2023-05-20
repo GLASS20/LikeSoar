@@ -59,13 +59,13 @@ public class RenderModules extends FeatureCategory {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         int offset = 15;
         int modIndex = 1;
+        int valueIndex = 1;
 
         ClickGui clickGUI = NekoCat.instance.guiManager.getgClickGUI();
         GlUtils.startTranslate(openModSetting ? (float) -openSettingAnimation.getValue() : 0, 0);
 
         for(Module m : NekoCat.instance.moduleManager.getModules()) {
-            if (m.getModuleCategory()!=ModuleCategory.Render
-) {
+            if (m.getModuleCategory()!=ModuleCategory.Render) {
                 continue;
             }
             if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.moduleName, clickGUI.searchWord.getText())) : true) {
@@ -97,6 +97,47 @@ public class RenderModules extends FeatureCategory {
 
         GlUtils.stopTranslate();
 
+
+        scrollAnimation.setAnimation((float) scrollY, 16);
+
+        if(openSettingAnimation != null && selectedMod != null) {
+            valueIndex = 0;
+            GlUtils.startTranslate(openModSetting ? (float) -openSettingAnimation.getValue() + 220 : 220, 0 + (float) scrollVAnimation.getValue());
+
+            for (Comp comp : comps) {
+                // comp.drawScreen(mouseX, mouseY);
+                if (comp.setting instanceof IntegerValue || comp.setting instanceof FloatValue) {
+                    valueIndex+=2;
+                }
+                if (comp.setting instanceof BoolValue || comp.setting instanceof ListValue) {
+                    valueIndex++;
+                }
+            }
+
+            RoundedUtils.drawRound(this.getX() + 95, this.getY() + 10, 200, valueIndex <= 13 ? 210 : 210 + (valueIndex-13) * 18, 6, ColorUtils.getBackgroundColor(4));
+            FontUtils.regular24.drawString(selectedMod.moduleName, this.getX() + 100, this.getY() + 19, ColorUtils.getFontColor(1).getRGB());
+
+            for (Comp comp : comps) {
+                comp.drawScreen(mouseX, mouseY);
+            }
+
+
+            if(openSettingAnimation.isDone(Direction.BACKWARDS)) {
+                if(openModSetting) {
+                    openModSetting = false;
+                    comps.clear();
+                }
+            }
+
+            GlUtils.stopTranslate();
+        }
+
+        if(MouseUtils.isInside(mouseX, mouseY, this.getX(), this.getY(), this.getWidth(), this.getHeight())) {
+            canToggle = true;
+        }else{
+            canToggle = false;
+        }
+
         final MouseUtils.Scroll scroll = MouseUtils.scroll();
 
         if(scroll != null) {
@@ -126,13 +167,13 @@ public class RenderModules extends FeatureCategory {
             } else {
                 switch (scroll) {
                     case DOWN:
-                        if(scrollYV > -((modIndex - 6.5) * 35)) {
+                        if(scrollYV > -((valueIndex - 6.5) * 35)) {
                             scrollYV -=20;
                         }
 
-                        if(modIndex > 5) {
-                            if(scrollYV < -((modIndex - 8) * 35)) {
-                                scrollYV = -((modIndex - 7.1) * 35);
+                        if(valueIndex > 13) {
+                            if(scrollYV < -((valueIndex - 8) * 35)) {
+                                scrollYV = -((valueIndex - 7.1) * 35);
                             }
                         }
                         break;
@@ -140,7 +181,7 @@ public class RenderModules extends FeatureCategory {
                         if(scrollYV < -10) {
                             scrollYV +=20;
                         }else {
-                            if(modIndex > 5) {
+                            if(valueIndex > 13) {
                                 scrollYV = 0;
                             }
                         }
@@ -148,34 +189,6 @@ public class RenderModules extends FeatureCategory {
                 }
             }
 
-        }
-
-        scrollAnimation.setAnimation((float) scrollY, 16);
-
-        if(openSettingAnimation != null && selectedMod != null) {
-            GlUtils.startTranslate(openModSetting ? (float) -openSettingAnimation.getValue() + 220 : 220, 0 + (float) scrollVAnimation.getValue());
-
-            RoundedUtils.drawRound(this.getX() + 95, this.getY() + 10, 200, 210, 6, ColorUtils.getBackgroundColor(4));
-            FontUtils.regular24.drawString(selectedMod.moduleName, this.getX() + 100, this.getY() + 19, ColorUtils.getFontColor(1).getRGB());
-
-            for (Comp comp : comps) {
-                comp.drawScreen(mouseX, mouseY);
-            }
-
-            if(openSettingAnimation.isDone(Direction.BACKWARDS)) {
-                if(openModSetting) {
-                    openModSetting = false;
-                    comps.clear();
-                }
-            }
-
-            GlUtils.stopTranslate();
-        }
-
-        if(MouseUtils.isInside(mouseX, mouseY, this.getX(), this.getY(), this.getWidth(), this.getHeight())) {
-            canToggle = true;
-        }else{
-            canToggle = false;
         }
 
         scrollVAnimation.setAnimation((float) scrollYV, 16);
