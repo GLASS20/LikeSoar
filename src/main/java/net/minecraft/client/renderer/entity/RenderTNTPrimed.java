@@ -2,7 +2,7 @@ package net.minecraft.client.renderer.entity;
 
 import me.liycxc.NekoCat;
 import me.liycxc.hooks.RenderTNTPrimedHook;
-import me.liycxc.gui.management.mods.impl.TNTTimerMod;
+import me.liycxc.pvp.management.mods.impl.TNTTimerMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;

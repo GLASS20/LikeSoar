@@ -1,7 +1,7 @@
 package me.liycxc.utils;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.FullbrightMod;
+import me.liycxc.pvp.management.mods.impl.FullbrightMod;
 import me.liycxc.ui.notification.Notification;
 import me.liycxc.ui.notification.NotificationManager;
 import net.minecraft.client.Minecraft;

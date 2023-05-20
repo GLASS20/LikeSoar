@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.ChatMod;
+import me.liycxc.pvp.management.mods.impl.ChatMod;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.network.play.client.C14PacketTabComplete;

@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.HypixelMod;
+import me.liycxc.pvp.management.mods.impl.HypixelMod;
 import me.liycxc.utils.server.HypixelUtils;
 import me.liycxc.utils.server.ServerUtils;
 import net.minecraft.client.Minecraft;

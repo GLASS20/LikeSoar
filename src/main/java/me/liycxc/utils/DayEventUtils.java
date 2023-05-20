@@ -1,7 +1,7 @@
 package me.liycxc.utils;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.HUDMod;
+import me.liycxc.pvp.management.mods.impl.HUDMod;
 
 import java.util.Calendar;
 import java.util.Date;

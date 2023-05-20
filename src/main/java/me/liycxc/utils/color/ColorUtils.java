@@ -1,9 +1,9 @@
 package me.liycxc.utils.color;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.colors.AccentColor;
-import me.liycxc.gui.management.mods.impl.ClientMod;
-import me.liycxc.gui.management.mods.impl.HUDMod;
+import me.liycxc.pvp.management.colors.AccentColor;
+import me.liycxc.pvp.management.mods.impl.ClientMod;
+import me.liycxc.pvp.management.mods.impl.HUDMod;
 import me.liycxc.utils.MathUtils;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import me.liycxc.utils.color.impl.ChristmasColorUtils;

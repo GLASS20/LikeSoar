@@ -1,7 +1,7 @@
 package me.liycxc.utils.shader;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.MenuBlurMod;
+import me.liycxc.pvp.management.mods.impl.MenuBlurMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.shader.Framebuffer;

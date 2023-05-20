@@ -1,17 +1,14 @@
 package net.minecraft.client.gui;
 
-import java.awt.*;
-import java.util.Random;
-
 import me.liycxc.NekoCat;
+import me.liycxc.events.impl.EventRenderBossbar;
+import me.liycxc.events.impl.EventRenderCrosshair;
+import me.liycxc.events.impl.EventRenderScoreboard;
+import me.liycxc.events.impl.EventRenderSelectedItem;
 import me.liycxc.hooks.GuiIngameHook;
-import me.liycxc.gui.management.events.impl.EventRenderBossbar;
-import me.liycxc.gui.management.events.impl.EventRenderCrosshair;
-import me.liycxc.gui.management.events.impl.EventRenderScoreboard;
-import me.liycxc.gui.management.events.impl.EventRenderSelectedItem;
-import me.liycxc.gui.management.mods.impl.HotbarMod;
-import me.liycxc.gui.management.mods.impl.OldAnimationsMod;
-import me.liycxc.gui.management.mods.impl.OverlayEditorMod;
+import me.liycxc.pvp.management.mods.impl.HotbarMod;
+import me.liycxc.pvp.management.mods.impl.OldAnimationsMod;
+import me.liycxc.pvp.management.mods.impl.OverlayEditorMod;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -38,16 +35,12 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.src.Config;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.FoodStats;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
+
+import java.awt.*;
+import java.util.Random;
 
 public class GuiIngame extends Gui {
     private static final ResourceLocation vignetteTexPath = new ResourceLocation("textures/misc/vignette.png");

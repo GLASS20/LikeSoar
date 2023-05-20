@@ -1,12 +1,11 @@
 package me.liycxc.hooks;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.BorderlessFullscreenMod;
+import me.liycxc.pvp.management.mods.impl.BorderlessFullscreenMod;
+import net.minecraft.client.Minecraft;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-
-import net.minecraft.client.Minecraft;
 
 import static net.minecraft.client.Minecraft.displayFixCancel;
 

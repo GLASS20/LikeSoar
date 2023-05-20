@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.events.impl.EventSwitchTexture;
+import me.liycxc.events.impl.EventSwitchTexture;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.StitcherException;
 import net.minecraft.client.resources.IResource;

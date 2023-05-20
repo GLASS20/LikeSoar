@@ -1,18 +1,16 @@
 package me.liycxc.utils.shader;
 
-import java.io.IOException;
-
-import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.MotionBlurMod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.google.gson.JsonSyntaxException;
-
+import me.liycxc.NekoCat;
+import me.liycxc.pvp.management.mods.impl.MotionBlurMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.shader.ShaderGroup;
 import net.minecraft.client.shader.ShaderUniform;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
 
 public class MotionBlurUtils {
 

@@ -5,7 +5,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.SkinProtectMod;
+import me.liycxc.pvp.management.mods.impl.SkinProtectMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;

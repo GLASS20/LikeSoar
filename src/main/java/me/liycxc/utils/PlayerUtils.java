@@ -1,10 +1,5 @@
 package me.liycxc.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import com.google.common.collect.Multimap;
 import me.liycxc.NekoCat;
 import net.minecraft.block.Block;
@@ -29,6 +24,11 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.world.WorldSettings;
 import org.lwjgl.util.vector.Vector3f;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PlayerUtils {
 
@@ -146,6 +146,11 @@ public class PlayerUtils {
     public static void tellPlayer(String string) {
         if (string != null && mc.thePlayer != null)
             mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + NekoCat.instance.getName() + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + string));
+    }
+
+    public static void tellPlayerIrc(String string) {
+        if (string != null && mc.thePlayer != null)
+            mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + "IRC" + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + string));
     }
 
     public void portMove(float yaw, float multiplyer, float up) {

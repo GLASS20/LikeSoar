@@ -2,7 +2,7 @@ package net.minecraft.client.entity;
 
 import com.mojang.authlib.GameProfile;
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.events.impl.EventFovUpdate;
+import me.liycxc.events.impl.EventFovUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;

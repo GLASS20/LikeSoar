@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer;
 
 import com.google.common.collect.Lists;
-import me.liycxc.gui.management.events.impl.EventPreRenderChunk;
+import me.liycxc.events.impl.EventPreRenderChunk;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;

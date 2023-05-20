@@ -1,11 +1,13 @@
 package me.liycxc.hooks;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.events.impl.EventRender2D;
-import me.liycxc.gui.management.events.impl.EventRenderDamageTint;
-import me.liycxc.gui.management.events.impl.EventRenderShadow;
-import me.liycxc.gui.management.mods.impl.HUDMod;
-import me.liycxc.gui.management.mods.impl.MenuBlurMod;
+import me.liycxc.events.impl.EventRender2D;
+import me.liycxc.events.impl.EventRenderDamageTint;
+import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.pvp.GuiEditHUD;
+import me.liycxc.pvp.management.mods.impl.HUDMod;
+import me.liycxc.pvp.management.mods.impl.MenuBlurMod;
+import me.liycxc.ui.notification.NotificationManager;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import me.liycxc.utils.color.ColorUtils;
@@ -14,8 +16,6 @@ import me.liycxc.utils.render.StencilUtils;
 import me.liycxc.utils.shader.BlurUtils;
 import me.liycxc.utils.shader.GaussianBlur;
 import me.liycxc.utils.shader.ShadowUtils;
-import me.liycxc.gui.GuiEditHUD;
-import me.liycxc.ui.notification.NotificationManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;

@@ -1,19 +1,19 @@
 package me.liycxc.ui.notification;
 
-import java.awt.Color;
-
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.events.EventTarget;
-import me.liycxc.gui.management.events.impl.EventRenderShadow;
+import me.liycxc.events.EventTarget;
+import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.utils.TimerUtils;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;
 import me.liycxc.utils.animation.normal.impl.DecelerateAnimation;
 import me.liycxc.utils.color.ColorUtils;
 import me.liycxc.utils.font.FontUtils;
 import me.liycxc.utils.render.RoundedUtils;
-import me.liycxc.utils.TimerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+
+import java.awt.*;
 
 public class Notification {
 	

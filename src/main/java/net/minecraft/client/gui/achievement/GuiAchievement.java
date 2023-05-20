@@ -1,7 +1,7 @@
 package net.minecraft.client.gui.achievement;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.OverlayEditorMod;
+import me.liycxc.pvp.management.mods.impl.OverlayEditorMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;

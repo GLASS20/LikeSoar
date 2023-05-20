@@ -1,8 +1,8 @@
 package me.liycxc.hooks;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.ItemPhysicsMod;
-import me.liycxc.gui.management.mods.impl.UHCOverlayMod;
+import me.liycxc.pvp.management.mods.impl.ItemPhysicsMod;
+import me.liycxc.pvp.management.mods.impl.UHCOverlayMod;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

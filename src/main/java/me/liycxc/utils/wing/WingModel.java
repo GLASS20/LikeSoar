@@ -1,7 +1,7 @@
 package me.liycxc.utils.wing;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.WingsMod;
+import me.liycxc.pvp.management.mods.impl.WingsMod;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;

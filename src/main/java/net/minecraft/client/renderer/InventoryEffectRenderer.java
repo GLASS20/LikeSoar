@@ -1,14 +1,14 @@
 package net.minecraft.client.renderer;
 
-import java.util.Collection;
-
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.InventoryMod;
+import me.liycxc.pvp.management.mods.impl.InventoryMod;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+
+import java.util.Collection;
 
 public abstract class InventoryEffectRenderer extends GuiContainer {
 

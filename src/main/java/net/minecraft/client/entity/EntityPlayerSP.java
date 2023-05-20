@@ -1,7 +1,7 @@
 package net.minecraft.client.entity;
 
-import me.liycxc.gui.management.events.impl.EventPreMotionUpdate;
-import me.liycxc.gui.management.events.impl.EventUpdate;
+import me.liycxc.events.impl.EventPreMotionUpdate;
+import me.liycxc.events.impl.EventUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;

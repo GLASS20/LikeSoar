@@ -1,7 +1,7 @@
 package me.liycxc.utils.render;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.ClickEffectMod;
+import me.liycxc.pvp.management.mods.impl.ClickEffectMod;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import me.liycxc.utils.color.ColorUtils;
 

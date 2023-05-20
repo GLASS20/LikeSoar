@@ -1,7 +1,7 @@
 package net.minecraft.block;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.ClearGlassMod;
+import me.liycxc.pvp.management.mods.impl.ClearGlassMod;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

@@ -1,11 +1,11 @@
 package net.minecraft.client.renderer;
 
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.events.impl.EventTransformFirstPersonItem;
-import me.liycxc.gui.management.mods.impl.ClearWaterMod;
-import me.liycxc.gui.management.mods.impl.OldAnimationsMod;
-import me.liycxc.gui.management.mods.impl.OverlayEditorMod;
-import me.liycxc.gui.management.mods.impl.SmallHeldItemsMod;
+import me.liycxc.events.impl.EventTransformFirstPersonItem;
+import me.liycxc.pvp.management.mods.impl.ClearWaterMod;
+import me.liycxc.pvp.management.mods.impl.OldAnimationsMod;
+import me.liycxc.pvp.management.mods.impl.OverlayEditorMod;
+import me.liycxc.pvp.management.mods.impl.SmallHeldItemsMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

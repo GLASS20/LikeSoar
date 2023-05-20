@@ -3,11 +3,8 @@ package net.minecraft.client.gui;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 import com.mojang.authlib.GameProfile;
-import java.util.Comparator;
-import java.util.List;
-
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.TabEditorMod;
+import me.liycxc.pvp.management.mods.impl.TabEditorMod;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -23,6 +20,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.WorldSettings;
+
+import java.util.Comparator;
+import java.util.List;
 
 public class GuiPlayerTabOverlay extends Gui {
     private static final Ordering<NetworkPlayerInfo> field_175252_a = Ordering.from(new GuiPlayerTabOverlay.PlayerComparator());

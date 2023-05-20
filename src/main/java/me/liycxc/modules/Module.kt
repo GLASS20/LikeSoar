@@ -3,8 +3,6 @@ package me.liycxc.modules
 import me.liycxc.NekoCat
 import me.liycxc.utils.TimerUtils
 import me.liycxc.utils.animation.simple.SimpleAnimation
-import lombok.Getter
-import me.liycxc.Value
 
 open class Module {
     @JvmField
@@ -24,7 +22,6 @@ open class Module {
     var selectAnimation = SimpleAnimation(0.0f)
     var editOpacityAnimation = SimpleAnimation(0.0f)
 
-    @Getter
     var toggled = false
 
     constructor(moduleName: String, description: String, moduleCategory: ModuleCategory) {

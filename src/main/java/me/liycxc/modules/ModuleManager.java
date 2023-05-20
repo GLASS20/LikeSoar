@@ -1,6 +1,7 @@
 package me.liycxc.modules;
 
-import me.liycxc.modules.combat.Test;
+import me.liycxc.modules.kinds.combat.Test;
+import me.liycxc.modules.kinds.utilty.irc.IRC;
 import me.liycxc.utils.Logger;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class ModuleManager {
 
     public void registerModules() {
         registerModule(new Test());
+        registerModule(new IRC());
     }
 
     public void registerModule(Module module) {

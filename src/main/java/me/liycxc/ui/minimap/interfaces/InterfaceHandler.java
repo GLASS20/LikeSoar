@@ -1,11 +1,7 @@
 package me.liycxc.ui.minimap.interfaces;
 
-import java.util.ArrayList;
-
 import me.liycxc.NekoCat;
-import me.liycxc.gui.management.mods.impl.MinimapMod;
-import org.lwjgl.opengl.GL11;
-
+import me.liycxc.pvp.management.mods.impl.MinimapMod;
 import me.liycxc.ui.minimap.XaeroMinimap;
 import me.liycxc.ui.minimap.minimap.Minimap;
 import net.minecraft.client.Minecraft;
@@ -14,6 +10,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
+
+import java.util.ArrayList;
 
 public class InterfaceHandler
 {
