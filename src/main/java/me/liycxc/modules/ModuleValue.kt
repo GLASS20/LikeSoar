@@ -9,7 +9,7 @@ abstract class Value<T>(val name: String, var value: T, public var displayable: 
 
     val default = value
 
-    //private var displayableFunc: () -> Boolean = { true }
+    private var displayableFunc: () -> Boolean = { true }
 
     fun displayable(func: () -> Boolean): Value<T> {
         displayable = func
@@ -93,7 +93,7 @@ open class BoolValue(name: String, value: Boolean, displayable: () -> Boolean) :
  * Integer value represents a value with a integer
  */
 
-open class IntegerValue(name: String, value: Int, val minimum: Int = 0, val maximum: Int = Integer.MAX_VALUE, val suffix: String, displayable: () -> Boolean)
+open class IntValue(name: String, value: Int, val minimum: Int = 0, val maximum: Int = Integer.MAX_VALUE, val suffix: String, displayable: () -> Boolean)
     : Value<Int>(name, value, displayable) {
     constructor(name: String, value: Int, minimum: Int, maximum: Int, displayable: () -> Boolean): this(name, value, minimum, maximum, "", displayable)
     constructor(name: String, value: Int, minimum: Int, maximum: Int, suffix: String): this(name, value, minimum, maximum, suffix, { true } )
@@ -200,7 +200,7 @@ open class ColorValue(name: String, value: Color, val transparent: Boolean, disp
  * Block value represents a value with a block
  */
 
-class BlockValue(name: String, value: Int, displayable: () -> Boolean) : IntegerValue(name, value, 1, 197, displayable) {
+class BlockValue(name: String, value: Int, displayable: () -> Boolean) : IntValue(name, value, 1, 197, displayable) {
     constructor(name: String, value: Int): this(name, value, { true } )
 }
 

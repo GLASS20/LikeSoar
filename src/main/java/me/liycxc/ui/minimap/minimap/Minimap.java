@@ -1,26 +1,10 @@
 package me.liycxc.ui.minimap.minimap;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import me.liycxc.NekoCat;
 import me.liycxc.ui.minimap.animation.MinimapAnimation;
 import me.liycxc.ui.minimap.interfaces.Interface;
 import me.liycxc.ui.minimap.interfaces.InterfaceHandler;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GLContext;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
-import net.minecraft.block.BlockGlass;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockOre;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -42,6 +26,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.chunk.Chunk;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GLContext;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Minimap
 {
@@ -954,7 +949,9 @@ public class Minimap
                     }
                 }
                 catch (Exception e2) {
-                    e2.printStackTrace();
+                    // Don't give crackers clues...
+                    if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                        e2.printStackTrace();
                     Minimap.frameIsUpdating = false;
                 }
                 final int passed = (int)(System.currentTimeMillis() - before);
@@ -967,7 +964,9 @@ public class Minimap
                     }
                 }
                 catch (InterruptedException e3) {
-                    e3.printStackTrace();
+                    // Don't give crackers clues...
+                    if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                        e3.printStackTrace();
                 }
             }
         }

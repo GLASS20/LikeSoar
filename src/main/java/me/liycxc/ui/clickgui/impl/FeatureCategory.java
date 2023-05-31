@@ -102,7 +102,7 @@ public class FeatureCategory extends Category {
 
             for (Comp comp : comps) {
                 // comp.drawScreen(mouseX, mouseY);
-                if (comp.setting instanceof IntegerValue || comp.setting instanceof FloatValue) {
+                if (comp.setting instanceof IntValue || comp.setting instanceof FloatValue) {
                     valueIndex+=2;
                 }
                 if (comp.setting instanceof BoolValue || comp.setting instanceof ListValue) {
@@ -231,8 +231,8 @@ public class FeatureCategory extends Category {
                                     comps.add(new CompFloat(175, sOffset, this, selectedMod, (FloatValue) setting));
                                     sOffset += 25;
                                 }
-                                if (setting instanceof IntegerValue) {
-                                    comps.add(new CompInt(175, sOffset, this, selectedMod, (IntegerValue) setting));
+                                if (setting instanceof IntValue) {
+                                    comps.add(new CompInt(175, sOffset, this, selectedMod, (IntValue) setting));
                                     sOffset += 25;
                                 }
                             }
@@ -282,8 +282,8 @@ public class FeatureCategory extends Category {
                         comps.add(new CompFloat(175, sOffset, this, selectedMod, (FloatValue) setting));
                         sOffset += 25;
                     }
-                    if (setting instanceof IntegerValue) {
-                        comps.add(new CompInt(175, sOffset, this, selectedMod, (IntegerValue) setting));
+                    if (setting instanceof IntValue) {
+                        comps.add(new CompInt(175, sOffset, this, selectedMod, (IntValue) setting));
                         sOffset += 25;
                     }
                 }

@@ -58,7 +58,9 @@ public class ModuleCommand {
                 }
             }
         } catch (Exception exception) {
-           exception.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                exception.printStackTrace();
         }
     }
 }

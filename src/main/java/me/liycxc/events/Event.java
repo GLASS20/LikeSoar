@@ -36,9 +36,13 @@ public abstract class Event {
 				try {
 					data.target.invoke(data.source, event);
 				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					// Don't give crackers clues...
+					if (NekoCat.instance.DEVELOPMENT_SWITCH)
+						e.printStackTrace();
 				} catch (InvocationTargetException e) {
-					e.printStackTrace();
+					// Don't give crackers clues...
+					if (NekoCat.instance.DEVELOPMENT_SWITCH)
+						e.printStackTrace();
 				}
 
 			}

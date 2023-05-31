@@ -188,7 +188,9 @@ public class GuiCredit extends GuiScreen{
     				try {
 						desktop.browse(new URI(c.getUrl()));
 					} catch (IOException | URISyntaxException e) {
-						e.printStackTrace();
+						// Don't give crackers clues...
+						if (NekoCat.instance.DEVELOPMENT_SWITCH)
+							e.printStackTrace();
 					}
     			}
     			

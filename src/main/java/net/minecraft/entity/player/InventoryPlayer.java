@@ -1,6 +1,5 @@
 package net.minecraft.entity.player;
 
-import java.util.concurrent.Callable;
 import net.minecraft.block.Block;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -16,6 +15,8 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ReportedException;
 
+import java.util.concurrent.Callable;
+
 public class InventoryPlayer implements IInventory {
 
     /**
@@ -28,6 +29,7 @@ public class InventoryPlayer implements IInventory {
 
     /** The index of the currently held item (0-8). */
     public int currentItem;
+    public boolean alternativeSlot = false;
 
     /** The player whose inventory this is. */
     public EntityPlayer player;
@@ -136,7 +138,7 @@ public class InventoryPlayer implements IInventory {
 
     /**
      * Switch the current item to the next one or the previous one
-     *  
+     *
      * @param direction Direction to switch (1, 0, -1). 1 (any > 0) to select item left of current (decreasing
      * currentItem index), -1 (any < 0) to select item right of current (increasing currentItem index). 0 has no effect.
      */
@@ -470,7 +472,7 @@ public class InventoryPlayer implements IInventory {
     /**
      * Writes the inventory out as a list of compound tags. This is where the slot indices are used (+100 for armor, +80
      * for crafting).
-     *  
+     *
      * @param nbtTagListIn List to append tags to
      */
     public NBTTagList writeToNBT(NBTTagList nbtTagListIn) {
@@ -497,7 +499,7 @@ public class InventoryPlayer implements IInventory {
 
     /**
      * Reads from the given tag list and fills the slots in the inventory with the correct items.
-     *  
+     *
      * @param nbtTagListIn tagList to read from
      */
     public void readFromNBT(NBTTagList nbtTagListIn) {
@@ -582,7 +584,7 @@ public class InventoryPlayer implements IInventory {
 
     /**
      * returns a player armor item (as itemstack) contained in specified armor slot.
-     *  
+     *
      * @param slotIn the slot index requested
      */
     public ItemStack armorItemInSlot(int slotIn) {

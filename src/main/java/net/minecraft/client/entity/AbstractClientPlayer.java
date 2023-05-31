@@ -3,6 +3,8 @@ package net.minecraft.client.entity;
 import com.mojang.authlib.GameProfile;
 import me.liycxc.NekoCat;
 import me.liycxc.events.impl.EventFovUpdate;
+import me.liycxc.events.impl.EventLook;
+import me.liycxc.utils.vector.Vector2f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.ImageBufferDownload;
@@ -208,7 +210,15 @@ public abstract class AbstractClientPlayer extends EntityPlayer {
     /**
      * interpolated look vector
      */
-    public Vec3 getLook(float partialTicks) {
-        return this.getVectorForRotation(this.rotationPitch, this.rotationYaw);
+    public Vec3 getLook(final float partialTicks) {
+        float yaw = this.rotationYaw;
+        float pitch = this.rotationPitch;
+
+        EventLook lookEvent = new EventLook(new Vector2f(yaw, pitch));
+        lookEvent.call();
+        yaw = lookEvent.getRotation().x;
+        pitch = lookEvent.getRotation().y;
+
+        return this.getVectorForRotation(pitch, yaw);
     }
 }

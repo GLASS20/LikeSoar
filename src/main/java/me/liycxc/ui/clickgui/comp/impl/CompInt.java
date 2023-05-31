@@ -1,7 +1,7 @@
 package me.liycxc.ui.clickgui.comp.impl;
 
 import me.liycxc.NekoCat;
-import me.liycxc.modules.IntegerValue;
+import me.liycxc.modules.IntValue;
 import me.liycxc.modules.Module;
 import me.liycxc.ui.clickgui.comp.Comp;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;
@@ -25,7 +25,7 @@ public class CompInt extends Comp {
     private double renderWidth2;
     private SimpleAnimation animation = new SimpleAnimation(0.0F);
 
-    public CompInt(double x, double y, FeatureCategory parent, Module mod, IntegerValue setting) {
+    public CompInt(double x, double y, FeatureCategory parent, Module mod, IntValue setting) {
         this.x = x;
         this.y = y;
         this.parent = parent;
@@ -37,12 +37,12 @@ public class CompInt extends Comp {
     public void drawScreen(int mouseX, int mouseY) {
         super.drawScreen(mouseX, mouseY);
 
-        int min = ((IntegerValue)setting).getMinimum();
-        int max = ((IntegerValue)setting).getMaximum();
+        int min = ((IntValue)setting).getMinimum();
+        int max = ((IntValue)setting).getMaximum();
         double l = 90;
 
-        renderWidth = (l) * (((IntegerValue) setting).get() - min) / (max - min);
-        renderWidth2 = (l) * (((IntegerValue)setting).getMaximum() - min) / (max - min);
+        renderWidth = (l) * (((IntValue) setting).get() - min) / (max - min);
+        renderWidth2 = (l) * (((IntValue)setting).getMaximum() - min) / (max - min);
 
         animation.setAnimation((float) renderWidth, 14);
         
@@ -50,11 +50,11 @@ public class CompInt extends Comp {
         
         if (dragging) {
             if (diff == 0) {
-                setting.set(((IntegerValue)setting).getMinimum());
+                setting.set(((IntValue)setting).getMinimum());
             }
             else {
                 double newValue = roundToPlace(((diff / l) * (max - min) + min), 2);
-                ((IntegerValue) setting).set(newValue);
+                ((IntValue) setting).set(newValue);
             }
         }
         

@@ -1,5 +1,6 @@
 package me.liycxc.pvp.screenshot;
 
+import me.liycxc.NekoCat;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;
@@ -92,7 +93,9 @@ public class GuiScreenshotViewer extends GuiScreen{
 		            
 		            image = mc.getTextureManager().getDynamicTextureLocation("Image", nibt);
 				} catch (IOException e) {
-					e.printStackTrace();
+					// Don't give crackers clues...
+					if (NekoCat.instance.DEVELOPMENT_SWITCH)
+						e.printStackTrace();
 				}
 			}
 			
@@ -166,7 +169,9 @@ public class GuiScreenshotViewer extends GuiScreen{
 				try {
 					desktop.browse(new File(screenshotDir, screenshots.get(selected)).toURI());
 				} catch (IOException e) {
-					e.printStackTrace();
+					// Don't give crackers clues...
+					if (NekoCat.instance.DEVELOPMENT_SWITCH)
+						e.printStackTrace();
 				}
 			}
 		}

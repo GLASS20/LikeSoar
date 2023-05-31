@@ -12,11 +12,11 @@ public class AutoClick extends Module {
         super("AutoClick","Mouse down auto click", ModuleCategory.Combat);
     }
     
-    private IntegerValue aCps = new IntegerValue("A CPS",8,1,20);
-    private IntegerValue bCps = new IntegerValue("B CPS",8,1,20);
+    private IntValue aCps = new IntValue("A CPS",8,1,20);
+    private IntValue bCps = new IntValue("B CPS",8,1,20);
     private BoolValue leftClick = new BoolValue("Left Click",true);
     private ListValue autoBlock = new ListValue("AutoBlock",new String[]{"None", "Legit", "Fast"},"None",() -> leftClick.get());
-    private IntegerValue autoblockDelay = new IntegerValue("AutoBlock Delay",120,100,300,() -> leftClick.get() && autoBlock.get().equals("Legit"));
+    private IntValue autoblockDelay = new IntValue("AutoBlock Delay",120,100,300,() -> leftClick.get() && autoBlock.get().equals("Legit"));
 
     private long leftDelay = TimerUtils.randomClickDelay(minCps(),maxCps());
     private long leftLastSwing = 0L;

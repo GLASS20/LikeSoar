@@ -1,5 +1,13 @@
 package me.liycxc.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.mojang.util.UUIDTypeAdapter;
+import me.liycxc.NekoCat;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
@@ -9,15 +17,6 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.UUID;
-
-import javax.imageio.ImageIO;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.mojang.util.UUIDTypeAdapter;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 
 public class SkinUtils {
 
@@ -84,7 +83,9 @@ public class SkinUtils {
                 ImageIO.write(model, "png", modelF);
             }
             catch (Throwable t) {
-            	t.printStackTrace();
+                // Don't give crackers clues...
+                if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                    t.printStackTrace();
             }
         }
         if (!faceF.exists()) {
@@ -93,7 +94,9 @@ public class SkinUtils {
                 ImageIO.write(ImageIO.read(modelF).getSubimage(4, 0, 8, 8), "png", faceF);
             }
             catch (Throwable t2) {
-            	t2.printStackTrace();
+                // Don't give crackers clues...
+                if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                    t2.printStackTrace();
             }
         }
 	}

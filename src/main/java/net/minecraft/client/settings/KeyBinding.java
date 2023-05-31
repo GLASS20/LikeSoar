@@ -2,10 +2,11 @@ package net.minecraft.client.settings;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.List;
-import java.util.Set;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.IntHashMap;
+
+import java.util.List;
+import java.util.Set;
 
 public class KeyBinding implements Comparable<KeyBinding> {
     private static final List<KeyBinding> keybindArray = Lists.<KeyBinding>newArrayList();
@@ -91,6 +92,10 @@ public class KeyBinding implements Comparable<KeyBinding> {
             --this.pressTime;
             return true;
         }
+    }
+
+    public void setPressed(final boolean pressed) {
+        this.pressed = pressed;
     }
 
     private void unpressKey() {

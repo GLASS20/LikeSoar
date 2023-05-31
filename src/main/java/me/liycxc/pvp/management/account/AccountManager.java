@@ -50,7 +50,9 @@ public class AccountManager {
 			}
 			pw.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			// Don't give crackers clues...
+			if (NekoCat.instance.DEVELOPMENT_SWITCH)
+				e.printStackTrace();
 		}
 	}
 	
@@ -66,7 +68,9 @@ public class AccountManager {
 			}
 			reader.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// Don't give crackers clues...
+			if (NekoCat.instance.DEVELOPMENT_SWITCH)
+				e.printStackTrace();
 		}
 		
 		for (String s : lines) {
@@ -108,7 +112,9 @@ public class AccountManager {
 				(mc).setSession(new Session(acc.getProfile().getName(), acc.getProfile().getId(), acc.getAccessToken(), "legacy"));
 				a.setInfo(EnumChatFormatting.GREEN + "Success!");
 			} catch (MicrosoftAuthenticationException e) {
-				e.printStackTrace();
+				// Don't give crackers clues...
+				if (NekoCat.instance.DEVELOPMENT_SWITCH)
+					e.printStackTrace();
 				a.setInfo(EnumChatFormatting.RED + "Error :(");
 			}
 		}

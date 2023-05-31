@@ -74,6 +74,11 @@ public class ItemHoe extends Item {
         return true;
     }
 
+    public Item.ToolMaterial getToolMaterial() {
+        return this.theToolMaterial;
+    }
+
+
     /**
      * Returns the name of the material this tool is made from as it is declared in EnumToolMaterial (meaning diamond
      * would return "EMERALD")

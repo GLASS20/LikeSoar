@@ -4,6 +4,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import lombok.Setter;
+import me.liycxc.NekoCat;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.modules.kinds.utilty.irc.utils.*;
@@ -93,7 +94,9 @@ public class IRC extends Module {
                         sendMessages.clear();
                     }
                 }catch (Exception exception) {
-                    exception.printStackTrace();
+                    // Don't give crackers clues...
+                    if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                        exception.printStackTrace();
                 }
             }
         }

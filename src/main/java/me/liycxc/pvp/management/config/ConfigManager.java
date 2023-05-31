@@ -82,7 +82,9 @@ public class ConfigManager {
 			}
 			pw.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			// Don't give crackers clues...
+			if (NekoCat.instance.DEVELOPMENT_SWITCH)
+				e.printStackTrace();
 		}
 		
 	}
@@ -100,7 +102,9 @@ public class ConfigManager {
 			}
 			reader.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// Don't give crackers clues...
+			if (NekoCat.instance.DEVELOPMENT_SWITCH)
+				e.printStackTrace();
 		}
 		
 		for (String s : lines) {

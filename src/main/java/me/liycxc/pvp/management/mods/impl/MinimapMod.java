@@ -1,5 +1,6 @@
 package me.liycxc.pvp.management.mods.impl;
 
+import me.liycxc.NekoCat;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventRender2D;
 import me.liycxc.events.impl.EventRenderShadow;
@@ -52,7 +53,9 @@ public class MinimapMod extends Mod {
 			try {
 				minimap.load();
 			} catch (IOException e) {
-				e.printStackTrace();
+				// Don't give crackers clues...
+				if (NekoCat.instance.DEVELOPMENT_SWITCH)
+					e.printStackTrace();
 			}
 		}
 	}

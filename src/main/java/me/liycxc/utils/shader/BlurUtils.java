@@ -25,7 +25,9 @@ public class BlurUtils {
 			blurShader = new ShaderGroup(mc.getTextureManager(), mc.getResourceManager(), mc.getFramebuffer(), new ResourceLocation("shaders/post/blurArea.json"));
 			blurShader.createBindFramebuffers(mc.displayWidth, mc.displayHeight);
 		} catch (Exception e) {
-			e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
 		}
     }
     

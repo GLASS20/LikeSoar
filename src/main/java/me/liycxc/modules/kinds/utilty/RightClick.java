@@ -3,7 +3,7 @@ package me.liycxc.modules.kinds.utilty;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
 import me.liycxc.modules.BoolValue;
-import me.liycxc.modules.IntegerValue;
+import me.liycxc.modules.IntValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.TimerUtils;
@@ -15,8 +15,8 @@ public class RightClick extends Module {
         super("RightClick","AutoClick when you right mouse down", ModuleCategory.Util);
     }
 
-    public IntegerValue cpsA = new IntegerValue("A CPS",10,1,30);
-    public IntegerValue cpsB = new IntegerValue("B CPS",10,1,30);
+    public IntValue cpsA = new IntValue("A CPS",10,1,30);
+    public IntValue cpsB = new IntValue("B CPS",10,1,30);
     public BoolValue onlyBlock = new BoolValue("Only Blocks",true);
 
 

@@ -1,5 +1,6 @@
 package me.liycxc.utils.font;
 
+import me.liycxc.NekoCat;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import org.lwjgl.opengl.GL11;
 
@@ -28,7 +29,9 @@ public class CFont {
         try {
             return new DynamicTexture(img);
         } catch (Exception e) {
-            e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
             return null;
         }
     }
@@ -88,7 +91,9 @@ public class CFont {
         try {
             this.drawQuad(x, y, chars[c].width, chars[c].height, chars[c].storedX, chars[c].storedY, chars[c].width, chars[c].height);
         } catch (Exception e) {
-            e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
         }
     }
 

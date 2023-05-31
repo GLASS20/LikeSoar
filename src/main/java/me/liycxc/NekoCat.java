@@ -7,6 +7,9 @@ import me.liycxc.events.EventManager;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.*;
 import me.liycxc.file.FileManager;
+import me.liycxc.manager.BotManager;
+import me.liycxc.manager.TargetManager;
+import me.liycxc.manager.component.ComponentManager;
 import me.liycxc.modules.ModuleManager;
 import me.liycxc.modules.kinds.utilty.invManager.utils.InventoryUtils;
 import me.liycxc.pvp.GuiEditHUD;
@@ -44,10 +47,12 @@ import java.util.Random;
 public class NekoCat {
 
 	public static NekoCat instance = new NekoCat();
-
+	public static Minecraft mc = Minecraft.getMinecraft();
+	public final boolean DEVELOPMENT_SWITCH = true;
 	private final String name = "NekoCat";
 	private final String version = "2077";
 
+	// Soar Client Managers
 	public FileManager fileManager;
 	public ImageManager imageManager;
 	public DiscordManager discordManager;
@@ -62,13 +67,17 @@ public class NekoCat {
 	public MusicManager musicManager;
 	public AccountManager accountManager;
 	public QuickPlayManager quickPlayManager;
+
+	// NekoCat Managers
 	public ModuleManager moduleManager;
-	
+	public TargetManager targetManager;
+	public BotManager botManager;
+	public ComponentManager componentManager;
+
 	private boolean loaded;
 	private long playTime;
 	private TimerUtils apiTimer = new TimerUtils();
-	
-	private Minecraft mc = Minecraft.getMinecraft();
+
 	
 	public void startClient() {
 		
@@ -76,6 +85,7 @@ public class NekoCat {
 
 		// Managers initializing
 		{
+			// Soar
 			fileManager = new FileManager();
 			imageManager = new ImageManager();
 			keyBindManager = new KeyBindManager();
@@ -89,13 +99,21 @@ public class NekoCat {
 			musicManager = new MusicManager();
 			accountManager = new AccountManager();
 			quickPlayManager = new QuickPlayManager();
+
+			// NekoCat
 			moduleManager = new ModuleManager();
+			targetManager = new TargetManager();
+			botManager = new BotManager();
+			componentManager = new ComponentManager();
 		}
 
 		// Fonts initializing
 		{
 			FontUtils.init();
 			FontManager.init();
+			targetManager.init();
+			botManager.init();
+			componentManager.init();
 		}
 
 		eventManager.register(this);

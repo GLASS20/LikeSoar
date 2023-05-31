@@ -21,14 +21,14 @@ class InvManager : Module("InvManager","Auto clean your inv",ModuleCategory.Util
      * OPTIONS
      */
 
-    private val maxDelayValue: IntegerValue = object : IntegerValue("MaxDelay", 600, 0, 1000) {
+    private val maxDelayValue: IntValue = object : IntValue("MaxDelay", 600, 0, 1000) {
         override fun onChanged(oldValue: Int, newValue: Int) {
             val minCPS = minDelayValue.get()
             if (minCPS > newValue) set(minCPS)
         }
     }
 
-    private val minDelayValue: IntegerValue = object : IntegerValue("MinDelay", 400, 0, 1000) {
+    private val minDelayValue: IntValue = object : IntValue("MinDelay", 400, 0, 1000) {
         override fun onChanged(oldValue: Int, newValue: Int) {
             val maxDelay = maxDelayValue.get()
             if (maxDelay < newValue) set(maxDelay)
@@ -37,7 +37,7 @@ class InvManager : Module("InvManager","Auto clean your inv",ModuleCategory.Util
 
     private val invOpenValue = BoolValue("InvOpen", false)
     private val simulateInventory = BoolValue("SimulateInventory", true)
-    private val simulateDelayValue = IntegerValue("SimulateInventoryDelay", 0, 0, 1000).displayable { simulateInventory.get() }
+    private val simulateDelayValue = IntValue("SimulateInventoryDelay", 0, 0, 1000).displayable { simulateInventory.get() }
     private val noMoveValue = BoolValue("NoMove", false)
     private val hotbarValue = BoolValue("Hotbar", true)
     private val randomSlotValue = BoolValue("RandomSlot", false)
@@ -45,7 +45,7 @@ class InvManager : Module("InvManager","Auto clean your inv",ModuleCategory.Util
     private val throwValue = BoolValue("ThrowGarbage", true)
     private val armorValue = BoolValue("Armor", true)
     private val noCombatValue = BoolValue("NoCombat", false)
-    private val itemDelayValue = IntegerValue("ItemDelay", 0, 0, 5000)
+    private val itemDelayValue = IntValue("ItemDelay", 0, 0, 5000)
     private val onlySwordDamage = BoolValue("OnlySwordWeapon", true)
     private val swingValue = BoolValue("Swing", true)
     private val nbtGoalValue = ListValue("NBTGoal", ItemUtils.EnumNBTPriorityType.values().map { it.toString() }.toTypedArray(), "NONE")
@@ -94,6 +94,7 @@ class InvManager : Module("InvManager","Auto clean your inv",ModuleCategory.Util
 
     override fun onDisable() {
         invOpened = false
+        super.onDisable()
     }
 
     private fun checkOpen(): Boolean {

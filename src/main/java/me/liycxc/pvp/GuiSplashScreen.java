@@ -1,5 +1,6 @@
 package me.liycxc.pvp;
 
+import me.liycxc.NekoCat;
 import me.liycxc.utils.render.RenderUtils;
 import me.liycxc.utils.render.RoundedUtils;
 import net.minecraft.client.Minecraft;
@@ -118,7 +119,9 @@ public class GuiSplashScreen {
 			}
 			reader.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			// Don't give crackers clues...
+			if (NekoCat.instance.DEVELOPMENT_SWITCH)
+				e.printStackTrace();
 		}
 		
 		for (String s : lines) {
@@ -179,7 +182,9 @@ public class GuiSplashScreen {
 				}
 				reader.close();
 			} catch (Exception e) {
-				e.printStackTrace();
+				// Don't give crackers clues...
+				if (NekoCat.instance.DEVELOPMENT_SWITCH)
+					e.printStackTrace();
 			}
 			
 			for (String s : lines) {

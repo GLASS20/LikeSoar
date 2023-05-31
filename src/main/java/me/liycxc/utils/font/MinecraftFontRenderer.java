@@ -1,20 +1,20 @@
 package me.liycxc.utils.font;
 
-import java.awt.Font;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import me.liycxc.utils.color.ColorUtils;
-import org.lwjgl.opengl.GL11;
-
+import me.liycxc.NekoCat;
 import me.liycxc.utils.GlUtils;
+import me.liycxc.utils.color.ColorUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MinecraftFontRenderer extends CFont {
     CharData[] boldChars = new CharData[256],
@@ -210,7 +210,9 @@ public class MinecraftFontRenderer extends CFont {
                 try {
                     colorIndex = colorcodeIdentifiers.indexOf(text.charAt(index + 1));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    // Don't give crackers clues...
+                    if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                        e.printStackTrace();
                 }
 
                 if (colorIndex < 16) {

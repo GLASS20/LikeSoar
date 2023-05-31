@@ -1,5 +1,6 @@
 package me.liycxc.pvp.management.keybinds;
 
+import me.liycxc.NekoCat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -24,7 +25,9 @@ public class KeyBindManager {
 		try {
 			this.unregisterKeybind((KeyBinding) GameSettings.class.getField("ofKeyBindZoom").get(Minecraft.getMinecraft().gameSettings));
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-			e.printStackTrace();
+			// Don't give crackers clues...
+			if (NekoCat.instance.DEVELOPMENT_SWITCH)
+				e.printStackTrace();
 		}
 		
 		this.registerKeyBind(CLICKGUI);

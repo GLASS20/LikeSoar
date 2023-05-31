@@ -1,5 +1,7 @@
 package me.liycxc.utils;
 
+import me.liycxc.NekoCat;
+
 import java.io.*;
 
 public class FileUtils {
@@ -14,7 +16,9 @@ public class FileUtils {
                 stringBuilder.append(line).append('\n');
 
         } catch (Exception e) {
-            e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
         }
         return stringBuilder.toString();
     }
@@ -30,7 +34,9 @@ public class FileUtils {
     		try {
 				file.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+                // Don't give crackers clues...
+                if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                    e.printStackTrace();
 			}
     	}
     }

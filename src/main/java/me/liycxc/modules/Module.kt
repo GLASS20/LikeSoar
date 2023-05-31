@@ -45,19 +45,19 @@ open class Module {
     open fun onInitialize() {}
     fun onWorld() {}
     open fun onEnable() {
-        NekoCat.instance.eventManager.register(this)
     }
 
     open fun onDisable() {
-        NekoCat.instance.eventManager.unregister(this)
     }
 
     fun toggle() {
         if (toggled) {
             toggled = false
+            NekoCat.instance.eventManager.unregister(this)
             onDisable()
         } else {
             toggled = true
+            NekoCat.instance.eventManager.register(this)
             onEnable()
         }
     }

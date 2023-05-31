@@ -1,14 +1,15 @@
 package me.liycxc.hooks;
 
+import me.liycxc.NekoCat;
+import net.minecraft.client.network.NetHandlerPlayClient;
+import net.minecraft.network.play.client.C19PacketResourcePackStatus;
+import net.minecraft.network.play.server.S48PacketResourcePackSend;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.network.play.client.C19PacketResourcePackStatus;
-import net.minecraft.network.play.server.S48PacketResourcePackSend;
 
 public class NetHandlerPlayClientHook {
 
@@ -32,10 +33,14 @@ public class NetHandlerPlayClientHook {
 
             return true;
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
             return false;
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
         }
 
         return false;

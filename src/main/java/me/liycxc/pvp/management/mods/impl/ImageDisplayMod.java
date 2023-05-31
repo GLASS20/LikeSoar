@@ -66,7 +66,9 @@ public class ImageDisplayMod extends Mod {
 	            
 	            this.image = mc.getTextureManager().getDynamicTextureLocation("Image", nibt);
 	        } catch (Throwable e) {
-	        	e.printStackTrace();
+				// Don't give crackers clues...
+				if (NekoCat.instance.DEVELOPMENT_SWITCH)
+					e.printStackTrace();
 	        }
 		}
         

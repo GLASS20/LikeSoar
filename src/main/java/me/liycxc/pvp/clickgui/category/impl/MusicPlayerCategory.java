@@ -180,7 +180,9 @@ public class MusicPlayerCategory extends Category {
 			try {
 				Desktop.getDesktop().open(new File(mc.mcDataDir, "soar/music"));
 			} catch (IOException e) {
-				e.printStackTrace();
+				// Don't give crackers clues...
+				if (NekoCat.instance.DEVELOPMENT_SWITCH)
+					e.printStackTrace();
 			}
 		}
 		

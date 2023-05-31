@@ -1,5 +1,6 @@
 package me.liycxc.pvp.management.mods.impl;
 
+import me.liycxc.NekoCat;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import me.liycxc.utils.mouse.RawMouseHelper;
@@ -43,7 +44,9 @@ public class RawInputMod extends Mod {
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    // Don't give crackers clues...
+                    if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                        e.printStackTrace();
                 }
             }
         });

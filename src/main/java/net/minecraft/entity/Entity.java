@@ -1,14 +1,8 @@
 package net.minecraft.entity;
 
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.Callable;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFence;
-import net.minecraft.block.BlockFenceGate;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.BlockWall;
+import me.liycxc.events.impl.EventStrafe;
+import me.liycxc.utils.vector.Vector3d;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
@@ -31,21 +25,15 @@ import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ReportedException;
-import net.minecraft.util.StatCollector;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.Callable;
 
 public abstract class Entity implements ICommandSender {
     private static final AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
@@ -119,6 +107,16 @@ public abstract class Entity implements ICommandSender {
     public boolean velocityChanged;
     public boolean isInWeb;
     public boolean isOutsideBorder;
+    public boolean inView;
+    public int outOfViewTicks;
+    public int ticksSprint;
+
+    /**
+     * How many ticks has this entity had ran since being alive
+     */
+    public int ticksExisted;
+    public int ticksSinceVelocity, ticksSincePlayerVelocity;
+    public int ticksSinceTeleport;
 
     /**
      * gets set by setEntityDead, so this must be the flag whether an Entity is dead (inactive may be better term)
@@ -138,6 +136,7 @@ public abstract class Entity implements ICommandSender {
     public float distanceWalkedModified;
     public float distanceWalkedOnStepModified;
     public float fallDistance;
+    public float movementYaw, velocityYaw, lastMovementYaw;
 
     /**
      * The distance that has to be exceeded in order to triger a new step sound and an onEntityWalking event on a block
@@ -158,6 +157,7 @@ public abstract class Entity implements ICommandSender {
      * The entity's Z coordinate at the previous tick, used to calculate position during rendering routines
      */
     public double lastTickPosZ;
+    public double threadDistance;
 
     /**
      * How high this entity can step up when running into a block to try to get over it (currently make note the entity
@@ -175,9 +175,6 @@ public abstract class Entity implements ICommandSender {
      */
     public float entityCollisionReduction;
     protected Random rand;
-
-    /** How many ticks has this entity had ran since being alive */
-    public int ticksExisted;
 
     /**
      * The amount of ticks you have to stand inside of fire before be set on fire
@@ -387,6 +384,11 @@ public abstract class Entity implements ICommandSender {
      * Called to update the entity's position/logic.
      */
     public void onUpdate() {
+        if (isSprinting()) {
+            ticksSprint++;
+        } else {
+            ticksSprint = 0;
+        }
         this.onEntityUpdate();
     }
 
@@ -1080,6 +1082,9 @@ public abstract class Entity implements ICommandSender {
      * Used in both water and by flying objects
      */
     public void moveFlying(float strafe, float forward, float friction) {
+        final EventStrafe strafeEvent = new EventStrafe(strafe, forward, friction,this.rotationYaw);
+        strafeEvent.call();
+
         float f = strafe * strafe + forward * forward;
 
         if (f >= 1.0E-4F) {
@@ -1298,7 +1303,7 @@ public abstract class Entity implements ICommandSender {
     /**
      * Creates a Vec3 using the pitch and yaw of the entities rotation.
      */
-    protected final Vec3 getVectorForRotation(float pitch, float yaw) {
+    public final Vec3 getVectorForRotation(float pitch, float yaw) {
         float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
         float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
         float f2 = -MathHelper.cos(-pitch * 0.017453292F);
@@ -2451,5 +2456,20 @@ public abstract class Entity implements ICommandSender {
 
     public void setCulled(boolean culled) {
         this.culled = culled;
+    }
+
+    public Vector3d getCustomPositionVector() {
+        return new Vector3d(posX, posY, posZ);
+    }
+
+    public MovingObjectPosition rayTraceCustom(double blockReachDistance, float yaw, float pitch) {
+        final Vec3 vec3 = this.getPositionEyes(1.0F);
+        final Vec3 vec31 = this.getLookCustom(yaw, pitch);
+        final Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
+        return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
+    }
+
+    public Vec3 getLookCustom(float yaw, float pitch) {
+        return this.getVectorForRotation(pitch, yaw);
     }
 }

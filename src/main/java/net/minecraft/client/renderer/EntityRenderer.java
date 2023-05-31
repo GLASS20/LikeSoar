@@ -3,11 +3,7 @@ package net.minecraft.client.renderer;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import me.liycxc.NekoCat;
-import me.liycxc.events.impl.EventCameraRotation;
-import me.liycxc.events.impl.EventPlayerHeadRotation;
-import me.liycxc.events.impl.EventRender3D;
-import me.liycxc.events.impl.EventZoomFov;
-import me.liycxc.modules.kinds.combat.Reach;
+import me.liycxc.events.impl.*;
 import me.liycxc.pvp.management.mods.impl.MinimalBobbingMod;
 import me.liycxc.pvp.management.mods.impl.MinimalDamageShakeMod;
 import me.liycxc.pvp.management.mods.impl.MotionBlurMod;
@@ -428,7 +424,7 @@ public class EntityRenderer implements IResourceManagerReloadListener {
     /**
      * Finds what block or object the mouse is over at the specified partial tick time. Args: partialTickTime
      */
-    public void getMouseOver(float partialTicks) {
+    /*public void getMouseOver(float partialTicks) {
         Entity entity = this.mc.getRenderViewEntity();
         if (entity != null && this.mc.theWorld != null) {
             this.mc.mcProfiler.startSection("pick");
@@ -503,6 +499,101 @@ public class EntityRenderer implements IResourceManagerReloadListener {
 
             if (this.pointedEntity != null && (d2 < d1 || this.mc.objectMouseOver == null)) {
                 this.mc.objectMouseOver = new MovingObjectPosition(this.pointedEntity, vec33);
+                if (this.pointedEntity instanceof EntityLivingBase || this.pointedEntity instanceof EntityItemFrame) {
+                    this.mc.pointedEntity = this.pointedEntity;
+                }
+            }
+
+            this.mc.mcProfiler.endSection();
+        }
+    }
+*/
+    public void getMouseOver(final float partialTicks) {
+        final Entity entity = this.mc.getRenderViewEntity();
+
+        if (entity != null && this.mc.theWorld != null) {
+            this.mc.mcProfiler.startSection("pick");
+            this.mc.pointedEntity = null;
+            double blockReachDistance = this.mc.playerController.getBlockReachDistance();
+            this.mc.objectMouseOver = entity.rayTrace(blockReachDistance, partialTicks);
+            double distance = blockReachDistance;
+            final Vec3 vec3 = entity.getPositionEyes(partialTicks);
+            boolean flag = false;
+            double reach = 3.0D;
+            float expand = 0;
+
+            EventMouseOver mouseOverEvent = new EventMouseOver(reach, expand);
+            mouseOverEvent.call();
+
+            reach = mouseOverEvent.getRange();
+            expand = mouseOverEvent.getExpand();
+
+            if (this.mc.playerController.extendedReach()) {
+                blockReachDistance = 6.0D;
+                distance = 6.0D;
+            } else if (blockReachDistance > 3.0D) {
+                flag = true;
+            }
+
+            if (reach > 3.1) {
+                flag = true;
+            }
+
+            if (this.mc.objectMouseOver != null) {
+                distance = this.mc.objectMouseOver.hitVec.distanceTo(vec3);
+            }
+
+            final Vec3 vec31 = entity.getLook(partialTicks);
+            final Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
+            this.pointedEntity = null;
+            Vec3 vec33 = null;
+            final float f = 1.0F;
+            final List<Entity> list = this.mc.theWorld.getEntitiesInAABBexcluding(entity, entity.getEntityBoundingBox().addCoord(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance).expand(f, f, f), Predicates.and(EntitySelectors.NOT_SPECTATING, Entity::canBeCollidedWith));
+            double d2 = distance;
+
+            for (final Entity entity1 : list) {
+                final float f1 = entity1.getCollisionBorderSize() + ((entity instanceof EntityPlayer && !entity.isInvisible()) ? expand : 0);
+                final AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(f1, f1, f1);
+                final MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3, vec32);
+
+                if (axisalignedbb.isVecInside(vec3)) {
+                    if (d2 >= 0.0D) {
+                        this.pointedEntity = entity1;
+                        vec33 = movingobjectposition == null ? vec3 : movingobjectposition.hitVec;
+                        d2 = 0.0D;
+                    }
+                } else if (movingobjectposition != null) {
+                    final double d3 = vec3.distanceTo(movingobjectposition.hitVec);
+
+                    if (d3 < d2 || d2 == 0.0D) {
+                        boolean flag1 = false;
+
+                        if (Reflector.ForgeEntity_canRiderInteract.exists()) {
+                            flag1 = Reflector.callBoolean(entity1, Reflector.ForgeEntity_canRiderInteract);
+                        }
+
+                        if (!flag1 && entity1 == entity.ridingEntity) {
+                            if (d2 == 0.0D) {
+                                this.pointedEntity = entity1;
+                                vec33 = movingobjectposition.hitVec;
+                            }
+                        } else {
+                            this.pointedEntity = entity1;
+                            vec33 = movingobjectposition.hitVec;
+                            d2 = d3;
+                        }
+                    }
+                }
+            }
+
+            if (this.pointedEntity != null && flag && vec33 != null && vec3.distanceTo(vec33) > reach) {
+                this.pointedEntity = null;
+                this.mc.objectMouseOver = new MovingObjectPosition(MovingObjectPosition.MovingObjectType.MISS, vec33, null, new BlockPos(vec33));
+            }
+
+            if (this.pointedEntity != null && (d2 < distance || this.mc.objectMouseOver == null)) {
+                this.mc.objectMouseOver = new MovingObjectPosition(this.pointedEntity, vec33);
+
                 if (this.pointedEntity instanceof EntityLivingBase || this.pointedEntity instanceof EntityItemFrame) {
                     this.mc.pointedEntity = this.pointedEntity;
                 }

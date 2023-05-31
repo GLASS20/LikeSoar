@@ -169,7 +169,9 @@ public class GuiPleaseLogin extends GuiScreen{
 						NekoCat.instance.accountManager.setCurrentAccount(NekoCat.instance.accountManager.getAccountByUsername(acc.getProfile().getName()));
 						NekoCat.instance.accountManager.save();
 					} catch (MicrosoftAuthenticationException e) {
-						e.printStackTrace();
+						// Don't give crackers clues...
+						if (NekoCat.instance.DEVELOPMENT_SWITCH)
+							e.printStackTrace();
 					}
 				}
 			}.start();

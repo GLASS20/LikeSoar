@@ -1,10 +1,14 @@
 package me.liycxc.modules;
 
+import me.liycxc.NekoCat;
 import me.liycxc.modules.kinds.combat.AutoClick;
 import me.liycxc.modules.kinds.combat.Reach;
+import me.liycxc.modules.kinds.combat.killAura.KillAura;
 import me.liycxc.modules.kinds.render.Chams;
 import me.liycxc.modules.kinds.utilty.AutoTool;
 import me.liycxc.modules.kinds.utilty.RightClick;
+import me.liycxc.modules.kinds.utilty.Scaffold;
+import me.liycxc.modules.kinds.utilty.Teams;
 import me.liycxc.modules.kinds.utilty.invManager.InvManager;
 import me.liycxc.modules.kinds.utilty.irc.IRC;
 import me.liycxc.utils.Logger;
@@ -26,6 +30,9 @@ public class ModuleManager {
         registerModule(new RightClick());
         registerModule(new Chams());
         registerModule(new InvManager());
+        registerModule(new Teams());
+        registerModule(new KillAura());
+        registerModule(new Scaffold());
     }
 
     public void registerModule(Module module) {
@@ -33,6 +40,13 @@ public class ModuleManager {
         Logger.log("Initialize module: " + module.moduleName);
         module.onInitialize();
         Logger.log("Finished initialize module: " + module.moduleName);
+
+        if (module.getToggled()) {
+            NekoCat.instance.eventManager.register(module);
+            Logger.log("Event register module: " + module.moduleName);
+        } else {
+            NekoCat.instance.eventManager.unregister(module);
+        }
     }
 
     public Module getModule(String name) {

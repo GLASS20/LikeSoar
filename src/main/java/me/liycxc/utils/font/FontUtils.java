@@ -1,5 +1,6 @@
 package me.liycxc.utils.font;
 
+import me.liycxc.NekoCat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
@@ -109,7 +110,9 @@ public class FontUtils {
                 font = font.deriveFont(Font.PLAIN, size);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            // Don't give crackers clues...
+            if (NekoCat.instance.DEVELOPMENT_SWITCH)
+                e.printStackTrace();
             font = new Font("default", Font.PLAIN, +10);
         }
         return font;
