@@ -1530,6 +1530,18 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
      * Runs the current tick.
      */
     public void runTick() throws IOException {
+        // scaledResolution = new ScaledResolution(this);
+
+        if (thePlayer != null) {
+            thePlayer.lastMotionX = thePlayer.motionX;
+            thePlayer.lastMotionY = thePlayer.motionY;
+            thePlayer.lastMotionZ = thePlayer.motionZ;
+            thePlayer.lastGround = thePlayer.onGround;
+
+            thePlayer.lastMovementYaw = thePlayer.movementYaw;
+            thePlayer.movementYaw = thePlayer.velocityYaw = thePlayer.rotationYaw;
+        }
+
         if (this.rightClickDelayTimer > 0) {
             --this.rightClickDelayTimer;
         }

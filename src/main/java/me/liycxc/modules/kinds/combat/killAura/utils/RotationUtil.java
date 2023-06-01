@@ -50,7 +50,6 @@ public class RotationUtil {
         return normalRotations;
     }
 
-
     public Vector2f calculate(final Vec3 to, final EnumFacing enumFacing) {
         return calculate(new Vector3d(to.xCoord, to.yCoord, to.zCoord), enumFacing);
     }
@@ -144,7 +143,7 @@ public class RotationUtil {
                  * Fixing GCD
                  */
                 final Vector2f rotations = new Vector2f(yaw, pitch);
-                final Vector2f fixedRotations = RotationUtil.applySensitivityPatch(rotations);
+                final Vector2f fixedRotations = applySensitivityPatch(rotations);
 
                 /*
                  * Setting rotations

@@ -1,9 +1,8 @@
 package me.liycxc.modules.kinds.combat;
 
 import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventMotion;
 import me.liycxc.events.impl.EventMouseOver;
-import me.liycxc.events.impl.EventState;
+import me.liycxc.events.impl.EventPreMotion;
 import me.liycxc.modules.FloatValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
@@ -18,10 +17,8 @@ public class Reach extends Module {
     private int exempt = 0;
 
     @EventTarget
-    public void onPreMotion (EventMotion eventMotion) {
-        if (eventMotion.eventState == EventState.PRE) {
-            exempt--;
-        }
+    public void onPreMotion (EventPreMotion eventMotion) {
+        exempt--;
     }
     @EventTarget
     public void onMouseOver(EventMouseOver eventMouseOver) {

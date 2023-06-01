@@ -143,7 +143,7 @@ public class PlayerUtils {
                 (float) (-(Math.atan2(y, distance) * 180.0 / 3.141592653589793))};
     }
 
-    public static void tellPlayer(String string) {
+    public static void tellPlayer(Object string) {
         if (string != null && mc.thePlayer != null)
             mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + NekoCat.instance.getName() + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + string));
     }
@@ -385,6 +385,10 @@ public class PlayerUtils {
 
     public static boolean isAirUnder(Entity ent) {
         return mc.theWorld.getBlockState(new BlockPos(ent.posX, ent.posY - 1, ent.posZ)).getBlock() == Blocks.air;
+    }
+
+    public static boolean inLiquid() {
+        return mc.thePlayer.isInWater() || mc.thePlayer.isInLava();
     }
 
     public static void blinkToPos(double[] startPos, BlockPos endPos, double slack, double[] pOffset) {

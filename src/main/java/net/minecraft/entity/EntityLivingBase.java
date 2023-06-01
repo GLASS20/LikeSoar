@@ -4,11 +4,15 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
 import me.liycxc.NekoCat;
+import me.liycxc.events.impl.EventJump;
 import me.liycxc.events.impl.EventLivingUpdate;
+import me.liycxc.modules.kinds.combat.killAura.utils.MoveUtil;
 import me.liycxc.pvp.management.mods.impl.SlowSwingMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.item.EntityItem;
@@ -903,7 +907,7 @@ public abstract class EntityLivingBase extends Entity {
 
     /**
      * Drop the equipment for this entity.
-     *  
+     *
      * @param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player
      * or tameable)
      * @param lootingModifier level of enchanment to be applied to this drop
@@ -954,7 +958,7 @@ public abstract class EntityLivingBase extends Entity {
 
     /**
      * Drop 0-2 items of this living's type
-     *  
+     *
      * @param wasRecentlyHit true if this this entity was recently hit by appropriate entity (generally only if player
      * or tameable)
      * @param lootingModifier level of enchanment to be applied to this drop
@@ -1340,16 +1344,40 @@ public abstract class EntityLivingBase extends Entity {
      * Causes this entity to do an upwards motion (jumping).
      */
     protected void jump() {
-        this.motionY = (double)this.getJumpUpwardsMotion();
+        // if (this.ticksSinceJump <= 1) return;
+
+        float jumpMotion = this.getJumpUpwardsMotion();
 
         if (this.isPotionActive(Potion.jump)) {
-            this.motionY += (double)((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);
+            jumpMotion += (float) (this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F;
         }
 
+        if (this instanceof EntityPlayerSP) {
+            final EventJump event = new EventJump(jumpMotion, this.movementYaw);
+            event.call();
+            jumpMotion = event.getJumpMotion();
+            this.movementYaw = event.getYaw();
+            this.velocityYaw = event.getYaw();
+
+            if (event.isCancelled()) {
+                return;
+            }
+        }
+
+        // this.ticksSinceJump = 0;
+        this.motionY = jumpMotion;
+
         if (this.isSprinting()) {
-            float f = this.rotationYaw * 0.017453292F;
-            this.motionX -= (double)(MathHelper.sin(f) * 0.2F);
-            this.motionZ += (double)(MathHelper.cos(f) * 0.2F);
+            float f = this.movementYaw * 0.017453292F;
+
+            final Minecraft mc = Minecraft.getMinecraft();
+            if (mc.thePlayer.omniSprint) {
+                f = (float) (MoveUtil.direction() * (180 / Math.PI));
+                f *= 0.017453292F;
+            }
+
+            this.motionX -= MathHelper.sin(f) * 0.2F;
+            this.motionZ += MathHelper.cos(f) * 0.2F;
         }
 
         this.isAirBorne = true;
@@ -1912,7 +1940,7 @@ public abstract class EntityLivingBase extends Entity {
 
     /**
      * Set the render yaw offset
-     *  
+     *
      * @param offset The render yaw offset
      */
     public void setRenderYawOffset(float offset) {

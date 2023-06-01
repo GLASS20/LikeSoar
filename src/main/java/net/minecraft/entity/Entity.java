@@ -69,14 +69,21 @@ public abstract class Entity implements ICommandSender {
     /** Entity position Z */
     public double posZ;
 
-    /** Entity motion X */
-    public double motionX;
 
-    /** Entity motion Y */
-    public double motionY;
+    /**
+     * Entity motion X
+     */
+    public double motionX, lastMotionX;
 
-    /** Entity motion Z */
-    public double motionZ;
+    /**
+     * Entity motion Y
+     */
+    public double motionY, lastMotionY;
+
+    /**
+     * Entity motion Z
+     */
+    public double motionZ, lastMotionZ;
 
     /** Entity rotation Yaw */
     public float rotationYaw;
@@ -88,7 +95,7 @@ public abstract class Entity implements ICommandSender {
 
     /** Axis aligned bounding box. */
     private AxisAlignedBB boundingBox;
-    public boolean onGround;
+    public boolean onGround, lastGround;
 
     /**
      * True if after a move this entity has collided with something on X- or Z-axis
@@ -1794,7 +1801,7 @@ public abstract class Entity implements ICommandSender {
     /**
      * Marks the entity as being inside a portal, activating teleportation logic in onEntityUpdate() in the following
      * tick(s).
-     *  
+     *
      * @param pos The postion of the portal that the entity is in
      */
     public void setPortal(BlockPos pos) {
@@ -2089,7 +2096,7 @@ public abstract class Entity implements ICommandSender {
 
     /**
      * Set the render yaw offset
-     *  
+     *
      * @param offset The render yaw offset
      */
     public void setRenderYawOffset(float offset) {

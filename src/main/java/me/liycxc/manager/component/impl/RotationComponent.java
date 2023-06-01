@@ -11,7 +11,7 @@ import me.liycxc.utils.vector.Vector2f;
 import static me.liycxc.NekoCat.mc;
 
 public final class RotationComponent extends Component {
-    private static boolean active = false, smoothed;
+    private static boolean active, smoothed;
     public static Vector2f rotations, lastRotations, targetRotations, lastServerRotations;
     private static double rotationSpeed;
     private static MovementFix correctMovement;
@@ -40,8 +40,8 @@ public final class RotationComponent extends Component {
             smooth();
         }
 
-//        mc.thePlayer.rotationYaw = rotations.x;
-//        mc.thePlayer.rotationPitch = rotations.y;
+        mc.thePlayer.rotationYaw = rotations.x;
+        mc.thePlayer.rotationPitch = rotations.y;
 
         if (correctMovement == MovementFix.BACKWARDS_SPRINT && active) {
             if (Math.abs(rotations.x - Math.toDegrees(MoveUtil.direction())) > 45) {
@@ -51,16 +51,16 @@ public final class RotationComponent extends Component {
         }
     }
 
-//    @EventTarget
-//    public void onMove (EventStrafe event) {
-//        if (active && correctMovement == MovementFix.NORMAL && rotations != null) {
-//            /*
-//             * Calculating movement fix
-//             */
-//            final float yaw = rotations.x;
-//            // MoveUtil.fixMovement(event, yaw);
-//        }
-//    }
+    @EventTarget
+    public void onMove (EventMoveInput event) {
+        if (active && correctMovement == MovementFix.NORMAL && rotations != null) {
+            /*
+             * Calculating movement fix
+              */
+            final float yaw = rotations.x;
+            MoveUtil.fixMovement(event, yaw);
+        }
+    }
 
     @EventTarget
     public void onLook (EventLook event) {
@@ -76,31 +76,28 @@ public final class RotationComponent extends Component {
         }
     }
 
-//    @EventTarget
-//    public void onJump (EventJump event) {
-//        if (active && (correctMovement == MovementFix.NORMAL || correctMovement == MovementFix.TRADITIONAL || correctMovement == MovementFix.BACKWARDS_SPRINT) && rotations != null) {
-//            event.setYaw(rotations.x);
-//        }
-//    }
+    @EventTarget
+    public void onJump (EventJump event) {
+        if (active && (correctMovement == MovementFix.NORMAL || correctMovement == MovementFix.TRADITIONAL || correctMovement == MovementFix.BACKWARDS_SPRINT) && rotations != null) {
+            event.setYaw(rotations.x);
+        }
+    }
 
     @EventTarget
-    public void onPreMotionEvent (EventMotion event) {
-        if (event.eventState != EventState.PRE) {
-            return;
-        }
+    public void onPreMotionEvent (EventPreMotion event) {
         if (active && rotations != null) {
             final float yaw = rotations.x;
             final float pitch = rotations.y;
 
-            event.setRotationYaw(yaw);
-            event.setRotationPitch(pitch);
+            event.setYaw(yaw);
+            event.setPitch(pitch);
 
-//            mc.thePlayer.rotationYaw = yaw;
-//            mc.thePlayer.rotationPitch = pitch;
+            mc.thePlayer.rotationYaw = yaw;
+            mc.thePlayer.rotationPitch = pitch;
 
             mc.thePlayer.renderYawOffset = yaw;
             mc.thePlayer.rotationYawHead = yaw;
-            // mc.thePlayer.renderPitchHead = pitch;
+            mc.thePlayer.renderPitchHead = pitch;
 
             lastServerRotations = new Vector2f(yaw, pitch);
 

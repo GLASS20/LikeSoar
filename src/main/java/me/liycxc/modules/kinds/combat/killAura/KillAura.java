@@ -80,10 +80,7 @@ public class KillAura extends Module {
     private int attack, hitTicks, expandRange;
 
     @EventTarget
-    public void onPreMotion(EventMotion eventMotion) {
-        if (eventMotion.eventState != EventState.PRE) {
-            return;
-        }
+    public void onPreMotion(EventPreMotion eventMotion) {
         this.hitTicks++;
 
         if (mc.currentScreen != null) {
@@ -120,7 +117,7 @@ public class KillAura extends Module {
     }
 
     @EventTarget
-    public void onUpdate(EventUpdate eventUpdate) {
+    public void onUpdate(EventPreUpdate eventUpdate) {
         if (mc.thePlayer.getHealth() <= 0.0 && this.autoDisable.get()) {
             this.toggle();
         }
@@ -233,18 +230,15 @@ public class KillAura extends Module {
                 }
 
                 if (rotationSpeed != 0) {
-                    RotationComponent.setRotations(targetRotations, rotationSpeed,/*
-                            movementCorrection.get() == MovementFix.OFF || shouldRun() ? */MovementFix.OFF/* : movementCorrection.get()*/);
+                    RotationComponent.setRotations(targetRotations, rotationSpeed,MovementFix.OFF);
                 }
                 break;
 
             case "Autistic AntiCheat":
                 double speed = rotationSpeed * 10;
-                RotationComponent.setRotations(new Vector2f((float) (RotationComponent.rotations.x + speed), 0), speed / 18,/*
-                        movementCorrection.get() == MovementFix.OFF || shouldRun() ?*/ MovementFix.OFF/* : movementCorrection.get()*/);
+                RotationComponent.setRotations(new Vector2f((float) (RotationComponent.rotations.x + speed), 0), speed / 18,MovementFix.OFF);
                 break;
         }
-
     }
 
     /*public boolean shouldRun() {
@@ -447,9 +441,10 @@ public class KillAura extends Module {
         this.attack = Math.min(Math.max(this.attack, this.attack + 2), 5);
 
         // Client.INSTANCE.getEventBus().handle(new ClickEvent());
-        if (!this.noSwing.get()) mc.thePlayer.swingItem();
+        if (!this.noSwing.get())
+            mc.thePlayer.swingItem();
 
-        final EventAttackEntity event = new EventAttackEntity(target);
+        EventAttackEntity event = new EventAttackEntity(target);
         event.call();
 
         if (!event.isCancelled()) {
@@ -625,7 +620,7 @@ public class KillAura extends Module {
             event.setStrafeMultiplier(0.2F);
             event.setForwardMultiplier(0.2F);
         }
-    };
+    }
 
     private void preBlock() {
         switch (autoBlock.get()) {

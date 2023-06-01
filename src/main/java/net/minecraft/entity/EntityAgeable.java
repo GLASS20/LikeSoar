@@ -200,7 +200,7 @@ public abstract class EntityAgeable extends EntityCreature {
     /**
      * Sets the width and height of the entity. Args: width, height
      */
-    protected final void setSize(float width, float height) {
+    public final void setSize(float width, float height) {
         boolean flag = this.ageWidth > 0.0F;
         this.ageWidth = width;
         this.ageHeight = height;
