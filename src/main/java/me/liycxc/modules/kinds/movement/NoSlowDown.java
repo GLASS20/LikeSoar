@@ -23,10 +23,6 @@ public class NoSlowDown extends Module {
 
     public ListValue modeValue = new ListValue("Mode",new String[]{"Vanilla","Hypixel"},"Vanilla");
 
-    // Hypixel mode
-    private boolean nextTemp = false;
-    private boolean lastBlockingStat = false;
-    private boolean waitC03 = false;
     MSTimer timer = new MSTimer();
 
     @EventTarget
