@@ -1,8 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import java.util.Random;
-
-import me.liycxc.hooks.RenderEntityItemHook;
+import me.liycxc.pvp.hooks.RenderEntityItemHook;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -10,6 +8,8 @@ import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.Random;
 
 public class RenderEntityItem extends Render<EntityItem> {
     private final RenderItem itemRenderer;

@@ -1,4 +1,4 @@
-package me.liycxc.hooks;
+package me.liycxc.pvp.hooks;
 
 import me.liycxc.NekoCat;
 import me.liycxc.pvp.management.mods.impl.BorderlessFullscreenMod;

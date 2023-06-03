@@ -10,6 +10,7 @@ import me.liycxc.file.FileManager;
 import me.liycxc.manager.BotManager;
 import me.liycxc.manager.TargetManager;
 import me.liycxc.manager.component.ComponentManager;
+import me.liycxc.modules.ModuleConfig;
 import me.liycxc.modules.ModuleManager;
 import me.liycxc.modules.kinds.utilty.invManager.utils.InventoryUtils;
 import me.liycxc.pvp.GuiEditHUD;
@@ -49,7 +50,6 @@ public class NekoCat {
 	public static NekoCat instance = new NekoCat();
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public final boolean DEVELOPMENT_SWITCH = true;
-	private final String name = "NekoCat";
 	private final String version = "2077";
 
 	// Soar Client Managers
@@ -73,10 +73,11 @@ public class NekoCat {
 	public TargetManager targetManager;
 	public BotManager botManager;
 	public ComponentManager componentManager;
+	public ModuleConfig moduleConfig;
 
 	private boolean loaded;
 	private long playTime;
-	private TimerUtils apiTimer = new TimerUtils();
+	private final TimerUtils apiTimer = new TimerUtils();
 
 	
 	public void startClient() {
@@ -102,6 +103,7 @@ public class NekoCat {
 
 			// NekoCat
 			moduleManager = new ModuleManager();
+			moduleConfig = new ModuleConfig();
 			targetManager = new TargetManager();
 			botManager = new BotManager();
 			componentManager = new ComponentManager();
@@ -129,6 +131,8 @@ public class NekoCat {
 		mc.gameSettings.loadOptions();
 		DayEventUtils.resetHudDesign();
 		moduleManager.registerModules();
+
+		moduleConfig.load(fileManager.getNConfigFile());
 	}
 	
 	public void stopClient() {
@@ -141,6 +145,8 @@ public class NekoCat {
 			discordManager = new DiscordManager();
 			discordManager.update("Playing NekoCat Client v" + NekoCat.instance.getVersion(), "");
 		}
+
+		moduleConfig.save(fileManager.getNConfigFile());
 	}
     
 	@EventTarget
@@ -231,8 +237,8 @@ public class NekoCat {
             
             if(modManager.getModByClass(ForgeSpooferMod.class).isToggled()) {
                 (packet).setData(new PacketBuffer(Unpooled.buffer()).writeString("FML"));
-            }else {
-                (packet).setData(new PacketBuffer(Unpooled.buffer()).writeString("NekoCat Client v" + version));
+            } else {
+                (packet).setData(new PacketBuffer(Unpooled.buffer()).writeString("Lunar-Client"));
             }
         }
 
@@ -287,7 +293,7 @@ public class NekoCat {
     }
     
 	public String getName() {
-		return name;
+		return "NekoCat";
 	}
 
 	public String getVersion() {

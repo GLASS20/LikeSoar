@@ -7,7 +7,7 @@ import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import me.liycxc.events.impl.EventDamageEntity;
 import me.liycxc.events.impl.EventRespawn;
-import me.liycxc.hooks.NetHandlerPlayClientHook;
+import me.liycxc.pvp.hooks.NetHandlerPlayClientHook;
 import net.minecraft.block.Block;
 import net.minecraft.client.ClientBrandRetriever;
 import net.minecraft.client.Minecraft;

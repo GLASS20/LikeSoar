@@ -1,5 +1,6 @@
 package me.liycxc.ui.clickgui;
 
+import me.liycxc.ui.clickgui.impl.ConfigCategory;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;
 import me.liycxc.ui.clickgui.impl.features.CombatModules;
 import me.liycxc.ui.clickgui.impl.features.MovementModules;
@@ -17,6 +18,7 @@ public class CategoryManager {
         categories.add(new MovementModules());
         categories.add(new RenderModules());
         categories.add(new UtiltyModules());
+        categories.add(new ConfigCategory());
 //        categories.add(new EditHUDCategory());
 //        categories.add(new ConfigCategory());
 //        categories.add(new CosmeticCategory());

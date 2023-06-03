@@ -1,11 +1,6 @@
-package me.liycxc.hooks;
-
-import java.awt.Color;
-import java.text.DecimalFormat;
+package me.liycxc.pvp.hooks;
 
 import me.liycxc.utils.server.ServerUtils;
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,6 +9,10 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderTNTPrimed;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.item.EntityTNTPrimed;
+import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
+import java.text.DecimalFormat;
 
 public class RenderTNTPrimedHook {
 	

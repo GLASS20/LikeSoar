@@ -1,5 +1,6 @@
 package me.liycxc.file;
 
+import lombok.Getter;
 import me.liycxc.NekoCat;
 import me.liycxc.utils.FileUtils;
 import net.minecraft.client.Minecraft;
@@ -10,18 +11,26 @@ public class FileManager {
 
 	private Minecraft mc = Minecraft.getMinecraft();
 	
-	//Directory
-	private File soarDir;
-	private File tempDir;
-	private File imageDir;
-	private File musicDir;
-	private File configDir;
+	// Directory
+	private final File soarDir;
+	private final File tempDir;
+	private final File imageDir;
+	private final File musicDir;
+	private final File configDir;
 	
-	//File
-	private File configFile;
-	private File versionFile;
-	private File accountFile;
-	
+	// File
+	private final File configFile;
+	private final File versionFile;
+	private final File accountFile;
+
+	// NekoCat
+	@Getter
+	private final File nekocatDir;
+	@Getter
+	private final File nConfigDir;
+	@Getter
+	private final File nConfigFile;
+
 	public FileManager() {
 		
 		soarDir = new File(mc.mcDataDir, "soar");
@@ -33,7 +42,12 @@ public class FileManager {
 		configFile = new File(soarDir, "Config.txt");
 		accountFile = new File(soarDir, "Accounts.txt");
 		versionFile = new File(tempDir, NekoCat.instance.getVersion() + ".ver");
-		
+
+		// NekoCat
+		nekocatDir = new File(mc.mcDataDir,"NekoCat");
+		nConfigDir = new File(nekocatDir,"Configs");
+		nConfigFile = new File(nConfigDir,"Config.nekocat");
+
 		FileUtils.createDir(soarDir);
 		FileUtils.createDir(tempDir);
 		FileUtils.createDir(imageDir);
@@ -43,6 +57,10 @@ public class FileManager {
 		FileUtils.createFile(configFile);
 		FileUtils.createFile(accountFile);
 		FileUtils.createFile(versionFile);
+
+		FileUtils.createDir(nekocatDir);
+		FileUtils.createDir(nConfigDir);
+		FileUtils.createFile(nConfigFile);
 	}
 
 	public File getSoarDir() {

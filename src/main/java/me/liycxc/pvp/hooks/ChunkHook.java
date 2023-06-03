@@ -1,4 +1,4 @@
-package me.liycxc.hooks;
+package me.liycxc.pvp.hooks;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

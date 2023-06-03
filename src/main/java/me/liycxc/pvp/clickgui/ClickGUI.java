@@ -55,7 +55,6 @@ public class ClickGUI extends GuiScreen{
 	private List<ClickEffect> clickEffects = new ArrayList<>();
 
 	public ClickGUI() {
-
 		loaded = false;
 		loadedCosmetic = false;
 		this.x = 100;
@@ -69,7 +68,6 @@ public class ClickGUI extends GuiScreen{
 
 	@Override
 	public void initGui() {
-
 		ScaledResolution sr = new ScaledResolution(mc);
 
 		if(!loadedCosmetic) {

@@ -3,7 +3,7 @@ package net.minecraft.world.chunk;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
-import me.liycxc.hooks.ChunkHook;
+import me.liycxc.pvp.hooks.ChunkHook;
 import me.liycxc.utils.ClientUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;

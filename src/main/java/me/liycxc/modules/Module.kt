@@ -82,4 +82,13 @@ open class Module {
             valueField.isAccessible = true
             valueField[this]
         }.filterIsInstance<Value<*>>()
+
+    open fun getValueByName(name: String): Value<*>? {
+        for (value in values) {
+            if (value.name == name) {
+                return value
+            }
+        }
+        return null
+    }
 }
