@@ -17,10 +17,6 @@ import java.util.stream.IntStream
 
 class InvManager : Module("InvManager","Auto clean your inv",ModuleCategory.Util) {
 
-    /**
-     * OPTIONS
-     */
-
     private val maxDelayValue: IntValue = object : IntValue("MaxDelay", 600, 0, 1000) {
         override fun onChanged(oldValue: Int, newValue: Int) {
             val minCPS = minDelayValue.get()
