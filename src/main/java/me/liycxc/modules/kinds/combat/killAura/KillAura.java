@@ -18,6 +18,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class KillAura extends Module {
     public KillAura() {
-        super("KillAura","Demo", ModuleCategory.Combat);
+        super("KillAura","Demo", ModuleCategory.Combat, Keyboard.KEY_R);
     }
 
     private final ListValue mode = new ListValue("Attack Mode", new String[]{"Single","Switch","Multiple"},"Single");

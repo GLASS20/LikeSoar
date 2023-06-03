@@ -29,7 +29,7 @@ import static me.liycxc.modules.kinds.utilty.irc.utils.ServerUtils.getTime;
 
 public class IRC extends Module {
     public IRC() {
-        super("IRC","Realtime Chat", ModuleCategory.Util);
+        super("IRC","Realtime Chat", ModuleCategory.Util,true);
     }
 
     public static ArrayList<String> sendMessages = new ArrayList<>();

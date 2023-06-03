@@ -15,8 +15,10 @@ import me.liycxc.modules.kinds.utilty.irc.IRC;
 import me.liycxc.utils.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ModuleManager {
+    public HashMap<Integer,Module> keyBinds = new HashMap<>();
     ArrayList<Module> modules = new ArrayList<Module>();
 
     public void registerModules() {
@@ -35,6 +37,10 @@ public class ModuleManager {
 
     public void registerModule(Module module) {
         modules.add(module);
+        if (module.getKeybind() != 0) {
+            keyBinds.put(module.getKeybind(),module);
+        }
+
         Logger.log("Initialize module: " + module.moduleName);
         module.onInitialize();
         Logger.log("Finished initialize module: " + module.moduleName);

@@ -9,6 +9,7 @@ import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.modules.kinds.combat.killAura.utils.MoveUtil;
 import me.liycxc.utils.MSTimer;
+import me.liycxc.utils.PlayerUtils;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.Packet;
@@ -27,7 +28,7 @@ public class NoSlowDown extends Module {
 
     @EventTarget
     public void onUpdate(EventPreMotion event) {
-        if (!MoveUtil.isMoving()) {
+        if (!MoveUtil.isMoving() || !mc.gameSettings.keyBindUseItem.isPressed()) {
             return;
         }
 
@@ -56,7 +57,11 @@ public class NoSlowDown extends Module {
     public void onSendPacket(EventSendPacket eventSendPacket) {
         Packet packet = eventSendPacket.getPacket();
 
-        if (!MoveUtil.isMoving()) {
+        if (mc.thePlayer == null) {
+            return;
+        }
+
+        if (!MoveUtil.isMoving() || !mc.gameSettings.keyBindUseItem.isPressed()) {
             return;
         }
 
@@ -70,6 +75,7 @@ public class NoSlowDown extends Module {
                     final int slot = mc.thePlayer.inventory.currentItem;
                     mc.getNetHandler().addToSendQueueNoEvent(new C09PacketHeldItemChange((slot + 1) % 8));
                     mc.getNetHandler().addToSendQueueNoEvent(new C09PacketHeldItemChange(slot));
+                    PlayerUtils.tellPlayer("Ues");
                 }
                 break;
             }
@@ -78,7 +84,7 @@ public class NoSlowDown extends Module {
 
     @EventTarget
     public void onSlowDown (EventSlowDown eventSlowDown) {
-        if (mc.thePlayer.isUsingItem() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInWater() && !mc.thePlayer.isInLava() && MoveUtil.isMoving()) {
+        if (mc.thePlayer.isUsingItem() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInWater() && !mc.thePlayer.isInLava() && MoveUtil.isMoving() && mc.gameSettings.keyBindUseItem.isPressed()) {
             eventSlowDown.setCancelled(true);
         }
     }

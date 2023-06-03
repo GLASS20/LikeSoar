@@ -4,7 +4,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class NotificationManager {
     private static LinkedBlockingQueue<Notification> pendingNotifications = new LinkedBlockingQueue<>();
-    private static Notification currentNotification = null;
+    public static Notification currentNotification = null;
 
     public static void show(Notification notification) {
         pendingNotifications.add(notification);
