@@ -690,13 +690,13 @@ public class KillAura extends Module {
     private int getMaxCps() {
         return Math.max(cpsA.get(),cpsB.get());
     }
-    
-    public int getMaxRotationSpeed() {
-        return Math.max(rotationSpeedA.get(),rotationSpeedB.get());
-    }
 
     private int getMinCps() {
         return Math.min(cpsA.get(),cpsB.get());
+    }
+
+    public int getMaxRotationSpeed() {
+        return Math.max(rotationSpeedA.get(),rotationSpeedB.get());
     }
 
     public int getMinRotationSpeed() {
