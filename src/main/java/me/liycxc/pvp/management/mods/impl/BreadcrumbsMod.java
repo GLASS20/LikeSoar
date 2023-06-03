@@ -2,7 +2,7 @@ package me.liycxc.pvp.management.mods.impl;
 
 import me.liycxc.NekoCat;
 import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventPreMotionUpdate;
+import me.liycxc.events.impl.EventPreMotion;
 import me.liycxc.events.impl.EventRender3D;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
@@ -32,7 +32,7 @@ public class BreadcrumbsMod extends Mod {
 	}
 	
 	@EventTarget
-	public void onPreMotionUpdate(EventPreMotionUpdate event) {
+	public void onPreMotionUpdate(EventPreMotion event) {
         if (mc.thePlayer.lastTickPosX != mc.thePlayer.posX || mc.thePlayer.lastTickPosY != mc.thePlayer.posY || mc.thePlayer.lastTickPosZ != mc.thePlayer.posZ) {
             path.add(new Vec3(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ));
         }

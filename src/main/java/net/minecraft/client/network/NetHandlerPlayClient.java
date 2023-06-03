@@ -594,13 +594,18 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient {
         }
     }
 
-    public void addToSendQueue(Packet p_147297_1_) {
-        this.netManager.sendPacket(p_147297_1_);
+    public void addToSendQueue(Packet packet) {
+        this.netManager.sendPacket(packet);
     }
 
-    public void addToSendQueueUnregistered(final Packet p_147297_1_) {
-        this.netManager.sendUnregisteredPacket(p_147297_1_);
+    public void addToSendQueueUnregistered(final Packet packet) {
+        this.netManager.sendUnregisteredPacket(packet);
     }
+
+    public void addToSendQueueNoEvent(final Packet packet) {
+        this.addToSendQueueUnregistered(packet);
+    }
+
 
     public void handleCollectItem(S0DPacketCollectItem packetIn) {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);

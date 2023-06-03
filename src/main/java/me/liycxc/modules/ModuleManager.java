@@ -4,6 +4,7 @@ import me.liycxc.NekoCat;
 import me.liycxc.modules.kinds.combat.AutoClick;
 import me.liycxc.modules.kinds.combat.Reach;
 import me.liycxc.modules.kinds.combat.killAura.KillAura;
+import me.liycxc.modules.kinds.movement.NoSlowDown;
 import me.liycxc.modules.kinds.render.Chams;
 import me.liycxc.modules.kinds.utilty.AutoTool;
 import me.liycxc.modules.kinds.utilty.RightClick;
@@ -18,10 +19,6 @@ import java.util.ArrayList;
 public class ModuleManager {
     ArrayList<Module> modules = new ArrayList<Module>();
 
-    public void onStart() {
-
-    }
-
     public void registerModules() {
         registerModule(new IRC());
         registerModule(new AutoClick());
@@ -33,6 +30,7 @@ public class ModuleManager {
         registerModule(new Teams());
         registerModule(new KillAura());
         registerModule(new Scaffold());
+        registerModule(new NoSlowDown());
     }
 
     public void registerModule(Module module) {

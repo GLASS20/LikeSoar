@@ -11,9 +11,6 @@ open class Module {
     var description: String
     var moduleCategory: ModuleCategory
     var introAnimation = SimpleAnimation(0.0f)
-    var fontAnimation = arrayOf(
-        SimpleAnimation(0.0f), SimpleAnimation(0.0f), SimpleAnimation(0.0f)
-    )
 
     @JvmField
     var mc = Minecraft.getMinecraft()
@@ -23,8 +20,6 @@ open class Module {
     var buttonOpacityAnimation = SimpleAnimation(0.0f)
     @JvmField
     var selectTimer = TimerUtils()
-    var selectAnimation = SimpleAnimation(0.0f)
-    var editOpacityAnimation = SimpleAnimation(0.0f)
 
     var toggled = false
 

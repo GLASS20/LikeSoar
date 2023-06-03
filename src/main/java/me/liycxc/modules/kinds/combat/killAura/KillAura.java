@@ -309,7 +309,7 @@ public class KillAura extends Module {
     }
 
     @EventTarget
-    public void onPostMotion (EventPreMotionUpdate eventPreMotionUpdate) {
+    public void onPostMotion (EventPreMotion eventPreMotionUpdate) {
         if (target != null && this.canBlock()) {
             this.postBlock();
         }
