@@ -3,7 +3,7 @@ package net.minecraft.world;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import me.liycxc.modules.kinds.combat.killAura.utils.RayCastUtil;
+import me.liycxc.modules.impl.combat.killAura.utils.RayCastUtil;
 import me.liycxc.utils.ClientUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;

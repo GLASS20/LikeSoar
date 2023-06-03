@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import me.liycxc.NekoCat;
 import me.liycxc.events.impl.EventJump;
 import me.liycxc.events.impl.EventLivingUpdate;
-import me.liycxc.modules.kinds.combat.killAura.utils.MoveUtil;
+import me.liycxc.modules.impl.combat.killAura.utils.MoveUtil;
 import me.liycxc.pvp.management.mods.impl.SlowSwingMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

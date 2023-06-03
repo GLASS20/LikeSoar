@@ -12,7 +12,7 @@ import me.liycxc.manager.TargetManager;
 import me.liycxc.manager.component.ComponentManager;
 import me.liycxc.modules.ModuleConfig;
 import me.liycxc.modules.ModuleManager;
-import me.liycxc.modules.kinds.utilty.invManager.utils.InventoryUtils;
+import me.liycxc.modules.impl.utilty.invManager.utils.InventoryUtils;
 import me.liycxc.pvp.GuiEditHUD;
 import me.liycxc.pvp.management.account.AccountManager;
 import me.liycxc.pvp.management.colors.ColorManager;

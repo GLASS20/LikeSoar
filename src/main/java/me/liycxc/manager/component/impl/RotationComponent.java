@@ -3,9 +3,9 @@ package me.liycxc.manager.component.impl;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.*;
 import me.liycxc.manager.component.Component;
-import me.liycxc.modules.kinds.combat.killAura.utils.MoveUtil;
-import me.liycxc.modules.kinds.combat.killAura.utils.MovementFix;
-import me.liycxc.modules.kinds.combat.killAura.utils.RotationUtil;
+import me.liycxc.modules.impl.combat.killAura.utils.MoveUtil;
+import me.liycxc.modules.impl.combat.killAura.utils.MovementFix;
+import me.liycxc.modules.impl.combat.killAura.utils.RotationUtil;
 import me.liycxc.utils.vector.Vector2f;
 
 import static me.liycxc.NekoCat.mc;
