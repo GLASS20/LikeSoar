@@ -84,7 +84,7 @@ public class NoSlowDown extends Module {
 
     @EventTarget
     public void onSlowDown (EventSlowDown eventSlowDown) {
-        if (mc.thePlayer.isUsingItem() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInWater() && !mc.thePlayer.isInLava() && MoveUtil.isMoving() && mc.gameSettings.keyBindUseItem.isPressed()) {
+        if (mc.thePlayer.isUsingItem() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInWater() && !mc.thePlayer.isInLava() && MoveUtil.isMoving()) {
             eventSlowDown.setCancelled(true);
         }
     }

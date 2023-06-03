@@ -49,6 +49,10 @@ public class IRC extends Module {
             timer.reset();
             while (serverStatus) {
                 try {
+                    if (MineUser.isNull()) {
+                        qqLogin();
+                        continue;
+                    }
                     // Echo messages
                     if (timer.hasTimePassed(800L)) {
                         FindIterable<Document> findIterable = ServerUtils.messagesCollection.find(Filters.gte("time",timer.time - 3000));

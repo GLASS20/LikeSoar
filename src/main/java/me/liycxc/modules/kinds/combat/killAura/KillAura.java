@@ -55,11 +55,11 @@ public class KillAura extends Module {
     private final ListValue rotationMode = new ListValue("Rotation Mode", new String[]{"Legit/Normal","Autistic AntiCheat"},"Legit/Normal", () -> advanced.get());
     private final BoolValue attackWhilstScaffolding = new BoolValue("Attack whilst Scaffolding", false, () -> advanced.get());
     private final BoolValue noSwing = new BoolValue("No swing", false, () -> advanced.get());
-    private final BoolValue autoDisable = new BoolValue("Auto disable", false, () -> advanced.get());
+    private final BoolValue autoDisable = new BoolValue("Auto disable", true, () -> advanced.get());
     private final BoolValue grimFalse = new BoolValue("Prevent Grim false positives", false, () -> advanced.get());
 
-    private final BoolValue showTargets = new BoolValue("Targets", false);
-    public final BoolValue player = new BoolValue("Player", false, () -> showTargets.get());
+    private final BoolValue showTargets = new BoolValue("Targets", true);
+    public final BoolValue player = new BoolValue("Player", true, () -> showTargets.get());
     public final BoolValue invisibles = new BoolValue("Invisibles", false, () -> showTargets.get());
     public final BoolValue animals = new BoolValue("Animals", false, () -> showTargets.get());
     public final BoolValue mobs = new BoolValue("Mobs", false, () -> showTargets.get());
