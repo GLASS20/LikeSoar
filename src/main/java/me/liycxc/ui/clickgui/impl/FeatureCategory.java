@@ -17,7 +17,6 @@ import me.liycxc.ui.clickgui.comp.impl.CompInt;
 import me.liycxc.ui.clickgui.comp.impl.CompList;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.Logger;
-import me.liycxc.utils.PlayerUtils;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;
 import me.liycxc.utils.animation.normal.impl.EaseInOutQuad;
@@ -65,7 +64,7 @@ public class FeatureCategory extends Category {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         int offset = 15;
-        int tempModeIndex = 1;
+        int tempModeIndex = 0;
         int valueIndex = 1;
 
         ClickGui clickGUI = NekoCat.instance.guiManager.getgClickGUI();
@@ -106,7 +105,7 @@ public class FeatureCategory extends Category {
         if (modIndex != tempModeIndex) {
             scrollY = 0;
             scrollYV = 0;
-            PlayerUtils.tellPlayer("clean");
+            // PlayerUtils.tellPlayer("clean" + " t: " + tempModeIndex);
             scrollAnimation.setAnimation((float) -scrollY, 16);
         }
 
