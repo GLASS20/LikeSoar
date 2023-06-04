@@ -130,10 +130,6 @@ public class ClickGui extends GuiScreen {
 
         if(!categoryManager.isModule(selectedCategory,categoryManager)) {
             FeatureCategory.openModSetting = false;
-            CombatModules.openModSetting = false;
-            MovementModules.openModSetting = false;
-            RenderModules.openModSetting = false;
-            UtiltyModules.openModSetting = false;
         }
 
         if(categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
