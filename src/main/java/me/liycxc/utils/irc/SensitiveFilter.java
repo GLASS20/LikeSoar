@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty.irc.utils;
+package me.liycxc.utils.irc;
 
 import me.liycxc.utils.Logger;
 import net.minecraft.client.Minecraft;

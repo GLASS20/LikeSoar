@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty.invManager.utils
+package me.liycxc.utils.module.invs
 
 import java.math.BigDecimal
 import java.math.RoundingMode

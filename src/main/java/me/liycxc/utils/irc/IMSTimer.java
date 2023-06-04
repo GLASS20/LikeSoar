@@ -1,8 +1,8 @@
-package me.liycxc.modules.impl.utilty.irc.utils;
+package me.liycxc.utils.irc;
 
-import static me.liycxc.modules.impl.utilty.irc.utils.ServerUtils.getTime;
+import static me.liycxc.utils.irc.ServerUtils.getTime;
 
-public final class MSTimer {
+public final class IMSTimer {
 
     public long time = -1L;
 

@@ -1,6 +1,5 @@
-package me.liycxc.modules.impl.utilty.invManager.utils
+package me.liycxc.utils.module.invs
 
-import me.liycxc.utils.MSTimer
 import net.minecraft.block.Block
 import net.minecraft.client.Minecraft
 import net.minecraft.init.Blocks

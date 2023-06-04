@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.combat.killAura.utils;
+package me.liycxc.utils.module.player;
 
 import com.google.common.base.Predicates;
 import me.liycxc.utils.vector.Vector2f;

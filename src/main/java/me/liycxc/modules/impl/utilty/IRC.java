@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty.irc;
+package me.liycxc.modules.impl.utilty;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
@@ -7,9 +7,9 @@ import lombok.Setter;
 import me.liycxc.NekoCat;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
-import me.liycxc.modules.impl.utilty.irc.utils.*;
 import me.liycxc.utils.Logger;
 import me.liycxc.utils.PlayerUtils;
+import me.liycxc.utils.irc.*;
 import net.minecraft.util.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static me.liycxc.modules.impl.utilty.irc.utils.ServerUtils.getTime;
+import static me.liycxc.utils.irc.ServerUtils.getTime;
 
 public class IRC extends Module {
     public IRC() {
@@ -36,7 +36,7 @@ public class IRC extends Module {
     @Setter
     private static boolean serverStatus = false;
     private final ArrayList<ObjectId> locMessages = new ArrayList<>();
-    private final MSTimer timer = new MSTimer();
+    private final IMSTimer timer = new IMSTimer();
     private final Thread messageGetter = new Thread("Message Getter") {
         @Override
         public void run() {

@@ -12,7 +12,6 @@ import me.liycxc.manager.TargetManager;
 import me.liycxc.manager.component.ComponentManager;
 import me.liycxc.modules.ModuleConfig;
 import me.liycxc.modules.ModuleManager;
-import me.liycxc.modules.impl.utilty.invManager.utils.InventoryUtils;
 import me.liycxc.pvp.GuiEditHUD;
 import me.liycxc.pvp.management.account.AccountManager;
 import me.liycxc.pvp.management.colors.ColorManager;
@@ -32,6 +31,7 @@ import me.liycxc.utils.*;
 import me.liycxc.utils.culling.CullTask;
 import me.liycxc.utils.font.FontManager;
 import me.liycxc.utils.font.FontUtils;
+import me.liycxc.utils.module.invs.InventoryUtils;
 import me.liycxc.utils.server.HypixelUtils;
 import me.liycxc.utils.server.ServerUtils;
 import net.minecraft.client.Minecraft;
@@ -47,10 +47,17 @@ import java.util.Random;
 
 public class NekoCat {
 
+	public String getName() {
+		return "NekoCat";
+	}
+
+	public String getVersion() {
+		return "2077";
+	}
+
 	public static NekoCat instance = new NekoCat();
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public final boolean DEVELOPMENT_SWITCH = true;
-	private final String version = "2077";
 
 	// Soar Client Managers
 	public FileManager fileManager;
@@ -291,14 +298,6 @@ public class NekoCat {
         	}
     	}
     }
-    
-	public String getName() {
-		return "NekoCat";
-	}
-
-	public String getVersion() {
-		return version;
-	}
 
 	public long getPlayTime() {
 		return playTime;

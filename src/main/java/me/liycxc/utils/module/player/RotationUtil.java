@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.combat.killAura.utils;
+package me.liycxc.utils.module.player;
 
 import me.liycxc.utils.vector.Vector2f;
 import me.liycxc.utils.vector.Vector3d;

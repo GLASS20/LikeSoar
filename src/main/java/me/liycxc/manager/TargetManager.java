@@ -3,7 +3,7 @@ package me.liycxc.manager;
 import me.liycxc.NekoCat;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
-import me.liycxc.modules.impl.combat.killAura.KillAura;
+import me.liycxc.modules.impl.combat.KillAura;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

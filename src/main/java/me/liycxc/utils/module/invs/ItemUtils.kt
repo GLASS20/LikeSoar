@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty.invManager.utils
+package me.liycxc.utils.module.invs
 
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.item.ItemArmor
@@ -56,8 +56,30 @@ object ItemUtils {
         // For damage reduction it is better if it is smaller, so it has to be inverted
         // The decimal values have to be rounded since in double math equals is inaccurate
         // For example 1.03 - 0.41 = 0.6200000000000001 and (1.03 - 0.41) == 0.62 would be false
-        val compare = RegexUtils.round(getArmorThresholdedDamageReduction(o2.itemStack).toDouble() - if (hasNBTGoal(o2.itemStack, goal)) { nbtedPriority / 5f } else { 0f }, 3)
-            .compareTo(RegexUtils.round(getArmorThresholdedDamageReduction(o1.itemStack).toDouble() - if (hasNBTGoal(o1.itemStack, goal)) { nbtedPriority / 5f } else { 0f }, 3))
+        val compare = RegexUtils.round(
+            getArmorThresholdedDamageReduction(o2.itemStack).toDouble() - if (hasNBTGoal(
+                    o2.itemStack,
+                    goal
+                )
+            ) {
+                nbtedPriority / 5f
+            } else {
+                0f
+            }, 3
+        )
+            .compareTo(
+                RegexUtils.round(
+                    getArmorThresholdedDamageReduction(o1.itemStack).toDouble() - if (hasNBTGoal(
+                            o1.itemStack,
+                            goal
+                        )
+                    ) {
+                        nbtedPriority / 5f
+                    } else {
+                        0f
+                    }, 3
+                )
+            )
 
         // If both armor pieces have the exact same damage, compare enchantments
         if (compare == 0) {

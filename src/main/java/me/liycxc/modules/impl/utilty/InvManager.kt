@@ -1,11 +1,11 @@
-package me.liycxc.modules.impl.utilty.invManager;
+package me.liycxc.modules.impl.utilty;
 import me.liycxc.events.EventTarget
 import me.liycxc.events.impl.EventUpdate
 import me.liycxc.modules.*
-import me.liycxc.modules.impl.utilty.invManager.utils.ArmorPiece
-import me.liycxc.modules.impl.utilty.invManager.utils.InventoryUtils
-import me.liycxc.modules.impl.utilty.invManager.utils.ItemUtils
 import me.liycxc.utils.*
+import me.liycxc.utils.module.invs.ArmorPiece
+import me.liycxc.utils.module.invs.InventoryUtils
+import me.liycxc.utils.module.invs.ItemUtils
 import net.minecraft.client.gui.inventory.GuiInventory
 import net.minecraft.enchantment.Enchantment
 import net.minecraft.init.Blocks

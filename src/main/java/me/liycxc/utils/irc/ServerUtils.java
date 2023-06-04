@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty.irc.utils;
+package me.liycxc.utils.irc;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.ConnectionString;
@@ -9,7 +9,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import me.liycxc.modules.impl.utilty.irc.IRC;
+import me.liycxc.modules.impl.utilty.IRC;
 import me.liycxc.utils.Logger;
 import me.liycxc.utils.PlayerUtils;
 import org.apache.http.HttpResponse;

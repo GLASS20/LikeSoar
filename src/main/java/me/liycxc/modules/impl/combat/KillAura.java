@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.combat.killAura;
+package me.liycxc.modules.impl.combat;
 
 import me.liycxc.NekoCat;
 import me.liycxc.events.EventTarget;
@@ -7,7 +7,7 @@ import me.liycxc.manager.component.impl.BadPacketsComponent;
 import me.liycxc.manager.component.impl.InventoryDeSyncComponent;
 import me.liycxc.manager.component.impl.RotationComponent;
 import me.liycxc.modules.*;
-import me.liycxc.modules.impl.combat.killAura.utils.*;
+import me.liycxc.utils.module.player.*;
 import me.liycxc.utils.vector.Vector2f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -231,7 +231,7 @@ public class KillAura extends Module {
                 }
 
                 if (rotationSpeed != 0) {
-                    RotationComponent.setRotations(targetRotations, rotationSpeed,MovementFix.OFF);
+                    RotationComponent.setRotations(targetRotations, rotationSpeed, MovementFix.OFF);
                 }
                 break;
 

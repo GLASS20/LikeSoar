@@ -2,16 +2,11 @@ package me.liycxc.modules;
 
 import me.liycxc.NekoCat;
 import me.liycxc.modules.impl.combat.AutoClick;
+import me.liycxc.modules.impl.combat.KillAura;
 import me.liycxc.modules.impl.combat.Reach;
-import me.liycxc.modules.impl.combat.killAura.KillAura;
 import me.liycxc.modules.impl.movement.NoSlowDown;
 import me.liycxc.modules.impl.render.Chams;
-import me.liycxc.modules.impl.utilty.AutoTool;
-import me.liycxc.modules.impl.utilty.RightClick;
-import me.liycxc.modules.impl.utilty.Scaffold;
-import me.liycxc.modules.impl.utilty.Teams;
-import me.liycxc.modules.impl.utilty.invManager.InvManager;
-import me.liycxc.modules.impl.utilty.irc.IRC;
+import me.liycxc.modules.impl.utilty.*;
 import me.liycxc.utils.Logger;
 
 import java.util.ArrayList;

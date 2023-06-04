@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.combat.killAura.utils;
+package me.liycxc.utils.module.player;
 
 public class StopWatch {
     private long millis;
