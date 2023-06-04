@@ -5,6 +5,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import lombok.Setter;
 import me.liycxc.NekoCat;
+import me.liycxc.events.EventTarget;
+import me.liycxc.events.impl.EventLoadWorld;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.Logger;
@@ -126,6 +128,13 @@ public class IRC extends Module {
         messageGetter.suspend();
         super.onDisable();
     }
+
+    @EventTarget
+    public void onLoadWorld(EventLoadWorld eventLoadWorld) {
+        if (toggled) {
+            onEnable();
+        }
+    }
     /**
      * Getting QQ Name and QQ Number
      * table: MineUser
@@ -171,6 +180,9 @@ public class IRC extends Module {
                 Logger.log("QQ data got ok");
             }
         } else {
+            PlayerUtils.tellPlayerIrc("QQ Name: " + MineUser.qqName);
+            PlayerUtils.tellPlayerIrc("QQ Number: " + PenguinUtils.QQNumber);
+            PlayerUtils.tellPlayerIrc("Use .i or .switchchat to send massage");
             Logger.log("QQ data is ready");
         }
     }

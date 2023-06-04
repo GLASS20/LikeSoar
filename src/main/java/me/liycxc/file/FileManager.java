@@ -46,7 +46,7 @@ public class FileManager {
 		// NekoCat
 		nekocatDir = new File(mc.mcDataDir,"NekoCat");
 		nConfigDir = new File(nekocatDir,"Configs");
-		nConfigFile = new File(nConfigDir,"Config.nekocat");
+		nConfigFile = new File(nConfigDir,"DefaultLocal.nekocat");
 
 		FileUtils.createDir(soarDir);
 		FileUtils.createDir(tempDir);
