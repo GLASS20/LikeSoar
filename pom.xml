@@ -291,7 +291,7 @@
             <artifactId>loc</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libraries/lombok.jar</systemPath>
+            <systemPath>${project.basedir}/libs/lombok.jar</systemPath>
         </dependency>
     </dependencies>
 
