@@ -23,7 +23,6 @@ public class ModuleManager {
         registerModule(new Reach());
         registerModule(new RightClick());
         registerModule(new Chams());
-        registerModule(new InvManager());
         registerModule(new Teams());
         registerModule(new KillAura());
         registerModule(new Scaffold());

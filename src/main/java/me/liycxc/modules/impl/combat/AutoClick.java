@@ -1,8 +1,12 @@
 package me.liycxc.modules.impl.combat;
 
+import me.liycxc.api.impl.BoolValue;
+import me.liycxc.api.impl.IntValue;
+import me.liycxc.api.impl.ListValue;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
-import me.liycxc.modules.*;
+import me.liycxc.modules.Module;
+import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.TimerUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemSword;

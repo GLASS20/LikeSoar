@@ -1,9 +1,9 @@
 package me.liycxc.modules.impl.utilty;
 
+import me.liycxc.api.impl.BoolValue;
+import me.liycxc.api.impl.IntValue;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
-import me.liycxc.modules.BoolValue;
-import me.liycxc.modules.IntValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.TimerUtils;

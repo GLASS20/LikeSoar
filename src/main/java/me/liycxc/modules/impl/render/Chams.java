@@ -1,9 +1,9 @@
 package me.liycxc.modules.impl.render;
 
+import me.liycxc.api.impl.BoolValue;
+import me.liycxc.api.impl.ListValue;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventRendererLivingEntity;
-import me.liycxc.modules.BoolValue;
-import me.liycxc.modules.ListValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import net.minecraft.client.renderer.GlStateManager;

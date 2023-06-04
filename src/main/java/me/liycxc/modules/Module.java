@@ -3,6 +3,7 @@ package me.liycxc.modules;
 import lombok.Getter;
 import lombok.Setter;
 import me.liycxc.NekoCat;
+import me.liycxc.api.Value;
 import me.liycxc.utils.ClientUtils;
 import me.liycxc.utils.TimerUtils;
 import me.liycxc.utils.animation.simple.SimpleAnimation;

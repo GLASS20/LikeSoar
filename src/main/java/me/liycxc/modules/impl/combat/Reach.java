@@ -1,9 +1,9 @@
 package me.liycxc.modules.impl.combat;
 
+import me.liycxc.api.impl.FloatValue;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventMouseOver;
 import me.liycxc.events.impl.EventPreMotion;
-import me.liycxc.modules.FloatValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import org.lwjgl.input.Mouse;
