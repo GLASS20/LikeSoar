@@ -29,8 +29,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import org.lwjgl.input.Keyboard;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class KillAura extends Module {
@@ -52,38 +50,37 @@ public class KillAura extends Module {
     
     private final BoolValue keepSprint = new BoolValue("Keep sprint", false);
 
-    private final ListValue espMode = new ListValue("Target ESP Mode", new String[]{"Ring","Box","None"},"Ring");
+    // private final ListValue espMode = new ListValue("Target ESP Mode", new String[]{"Ring","Box","None"},"Ring");
 
-    public final ListValue boxMode = new ListValue("Box Mode", new String[]{"Above","Full"},"Above", () -> espMode.get().equals("Box"));
+    // public final ListValue boxMode = new ListValue("Box Mode", new String[]{"Above","Full"},"Above", () -> espMode.get().equals("Box"));
 
     private final BoolValue rayCast = new BoolValue("Ray cast", false);
 
     private final BoolValue advanced = new BoolValue("Advanced", false);
-    private final BoolValue lookAtTheClosestPoint = new BoolValue("Look at the closest point on the player", true, () -> advanced.get());
-    private final BoolValue subTicks = new BoolValue("Attack outside ticks", false, () -> advanced.get());
-    private final ListValue rotationMode = new ListValue("Rotation Mode", new String[]{"Legit/Normal","Autistic AntiCheat"},"Legit/Normal", () -> advanced.get());
-    private final BoolValue attackWhilstScaffolding = new BoolValue("Attack whilst Scaffolding", false, () -> advanced.get());
-    private final BoolValue noSwing = new BoolValue("No swing", false, () -> advanced.get());
-    private final BoolValue autoDisable = new BoolValue("Auto disable", true, () -> advanced.get());
-    private final BoolValue grimFalse = new BoolValue("Prevent Grim false positives", false, () -> advanced.get());
+    private final BoolValue lookAtTheClosestPoint = new BoolValue("Look at the closest point on the player", true, advanced::get);
+    private final BoolValue subTicks = new BoolValue("Attack outside ticks", false, advanced::get);
+    private final ListValue rotationMode = new ListValue("Rotation Mode", new String[]{"Legit/Normal","Autistic AntiCheat"},"Legit/Normal", advanced::get);
+    private final BoolValue attackWhilstScaffolding = new BoolValue("Attack whilst Scaffolding", false, advanced::get);
+    private final BoolValue noSwing = new BoolValue("No swing", false, advanced::get);
+    private final BoolValue autoDisable = new BoolValue("Auto disable", true, advanced::get);
+    private final BoolValue grimFalse = new BoolValue("Prevent Grim false positives", false, advanced::get);
 
     private final BoolValue showTargets = new BoolValue("Targets", true);
-    public final BoolValue player = new BoolValue("Player", true, () -> showTargets.get());
-    public final BoolValue invisibles = new BoolValue("Invisibles", false, () -> showTargets.get());
-    public final BoolValue animals = new BoolValue("Animals", false, () -> showTargets.get());
-    public final BoolValue mobs = new BoolValue("Mobs", false, () -> showTargets.get());
-    public final BoolValue teams = new BoolValue("Teams", false, () -> showTargets.get());
+    public final BoolValue player = new BoolValue("Player", true, showTargets::get);
+    public final BoolValue invisibles = new BoolValue("Invisibles", false, showTargets::get);
+    public final BoolValue animals = new BoolValue("Animals", false, showTargets::get);
+    public final BoolValue mobs = new BoolValue("Mobs", false, showTargets::get);
+    public final BoolValue teams = new BoolValue("Teams", false, showTargets::get);
 
 
     private final StopWatch attackStopWatch = new StopWatch();
     private final StopWatch clickStopWatch = new StopWatch();
 
-    private float randomYaw, randomPitch, angle;
+    private float randomYaw, randomPitch;
     private boolean blocking, swing, allowAttack;
     private long nextSwing;
 
     public static List<Entity> targets;
-    public static List<Entity> pastTargets = new ArrayList<>();
     public Entity target;
 
     public StopWatch subTicksStopWatch = new StopWatch();
@@ -120,7 +117,7 @@ public class KillAura extends Module {
         if (this.autoDisable.get()) {
             this.toggle();
         }
-    };
+    }
 
     public void getTargets(double range) {
         targets = NekoCat.instance.targetManager.getTargets(range);
@@ -163,41 +160,10 @@ public class KillAura extends Module {
 
         target = targets.get(0);
 
-//        while (target == null || pastTargets.contains(target) || mc.thePlayer.getDistance(target.posX, target.posY, target.posZ) > range.get().doubleValue()) {
-//            target = targets.get(0);
-//            targets.remove(0);
-//
-//            if (targets.isEmpty()) {
-//                pastTargets.clear();
-//                this.getTargets(range.get().doubleValue());
-//            }
-//        }
-
         if (target == null || mc.thePlayer.isDead) {
             this.randomiseTargetRotations();
             return;
         }
-
-        Color color = /*getTheme().getFirstColor()*/ Color.WHITE;
-
-        /*
-        switch (espMode.get()) {
-            case "Ring":
-                ESPComponent.add(new SigmaRing(new ESPColor(color, color, color)));
-                break;
-            case "Box":
-                switch (boxMode.get()) {
-                    case "Full":
-                        ESPComponent.add(new FullBox(new ESPColor(color, color, color)));
-                        break;
-                    case "Above":
-                        ESPComponent.add(new AboveBox(new ESPColor(color, color, color)));
-                        break;
-                }
-                break;
-
-        }
-        */
 
         if (this.canBlock()) {
             this.preBlock();
@@ -250,60 +216,6 @@ public class KillAura extends Module {
                 break;
         }
     }
-
-    /*public boolean shouldRun() {
-        // If you're Tecnio don't scroll down
-        String userEnteredCode = runMovementFixIfNot.get();
-
-        // Legit no one can bypass this to make a rce
-        if (userEnteredCode.length() > 60 || userEnteredCode.length() <= 1 || userEnteredCode.contains(";") || userEnteredCode.contains(".")) {
-            return false;
-        }
-
-        // I don't think you could write something more scuffed if you tried
-        String script =
-                // Don't kill me please
-                "" +
-                        "boolean onGround = " + mc.thePlayer.onGround + ";" +
-                        "boolean ground = onGround;" +
-
-                        "int ticksOnGround = " + mc.thePlayer.onGroundTicks + ";" +
-                        "int onGroundTicks = ticksOnGround;" +
-                        "int groundTicks = ticksOnGround;" +
-
-                        "int ticksInAir = " + mc.thePlayer.offGroundTicks + ";" +
-                        "int airTicks = ticksInAir;" +
-                        "int ticksOffGround = ticksInAir;" +
-
-                        "int ticksSinceVelocity = " + mc.thePlayer.ticksSinceVelocity + ";" +
-                        "int velocityTicks = ticksSinceVelocity;" +
-
-                        "boolean runIf = " + userEnteredCode + ";" +
-
-                        "System.out.println(runIf);";
-
-        ScriptEvaluator scriptEvaluator = new ScriptEvaluator();
-
-        // Preserve current console which contains.
-        PrintStream previousConsole = System.out;
-
-        // Set the standard output to use newConsole.
-        ByteArrayOutputStream newConsole = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(newConsole));
-
-        try {
-            scriptEvaluator.cook(script);
-            scriptEvaluator.evaluate(new Object[0]);
-        } catch (CompileException | InvocationTargetException e) {
-            return false;
-        }
-
-        boolean result = newConsole.toString().contains("true");
-
-        System.setOut(previousConsole);
-
-        return result;
-    }*/
 
     /*
      * Randomising rotation target to simulate legit players
@@ -505,7 +417,7 @@ public class KillAura extends Module {
             event.setEnumAction(EnumAction.BLOCK);
             event.setUseItem(true);
         }
-    };
+    }
 
     @EventTarget
     public void onPacketSend(EventSendPacket event) {
@@ -517,10 +429,9 @@ public class KillAura extends Module {
             swing = false;
         }
 
-        if ((packet instanceof C0APacketAnimation || packet instanceof C02PacketUseEntity) &&
-                this.mode.get().equals("1.9+ (1.8 Visuals)")) {
-
-        }
+//        if ((packet instanceof C0APacketAnimation || packet instanceof C02PacketUseEntity) && this.mode.get().equals("1.9+ (1.8 Visuals)")) {
+//
+//        }
 
         this.packetBlock(event);
     }
@@ -695,7 +606,7 @@ public class KillAura extends Module {
 
             this.doAttack(targets);
         }
-    };
+    }
     
     private int getMaxCps() {
         return Math.max(cpsA.get(),cpsB.get());
