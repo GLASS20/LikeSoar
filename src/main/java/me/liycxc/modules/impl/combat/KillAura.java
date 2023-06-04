@@ -7,7 +7,11 @@ import me.liycxc.manager.component.impl.BadPacketsComponent;
 import me.liycxc.manager.component.impl.InventoryDeSyncComponent;
 import me.liycxc.manager.component.impl.RotationComponent;
 import me.liycxc.modules.*;
-import me.liycxc.utils.module.player.*;
+import me.liycxc.utils.MathUtils;
+import me.liycxc.utils.module.player.MovementFix;
+import me.liycxc.utils.module.player.RayCastUtil;
+import me.liycxc.utils.module.player.RotationUtil;
+import me.liycxc.utils.module.player.StopWatch;
 import me.liycxc.utils.vector.Vector2f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -215,7 +219,7 @@ public class KillAura extends Module {
     public void rotations() {
         final double minRotationSpeed = this.getMinRotationSpeed();
         final double maxRotationSpeed = this.getMaxRotationSpeed();
-        final float rotationSpeed = (float) MathUtils.getRandom(minRotationSpeed, maxRotationSpeed);
+        final float rotationSpeed = (float) me.liycxc.utils.MathUtils.getRandom(minRotationSpeed, maxRotationSpeed);
 
         switch (rotationMode.get()) {
             case "Legit/Normal":

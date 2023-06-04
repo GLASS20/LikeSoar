@@ -1,5 +1,6 @@
 package me.liycxc.utils.module.player;
 
+import me.liycxc.utils.MathConst;
 import me.liycxc.utils.vector.Vector2f;
 import me.liycxc.utils.vector.Vector3d;
 import net.minecraft.client.Minecraft;
