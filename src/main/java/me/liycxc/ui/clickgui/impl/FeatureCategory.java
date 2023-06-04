@@ -160,13 +160,13 @@ public class FeatureCategory extends Category {
             if (!openModSetting) {
                 switch (scroll) {
                     case DOWN:
-                        if(scrollY > -((modIndex - 6.5) * 35)) {
+                        if(scrollY > -((modIndex - 5) * 35)) {
                             scrollY -=20;
                         }
 
                         if(modIndex > 6) {
-                            if(scrollY < -((modIndex - 8) * 35)) {
-                                scrollY = -((modIndex - 7.1) * 35);
+                            if(scrollY < -((modIndex - 6) * 35)) {
+                                scrollY = -((modIndex - 6) * 35);
                             }
                         }
                         break;
