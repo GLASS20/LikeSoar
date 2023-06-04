@@ -164,7 +164,7 @@ public class FeatureCategory extends Category {
                             scrollY -=20;
                         }
 
-                        if(modIndex >= 6) {
+                        if(modIndex > 6) {
                             if(scrollY < -((modIndex - 8) * 35)) {
                                 scrollY = -((modIndex - 7.1) * 35);
                             }
@@ -174,7 +174,7 @@ public class FeatureCategory extends Category {
                         if(scrollY < -10) {
                             scrollY +=20;
                         } else {
-                            if(modIndex >= 6) {
+                            if(modIndex > 6) {
                                 scrollY = 0;
                             }
                         }
