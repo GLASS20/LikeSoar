@@ -7,6 +7,7 @@ import me.liycxc.api.impl.FloatValue;
 import me.liycxc.api.impl.IntValue;
 import me.liycxc.api.impl.ListValue;
 import me.liycxc.modules.Module;
+import me.liycxc.modules.ModuleCategory;
 import me.liycxc.ui.clickgui.Category;
 import me.liycxc.ui.clickgui.ClickGui;
 import me.liycxc.ui.clickgui.comp.Comp;
@@ -16,6 +17,7 @@ import me.liycxc.ui.clickgui.comp.impl.CompInt;
 import me.liycxc.ui.clickgui.comp.impl.CompList;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.Logger;
+import me.liycxc.utils.PlayerUtils;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;
 import me.liycxc.utils.animation.normal.impl.EaseInOutQuad;
@@ -40,14 +42,16 @@ public class FeatureCategory extends Category {
     private boolean canToggle;
     public boolean isHitd = false;
     public static ArrayList<Comp> comps = new ArrayList<>();
-    public int modeIndex,valueIndex;
+    public int modeIndex, modIndex = 1;
+    private ModuleCategory category;
 
     public FeatureCategory() {
         super("Feature");
     }
 
-    public FeatureCategory(String name) {
+    public FeatureCategory(String name, ModuleCategory category) {
         super(name);
+        this.category = category;
     }
 
     @Override
@@ -61,14 +65,18 @@ public class FeatureCategory extends Category {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         int offset = 15;
-        int modIndex = 1;
+        int tempModeIndex = 1;
         int valueIndex = 1;
 
         ClickGui clickGUI = NekoCat.instance.guiManager.getgClickGUI();
         GlUtils.startTranslate(openModSetting ? (float) -openSettingAnimation.getValue() : 0, 0);
 
         for(Module m : NekoCat.instance.moduleManager.getModules()) {
-            // if(!m.isHide()) {
+            if (category != null) {
+                if (m.getModuleCategory() != category) {
+                    continue;
+                }
+            }
             if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.moduleName, clickGUI.searchWord.getText())) : true) {
                 RoundedUtils.drawRound(this.getX() + 95, this.getY() + offset + scrollAnimation.getValue(), 200, 26, 6, ColorUtils.getBackgroundColor(4));
                 FontUtils.regular20.drawString(m.moduleName, this.getX() + 105, this.getY() + 10.5F + offset + scrollAnimation.getValue(), ColorUtils.getFontColor(2).getRGB());
@@ -87,17 +95,24 @@ public class FeatureCategory extends Category {
                 }
 
                 offset+=35;
-                modIndex++;
+                tempModeIndex++;
             }
-            // }
 
             if(clickGUI.close) {
                 m.selectTimer.reset();
             }
         }
 
-        GlUtils.stopTranslate();
+        if (modIndex != tempModeIndex) {
+            scrollY = 0;
+            scrollYV = 0;
+            PlayerUtils.tellPlayer("clean");
+            scrollAnimation.setAnimation((float) -scrollY, 16);
+        }
 
+        modIndex = tempModeIndex;
+
+        GlUtils.stopTranslate();
 
         scrollAnimation.setAnimation((float) scrollY, 16);
 
@@ -141,6 +156,7 @@ public class FeatureCategory extends Category {
 
         final MouseUtils.Scroll scroll = MouseUtils.scroll();
 
+
         if(scroll != null) {
             if (!openModSetting) {
                 switch (scroll) {
@@ -149,7 +165,7 @@ public class FeatureCategory extends Category {
                             scrollY -=20;
                         }
 
-                        if(modIndex > 5) {
+                        if(modIndex >= 6) {
                             if(scrollY < -((modIndex - 8) * 35)) {
                                 scrollY = -((modIndex - 7.1) * 35);
                             }
@@ -158,8 +174,8 @@ public class FeatureCategory extends Category {
                     case UP:
                         if(scrollY < -10) {
                             scrollY +=20;
-                        }else {
-                            if(modIndex > 5) {
+                        } else {
+                            if(modIndex >= 6) {
                                 scrollY = 0;
                             }
                         }
@@ -203,7 +219,11 @@ public class FeatureCategory extends Category {
         ClickGui clickGUI = NekoCat.instance.guiManager.getgClickGUI();
 
         for(Module m : NekoCat.instance.moduleManager.getModules()) {
-            // if(!m.isHide()) {
+            if (category != null) {
+                if (m.getModuleCategory() != category) {
+                    continue;
+                }
+            }
             if(clickGUI.searchMode ? (StringUtils.containsIgnoreCase(m.moduleName, clickGUI.searchWord.getText())) : true) {
 
                 if(MouseUtils.isInside(mouseX, mouseY, this.getX() + 270, this.getY() + offset + scrollAnimation.getValue(), 26, 26) && canToggle && !openModSetting) {

@@ -142,10 +142,6 @@ public class ClickGui extends GuiScreen {
                 searchWord.setFocused(true);
                 searchWord.setText("");
                 FeatureCategory.scrollY = 0;
-                CombatModules.scrollY = 0;
-                MovementModules.scrollY = 0;
-                RenderModules.scrollY = 0;
-                UtiltyModules.scrollY = 0;
                 NekoCat.instance.musicManager.setScrollY(0);
             }
         }
