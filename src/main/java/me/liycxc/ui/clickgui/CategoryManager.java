@@ -40,6 +40,6 @@ public class CategoryManager {
     }
 
     public boolean isModule(Category category,CategoryManager categoryManager) {
-        return (category.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || category.equals(categoryManager.getCategoryByClass(CombatModules.class)) || category.equals(categoryManager.getCategoryByClass(MovementModules.class)) || category.equals(categoryManager.getCategoryByClass(RenderModules.class)) || category.equals(categoryManager.getCategoryByClass(UtiltyModules.class)));
+        return category instanceof FeatureCategory;
     }
 }

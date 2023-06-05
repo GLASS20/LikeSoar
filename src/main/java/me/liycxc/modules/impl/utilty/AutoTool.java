@@ -9,7 +9,6 @@ import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -17,7 +16,6 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.util.BlockPos;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 @ModuleTag
@@ -27,28 +25,6 @@ public class AutoTool extends Module {
     }
 
     public BoolValue AutoWeapon = new BoolValue("AutoWeapon",true);
-
-    public Entity getItems(double range)
-    {
-        net.minecraft.entity.Entity tempEntity = null;
-        double dist = range;
-        for(Iterator iterator = mc.theWorld.loadedEntityList.iterator(); iterator.hasNext();)
-        {
-            Object i = iterator.next();
-            Entity entity = (Entity)i;
-            if(mc.thePlayer.onGround && mc.thePlayer.isCollidedVertically && (entity instanceof EntityItem))
-            {
-                double curDist = mc.thePlayer.getDistanceToEntity(entity);
-                if(curDist <= dist)
-                {
-                    dist = curDist;
-                    tempEntity = entity;
-                }
-            }
-        }
-
-        return tempEntity;
-    }
 
     @EventTarget
     public void onAttack(EventSendPacket e)

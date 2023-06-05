@@ -1,10 +1,7 @@
 package me.liycxc.manager.component;
 
 import me.liycxc.NekoCat;
-import me.liycxc.manager.component.impl.BadPacketsComponent;
-import me.liycxc.manager.component.impl.InventoryDeSyncComponent;
-import me.liycxc.manager.component.impl.KeybindComponent;
-import me.liycxc.manager.component.impl.RotationComponent;
+import me.liycxc.manager.component.impl.*;
 
 import java.util.ArrayList;
 
@@ -18,6 +15,8 @@ public final class ComponentManager extends ArrayList<Component> {
         this.add(new InventoryDeSyncComponent());
         this.add(new BadPacketsComponent());
         this.add(new KeybindComponent());
+        this.add(new SlotComponent());
+        this.add(new SelectorDetectionComponent());
         this.registerToEventBus();
     }
 

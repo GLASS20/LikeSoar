@@ -10,23 +10,30 @@ import me.liycxc.modules.impl.utilty.*;
 import me.liycxc.utils.Logger;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModuleManager {
     public HashMap<Integer,Module> keyBinds = new HashMap<>();
     ArrayList<Module> modules = new ArrayList<Module>();
+    List<Module> moduleList = new ArrayList<>();
 
     public void registerModules() {
-        registerModule(new IRC());
-        registerModule(new AutoClick());
-        registerModule(new AutoTool());
-        registerModule(new Reach());
-        registerModule(new RightClick());
-        registerModule(new Chams());
-        registerModule(new Teams());
-        registerModule(new KillAura());
-        registerModule(new Scaffold());
-        registerModule(new NoSlowDown());
+        moduleList.add(new IRC());
+        moduleList.add(new AutoClick());
+        moduleList.add(new AutoTool());
+        moduleList.add(new Reach());
+        moduleList.add(new RightClick());
+        moduleList.add(new Chams());
+        moduleList.add(new Teams());
+        moduleList.add(new KillAura());
+        moduleList.add(new Scaffold());
+        moduleList.add(new NoSlowDown());
+        moduleList.add(new InvManager());
+        moduleList.add(new InvMove());
+        registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
 
     public void registerModule(Module module) {
@@ -44,6 +51,12 @@ public class ModuleManager {
             Logger.log("Event register module: " + module.moduleName);
         } else {
             NekoCat.instance.eventManager.unregister(module);
+        }
+    }
+
+    public void registerModuleByList(List<Module> moduleList) {
+        for (Module module : moduleList) {
+            registerModule(module);
         }
     }
 

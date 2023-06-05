@@ -133,7 +133,7 @@ public class ClickGui extends GuiScreen {
         }
 
         if(categoryManager.isModule(selectedCategory,categoryManager) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) {
-            if(!(FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting) && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
+            if(!FeatureCategory.openModSetting && Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) && Keyboard.isKeyDown(Keyboard.KEY_F)) {
                 searchMode = true;
                 searchWord.setFocused(true);
                 searchWord.setText("");
@@ -142,7 +142,7 @@ public class ClickGui extends GuiScreen {
             }
         }
 
-        if(FeatureCategory.openModSetting || CombatModules.openModSetting || MovementModules.openModSetting || RenderModules.openModSetting || UtiltyModules.openModSetting || (!categoryManager.isModule(selectedCategory,categoryManager) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
+        if(FeatureCategory.openModSetting || (!categoryManager.isModule(selectedCategory,categoryManager) && !selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)))){
             searchMode = false;
         }
 
@@ -225,7 +225,6 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-
         int offset = 35;
         ScaledResolution sr = new ScaledResolution(mc);
 
@@ -239,12 +238,18 @@ public class ClickGui extends GuiScreen {
         }
 
         for(Category c : categoryManager.getCategories()) {
-
             if(!c.equals(categoryManager.getCategoryByClass(SettingsCategory.class))) {
                 if(MouseUtils.isInside(mouseX, mouseY, x + 4, y + offset, 75, 16) && mouseButton == 0) {
                     selectedCategory = c;
+                    FeatureCategory.scrollY = 0;
+                    FeatureCategory.scrollYV = 0;
+                    FeatureCategory.scrollAnimation.setAnimation((float) -FeatureCategory.scrollY, 16);
+                    FeatureCategory.scrollVAnimation.setAnimation((float) -FeatureCategory.scrollYV, 16);
+                    if (FeatureCategory.openModSetting) {
+                        FeatureCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
+                    }
                 }
-            }else {
+            } else {
                 if(MouseUtils.isInside(mouseX, mouseY, x, y + height - 30, 85, 30) && mouseButton == 0) {
                     selectedCategory = c;
                 }
@@ -297,7 +302,6 @@ public class ClickGui extends GuiScreen {
 
     @Override
     public void keyTyped(char typedChar, int keyCode) {
-
         for(Category c : categoryManager.getCategories()) {
             if(c.equals(selectedCategory)) {
                 c.keyTyped(typedChar, keyCode);
@@ -305,20 +309,8 @@ public class ClickGui extends GuiScreen {
         }
 
         if(keyCode == 1) {
-            if(FeatureCategory.openModSetting) {
+            if (FeatureCategory.openModSetting) {
                 FeatureCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
-            }
-            if (CombatModules.openModSetting) {
-                CombatModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
-            }
-            if (MovementModules.openModSetting) {
-                MovementModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
-            }
-            if (RenderModules.openModSetting) {
-                RenderModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
-            }
-            if (UtiltyModules.openModSetting) {
-                UtiltyModules.openSettingAnimation.setDirection(Direction.BACKWARDS);
             }
             if(searchMode) {
                 searchMode = false;

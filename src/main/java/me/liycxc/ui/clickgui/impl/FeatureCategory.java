@@ -16,7 +16,6 @@ import me.liycxc.ui.clickgui.comp.impl.CompFloat;
 import me.liycxc.ui.clickgui.comp.impl.CompInt;
 import me.liycxc.ui.clickgui.comp.impl.CompList;
 import me.liycxc.utils.GlUtils;
-import me.liycxc.utils.Logger;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;
 import me.liycxc.utils.animation.normal.impl.EaseInOutQuad;
@@ -100,13 +99,6 @@ public class FeatureCategory extends Category {
             if(clickGUI.close) {
                 m.selectTimer.reset();
             }
-        }
-
-        if (modIndex != tempModeIndex) {
-            scrollY = 0;
-            scrollYV = 0;
-            // PlayerUtils.tellPlayer("clean" + " t: " + tempModeIndex);
-            scrollAnimation.setAnimation((float) -scrollY, 16);
         }
 
         modIndex = tempModeIndex;
@@ -271,7 +263,6 @@ public class FeatureCategory extends Category {
                 }
                 offset+=35;
             }
-            //  }
         }
 
         if(openModSetting) {
@@ -280,7 +271,7 @@ public class FeatureCategory extends Category {
             }
 
             if (!openModSetting || selectedMod == null || !isHitd || !canToggle) {
-                Logger.log("ret");
+                // Logger.log("ret");
                 return;
             }
 

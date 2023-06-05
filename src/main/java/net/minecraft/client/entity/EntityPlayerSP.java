@@ -157,6 +157,9 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             EventPreUpdate eventPreUpdate = new EventPreUpdate();
             eventPreUpdate.call();
 
+            EventUpdate eventUpdate = new EventUpdate();
+            eventUpdate.call();
+
             super.onUpdate();
 
             this.onUpdateWalkingPlayer();

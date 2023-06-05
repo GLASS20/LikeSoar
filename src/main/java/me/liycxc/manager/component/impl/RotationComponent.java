@@ -8,8 +8,6 @@ import me.liycxc.utils.module.player.MovementFix;
 import me.liycxc.utils.module.player.RotationUtil;
 import me.liycxc.utils.vector.Vector2f;
 
-import static me.liycxc.NekoCat.mc;
-
 public final class RotationComponent extends Component {
     private static boolean active, smoothed;
     public static Vector2f rotations, lastRotations, targetRotations, lastServerRotations;
@@ -29,7 +27,6 @@ public final class RotationComponent extends Component {
         smooth();
     }
 
-    // @EventLink(value = Priorities.VERY_LOW)
     @EventTarget
     public void onUpdate (EventUpdate eventUpdate) {
 
@@ -41,8 +38,8 @@ public final class RotationComponent extends Component {
             smooth();
         }
 
-        mc.thePlayer.rotationYaw = rotations.x;
-        mc.thePlayer.rotationPitch = rotations.y;
+        // mc.thePlayer.rotationYaw = rotations.x;
+        // mc.thePlayer.rotationPitch = rotations.y;
 
         if (correctMovement == MovementFix.BACKWARDS_SPRINT && active) {
             if (Math.abs(rotations.x - Math.toDegrees(MoveUtil.direction())) > 45) {
