@@ -33,6 +33,7 @@ public class ModuleManager {
         moduleList.add(new NoSlowDown());
         moduleList.add(new InvManager());
         moduleList.add(new InvMove());
+        moduleList.add(new Stealer());
         registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
 
