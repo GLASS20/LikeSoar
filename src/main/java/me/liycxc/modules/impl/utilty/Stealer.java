@@ -2,6 +2,7 @@ package me.liycxc.modules.impl.utilty;
 
 import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.impl.IntValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventPreMotion;
 import me.liycxc.modules.Module;
@@ -14,6 +15,7 @@ import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 
+@ModuleTag
 public class Stealer extends Module {
     public Stealer() {
         super("Stealer","Chest Stealer", ModuleCategory.Util, Keyboard.KEY_B);

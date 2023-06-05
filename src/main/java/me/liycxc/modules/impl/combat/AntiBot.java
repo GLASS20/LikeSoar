@@ -2,12 +2,14 @@ package me.liycxc.modules.impl.combat;
 
 import me.liycxc.NekoCat;
 import me.liycxc.api.impl.BoolValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventPreMotion;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import net.minecraft.client.network.NetworkPlayerInfo;
 
+@ModuleTag
 public class AntiBot extends Module {
     public AntiBot() {
         super("AntiBot", "omg matrix bot", ModuleCategory.Combat);

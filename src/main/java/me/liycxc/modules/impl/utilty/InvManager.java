@@ -3,6 +3,7 @@ package me.liycxc.modules.impl.utilty;
 import me.liycxc.NekoCat;
 import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.impl.IntValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventAttackEntity;
 import me.liycxc.events.impl.EventPreMotion;
@@ -27,6 +28,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import org.lwjgl.input.Keyboard;
 
+@ModuleTag
 public class InvManager extends Module {
 
     public InvManager() {
