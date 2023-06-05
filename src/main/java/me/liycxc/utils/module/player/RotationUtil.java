@@ -13,6 +13,10 @@ import net.minecraft.util.Vec3;
 import static me.liycxc.NekoCat.mc;
 
 public class RotationUtil {
+    public static Rotation serverRotation = new Rotation(0F, 0F);
+    public static Rotation targetRotation;
+    public static boolean keepCurrentRotation = false;
+    private static int keepLength = 0;
 
     public static Vector2f calculate(final Vector3d from, final Vector3d to) {
         final Vector3d diff = to.subtract(from);
@@ -155,5 +159,15 @@ public class RotationUtil {
         }
 
         return new Vector2f(yaw, pitch);
+    }
+
+    public static void setTargetRotation(final Rotation rotation, int keepLength0) {
+//        if(Double.isNaN(rotation.getYaw()) || Double.isNaN(rotation.getPitch()) || rotation.getPitch() > 90 || rotation.getPitch() < -90) {
+//            return;
+//        }
+
+        // rotation.fixedSensitivity(mc.gameSettings.mouseSensitivity);
+        targetRotation = rotation;
+        keepLength = keepLength0;
     }
 }

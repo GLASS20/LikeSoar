@@ -15,6 +15,7 @@ public final class RotationComponent extends Component {
     public static Vector2f rotations, lastRotations, targetRotations, lastServerRotations;
     private static double rotationSpeed;
     private static MovementFix correctMovement;
+    Object playerYaw = null;
 
     /*
      * This method must be called on Pre Update Event to work correctly
@@ -92,8 +93,8 @@ public final class RotationComponent extends Component {
             event.setYaw(yaw);
             event.setPitch(pitch);
 
-            mc.thePlayer.rotationYaw = yaw;
-            mc.thePlayer.rotationPitch = pitch;
+            // mc.thePlayer.rotationYaw = yaw;
+            // mc.thePlayer.rotationPitch = pitch;
 
             mc.thePlayer.renderYawOffset = yaw;
             mc.thePlayer.rotationYawHead = yaw;
@@ -116,7 +117,7 @@ public final class RotationComponent extends Component {
         smoothed = false;
     }
 
-    private void correctDisabledRotations() {
+    private static void correctDisabledRotations() {
         final Vector2f rotations = new Vector2f(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
         final Vector2f fixedRotations = RotationUtil.resetRotation(RotationUtil.applySensitivityPatch(rotations, lastRotations));
 
@@ -147,5 +148,11 @@ public final class RotationComponent extends Component {
          * Updating MouseOver
          */
         mc.entityRenderer.getMouseOver(1);
+    }
+
+    public static void stopRotation() {
+        active = false;
+
+        correctDisabledRotations();
     }
 }

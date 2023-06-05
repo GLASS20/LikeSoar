@@ -131,7 +131,6 @@ public class ModelBiped extends ModelBase {
         final EntityPlayerSP entityPlayer = Minecraft.getMinecraft().thePlayer;
         if (entityIn == entityPlayer) {
             this.bipedHead.rotateAngleX = (entityPlayer.prevRenderPitchHead + (entityPlayer.renderPitchHead - entityPlayer.prevRenderPitchHead) * Minecraft.getMinecraft().timer.renderPartialTicks) / (180.0F / (float) Math.PI);
-            // this.bipedHead.rotateAngleX = entityPlayer.renderPitchHead / (180F / (float) Math.PI);
         }
         this.bipedRightArm.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F + (float) Math.PI) * 2.0F * p_78087_2_ * 0.5F;
         this.bipedLeftArm.rotateAngleX = MathHelper.cos(p_78087_1_ * 0.6662F) * 2.0F * p_78087_2_ * 0.5F;

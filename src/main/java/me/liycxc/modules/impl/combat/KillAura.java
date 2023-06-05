@@ -5,6 +5,7 @@ import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.impl.FloatValue;
 import me.liycxc.api.impl.IntValue;
 import me.liycxc.api.impl.ListValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.*;
 import me.liycxc.manager.component.impl.BadPacketsComponent;
@@ -31,6 +32,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
+@ModuleTag
 public class KillAura extends Module {
     public KillAura() {
         super("KillAura","Demo", ModuleCategory.Combat, Keyboard.KEY_R);
@@ -108,7 +110,7 @@ public class KillAura extends Module {
     @Override
     public void onDisable() {
         target = null;
-
+        RotationComponent.stopRotation();
         this.unblock(false);
     }
 
@@ -601,6 +603,7 @@ public class KillAura extends Module {
             if (targets.isEmpty()) {
                 this.randomiseTargetRotations();
                 target = null;
+                RotationComponent.stopRotation();
                 return;
             }
 

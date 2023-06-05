@@ -1,6 +1,7 @@
 package me.liycxc.modules.impl.utilty;
 
 import me.liycxc.api.impl.BoolValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
+@ModuleTag
 public class Teams extends Module {
     private BoolValue scoreboardValue = new BoolValue("ScoreboardTeam", true);
     private BoolValue colorValue = new BoolValue("Color", true);

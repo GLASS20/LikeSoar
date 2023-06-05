@@ -1,7 +1,6 @@
 package net.minecraft.client.entity;
 
 import me.liycxc.events.impl.*;
-import me.liycxc.utils.PlayerUtils;
 import me.liycxc.utils.vector.Vector2f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
@@ -151,9 +150,6 @@ public class EntityPlayerSP extends AbstractClientPlayer {
      * Called to update the entity's position/logic.
      */
     public void onUpdate() {
-        EventUpdate eventUpdate = new EventUpdate();
-        eventUpdate.call();
-
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ))) {
             prevRenderPitchHead = renderPitchHead;
             renderPitchHead = rotationPitch;
@@ -165,8 +161,8 @@ public class EntityPlayerSP extends AbstractClientPlayer {
 
             this.onUpdateWalkingPlayer();
 
-            EventPostMotion eventPostMotion = new EventPostMotion();
-            eventPostMotion.call();
+            EventPostMotion postMotion = new EventPostMotion();
+            postMotion.call();
         }
     }
 
@@ -286,11 +282,11 @@ public class EntityPlayerSP extends AbstractClientPlayer {
      * @param message used on EntityPlayerSP.sendChatMessage - as inbound message
      */
     public void sendChatMessage(final String message) {
-/*        final ChatInputEvent event = new ChatInputEvent(message);
-        Client.INSTANCE.getEventBus().handle(event);
-
-        if (event.isCancelled())
-            return;*/
+//        final ChatInputEvent event = new ChatInputEvent(message);
+//        Client.INSTANCE.getEventBus().handle(event);
+//
+//        if (event.isCancelled())
+//            return;
 
         this.sendQueue.addToSendQueue(new C01PacketChatMessage(message/*event.getMessage()*/));
     }
@@ -415,11 +411,11 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             final double d1 = z - (double) blockpos.getZ();
 
             if (!this.isOpenBlockSpace(blockpos)) {
-                EventPushOutOfBlock pushOutOfBlockEvent = new EventPushOutOfBlock();
-               pushOutOfBlockEvent.call();
-                if (pushOutOfBlockEvent.isCancelled()) {
-                    return false;
-                }
+//                PushOutOfBlockEvent pushOutOfBlockEvent = new PushOutOfBlockEvent();
+//                Client.INSTANCE.getEventBus().handle(pushOutOfBlockEvent);
+//                if (pushOutOfBlockEvent.isCancelled()) {
+//                    return false;
+//                }
 
                 int i = -1;
                 double d2 = 9999.0D;
@@ -462,12 +458,12 @@ public class EntityPlayerSP extends AbstractClientPlayer {
                     this.motionZ = f;
                 }
 
-                if (Math.abs(this.motionX) == 0.1F || Math.abs(this.motionZ) == 0.1F) {
-                    PlayerUtils.tellPlayer("");
-                    PlayerUtils.tellPlayer(Math.hypot(this.motionX, this.motionZ));
-                    PlayerUtils.tellPlayer(this.motionX);
-                    PlayerUtils.tellPlayer(this.motionZ);
-                }
+//                if (Math.abs(this.motionX) == 0.1F || Math.abs(this.motionZ) == 0.1F) {
+//                    ChatUtil.display("");
+//                    ChatUtil.display(Math.hypot(this.motionX, this.motionZ));
+//                    ChatUtil.display(this.motionX);
+//                    ChatUtil.display(this.motionZ);
+//                }
 
             }
 

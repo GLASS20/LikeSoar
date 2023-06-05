@@ -4,8 +4,8 @@ import com.google.gson.JsonElement;
 import lombok.Getter;
 import lombok.Setter;
 import me.liycxc.utils.Logger;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+//import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.Nullable;
 
 public abstract class Value<T> {
 
@@ -93,9 +93,9 @@ public abstract class Value<T> {
         return displayable.invoke();
     }
 
-    @Nullable
-    public Boolean displayable(@NotNull Function0<Boolean> function) {
-        displayable = function;
-        return null;
-    }
+//    @Nullable
+//    public Boolean displayable(@NotNull Function0<Boolean> function) {
+//        displayable = function;
+//        return null;
+//    }
 }

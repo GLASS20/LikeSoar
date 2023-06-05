@@ -2,6 +2,7 @@ package me.liycxc.modules.impl.render;
 
 import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.impl.ListValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventRendererLivingEntity;
 import me.liycxc.modules.Module;
@@ -13,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
+@ModuleTag
 public class Chams extends Module {
     public Chams() {
         super("Chams","Like esp in csgo", ModuleCategory.Render);

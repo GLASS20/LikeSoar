@@ -1,6 +1,7 @@
 package me.liycxc.modules.impl.utilty;
 
 import me.liycxc.api.impl.BoolValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventSendPacket;
 import me.liycxc.events.impl.EventUpdate;
@@ -19,6 +20,7 @@ import net.minecraft.util.BlockPos;
 import java.util.Iterator;
 import java.util.Objects;
 
+@ModuleTag
 public class AutoTool extends Module {
     public AutoTool() {
         super("AutoTool","Fast change you hand's item", ModuleCategory.Util);

@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import lombok.Setter;
 import me.liycxc.NekoCat;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventLoadWorld;
 import me.liycxc.modules.Module;
@@ -29,6 +30,7 @@ import java.util.Date;
 
 import static me.liycxc.utils.irc.ServerUtils.getTime;
 
+@ModuleTag
 public class IRC extends Module {
     public IRC() {
         super("IRC","Realtime Chat", ModuleCategory.Util,true);
@@ -118,8 +120,7 @@ public class IRC extends Module {
     }
     @Override
     public void onEnable() {
-        qqLogin();
-        messageGetter.resume();
+        this.onLoadWorld(null);
         super.onEnable();
     }
 
@@ -132,7 +133,24 @@ public class IRC extends Module {
     @EventTarget
     public void onLoadWorld(EventLoadWorld eventLoadWorld) {
         if (toggled) {
-            onEnable();
+            PlayerUtils.tellPlayerIrc("IRC - Multi-Platform");
+            if (MineUser.isNull()) {
+                PlayerUtils.tellPlayerIrc("Not Login, Please login");
+                PlayerUtils.tellPlayerIrc("Auto QQ Login...");
+                qqLogin();
+                if (StringUtils.isNullOrEmpty(MineUser.qqNumber)) {
+                    PlayerUtils.tellPlayerIrc("Cant get QQ data, module down");
+                    this.onDisable();
+                    this.setToggled(false);
+                } else {
+                    PlayerUtils.tellPlayerIrc("QQ Name: " + MineUser.qqName);
+                    PlayerUtils.tellPlayerIrc("QQ Number: " + PenguinUtils.QQNumber);
+                    PlayerUtils.tellPlayerIrc("Use .i or .switchchat to send massage");
+                    messageGetter.resume();
+                }
+            }
+        } else {
+            this.onDisable();
         }
     }
     /**
@@ -140,20 +158,9 @@ public class IRC extends Module {
      * table: MineUser
      */
     private void qqLogin() {
-        Logger.log("QQ Login starting");
-
-        PlayerUtils.tellPlayerIrc("IRC - Multi-Platform");
         if (MineUser.isNull()) {
-            PlayerUtils.tellPlayerIrc("Not Login, Please login");
-            PlayerUtils.tellPlayerIrc("Auto QQ Login...");
-            Logger.log("Getting qq of windows");
             PenguinUtils.getQQ();
-            if (StringUtils.isNullOrEmpty(PenguinUtils.QQNumber)) {
-                PlayerUtils.tellPlayerIrc("Cant get QQ data, module down");
-                Logger.warn("No app's login account or cant get data");
-                this.setToggled(false);
-            } else {
-                PlayerUtils.tellPlayerIrc("QQ Number: " + PenguinUtils.QQNumber);
+            if (!StringUtils.isNullOrEmpty(PenguinUtils.QQNumber)) {
                 MineUser.qqNumber = PenguinUtils.QQNumber;
 
                 HttpClient client = HttpClients.createDefault();
@@ -172,18 +179,13 @@ public class IRC extends Module {
                         MineUser.qqName = StringUtils.isNullOrEmpty(qqName.replaceAll("\\p{C}", "")) ? MineUser.qqNumber : qqName.replaceAll("\\p{C}", "");
                     } else {
                         Logger.error("Oops, HttpStatus is " + res.getStatusLine().getStatusCode());
+                        this.setToggled(false);
                     }
                 } catch (Exception e) {
                     Logger.error("We cant get qq name by qzone.qq.com");
+                    this.setToggled(false);
                 }
-                PlayerUtils.tellPlayerIrc("QQ Name: " + MineUser.qqName);
-                Logger.log("QQ data got ok");
             }
-        } else {
-            PlayerUtils.tellPlayerIrc("QQ Name: " + MineUser.qqName);
-            PlayerUtils.tellPlayerIrc("QQ Number: " + PenguinUtils.QQNumber);
-            PlayerUtils.tellPlayerIrc("Use .i or .switchchat to send massage");
-            Logger.log("QQ data is ready");
         }
     }
 }

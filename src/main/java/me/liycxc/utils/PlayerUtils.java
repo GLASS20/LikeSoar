@@ -148,9 +148,15 @@ public class PlayerUtils {
             mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + NekoCat.instance.getName() + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + string));
     }
 
+    private static ArrayList<String> messages = new ArrayList<>();
     public static void tellPlayerIrc(String string) {
-        if (string != null && mc.thePlayer != null)
-            mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + "IRC" + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + string));
+        messages.add(string);
+        if (string != null && mc.thePlayer != null) {
+            for (String sth : messages) {
+                mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GRAY + "[" + EnumChatFormatting.WHITE + "IRC" + EnumChatFormatting.GRAY + "]: " + EnumChatFormatting.GRAY + sth));
+            }
+            messages.clear();
+        }
     }
 
     public static void tellPlayerIrcMessage(String name,String message) {

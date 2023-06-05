@@ -3,6 +3,7 @@ package me.liycxc.modules.impl.combat;
 import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.impl.IntValue;
 import me.liycxc.api.impl.ListValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
 import me.liycxc.modules.Module;
@@ -11,6 +12,7 @@ import me.liycxc.utils.TimerUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemSword;
 
+@ModuleTag
 public class AutoClick extends Module {
     public AutoClick() {
         super("AutoClick","Mouse down auto click", ModuleCategory.Combat);

@@ -2,6 +2,7 @@ package me.liycxc.modules.impl.utilty;
 
 import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.impl.IntValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventTick;
 import me.liycxc.modules.Module;
@@ -10,6 +11,7 @@ import me.liycxc.utils.TimerUtils;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.ItemBlock;
 
+@ModuleTag
 public class RightClick extends Module {
     public RightClick() {
         super("RightClick","AutoClick when you right mouse down", ModuleCategory.Util);

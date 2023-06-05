@@ -1,6 +1,7 @@
 package me.liycxc.modules.impl.movement;
 
 import me.liycxc.api.impl.ListValue;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.events.EventTarget;
 import me.liycxc.events.impl.EventPreMotion;
 import me.liycxc.events.impl.EventSendPacket;
@@ -17,6 +18,7 @@ import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 
+@ModuleTag
 public class NoSlowDown extends Module {
     public NoSlowDown() {
         super("NoSlowDown","Get blocking no slow", ModuleCategory.Movement);
