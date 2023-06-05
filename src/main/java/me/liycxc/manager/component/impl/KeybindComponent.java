@@ -8,6 +8,9 @@ import me.liycxc.manager.component.Component;
 public class KeybindComponent extends Component {
     @EventTarget
     public void onKey(EventKey key) {
+        if (mc.currentScreen != null) {
+            return;
+        }
         if (NekoCat.instance.moduleManager.keyBinds.containsKey(key.getKey())) {
             NekoCat.instance.moduleManager.keyBinds.get(key.getKey()).toggle();
         }

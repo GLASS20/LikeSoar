@@ -25,11 +25,12 @@ import net.minecraft.network.play.client.C0DPacketCloseWindow;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import org.lwjgl.input.Keyboard;
 
 public class InvManager extends Module {
 
     public InvManager() {
-        super("InvManager","Clean inv", ModuleCategory.Util);
+        super("InvManager","Clean inv", ModuleCategory.Util, Keyboard.KEY_B);
     }
 
     private final IntValue delayA = new IntValue("Delay A",  100,50, 500);

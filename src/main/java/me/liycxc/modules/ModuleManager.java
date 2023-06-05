@@ -1,10 +1,12 @@
 package me.liycxc.modules;
 
 import me.liycxc.NekoCat;
+import me.liycxc.modules.impl.combat.AntiBot;
 import me.liycxc.modules.impl.combat.AutoClick;
 import me.liycxc.modules.impl.combat.KillAura;
 import me.liycxc.modules.impl.combat.Reach;
 import me.liycxc.modules.impl.movement.NoSlowDown;
+import me.liycxc.modules.impl.movement.SafeWalk;
 import me.liycxc.modules.impl.render.Chams;
 import me.liycxc.modules.impl.utilty.*;
 import me.liycxc.utils.Logger;
@@ -34,6 +36,8 @@ public class ModuleManager {
         moduleList.add(new InvManager());
         moduleList.add(new InvMove());
         moduleList.add(new Stealer());
+        moduleList.add(new SafeWalk());
+        moduleList.add(new AntiBot());
         registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
 

@@ -252,6 +252,8 @@ public abstract class Entity implements ICommandSender {
     /** The command result statistics for this Entity. */
     private final CommandResultStats cmdResultStats;
 
+    public boolean safeWalk = false;
+
     public int getEntityId() {
         return this.entityId;
     }
@@ -585,7 +587,7 @@ public abstract class Entity implements ICommandSender {
             double d5 = z;
             boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
 
-            if (flag) {
+            if (flag || safeWalk) {
                 double d6;
 
                 for (d6 = 0.05D; x != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox().offset(x, -1.0D, 0.0D)).isEmpty(); d3 = x) {
@@ -636,6 +638,8 @@ public abstract class Entity implements ICommandSender {
                     }
                 }
             }
+
+            safeWalk = false;
 
             List<AxisAlignedBB> list1 = this.worldObj.getCollidingBoundingBoxes(this, this.getEntityBoundingBox().addCoord(x, y, z));
             AxisAlignedBB axisalignedbb = this.getEntityBoundingBox();

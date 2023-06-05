@@ -12,10 +12,11 @@ import me.liycxc.utils.module.player.StopWatch;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.input.Keyboard;
 
 public class Stealer extends Module {
     public Stealer() {
-        super("Stealer","Chest Stealer", ModuleCategory.Util);
+        super("Stealer","Chest Stealer", ModuleCategory.Util, Keyboard.KEY_B);
     }
 
     private final IntValue delayA = new IntValue("Delay A",  100, 0, 500);
