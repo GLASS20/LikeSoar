@@ -1,6 +1,6 @@
 package net.minecraft.util;
 
-import me.liycxc.events.impl.EventMoveInput;
+import me.liycxc.api.events.impl.EventMoveInput;
 import net.minecraft.client.settings.GameSettings;
 
 public class MovementInputFromOptions extends MovementInput {

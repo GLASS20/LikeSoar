@@ -3,7 +3,7 @@ package net.minecraft.client.renderer;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
 import me.liycxc.NekoCat;
-import me.liycxc.events.impl.*;
+import me.liycxc.api.events.impl.*;
 import me.liycxc.pvp.management.mods.impl.MinimalBobbingMod;
 import me.liycxc.pvp.management.mods.impl.MinimalDamageShakeMod;
 import me.liycxc.pvp.management.mods.impl.MotionBlurMod;

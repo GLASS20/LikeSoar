@@ -1,8 +1,8 @@
 package me.liycxc.pvp;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.pvp.management.quickplay.QuickPlay;
 import me.liycxc.pvp.management.quickplay.QuickPlayCommand;
 import me.liycxc.utils.GlUtils;

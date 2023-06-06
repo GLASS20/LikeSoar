@@ -1,7 +1,7 @@
 package me.liycxc.ui.clickgui.comp.impl;
 
 import me.liycxc.NekoCat;
-import me.liycxc.api.impl.IntValue;
+import me.liycxc.api.value.impl.IntValue;
 import me.liycxc.modules.Module;
 import me.liycxc.ui.clickgui.comp.Comp;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;

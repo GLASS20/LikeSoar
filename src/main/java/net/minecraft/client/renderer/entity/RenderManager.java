@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.entity;
 
 import com.google.common.collect.Maps;
-import me.liycxc.events.impl.EventRenderHitbox;
+import me.liycxc.api.events.impl.EventRenderHitbox;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;

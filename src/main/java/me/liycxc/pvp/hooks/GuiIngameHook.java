@@ -1,9 +1,9 @@
 package me.liycxc.pvp.hooks;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.impl.EventRender2D;
-import me.liycxc.events.impl.EventRenderDamageTint;
-import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.api.events.impl.EventRender2D;
+import me.liycxc.api.events.impl.EventRenderDamageTint;
+import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.pvp.GuiEditHUD;
 import me.liycxc.pvp.management.mods.impl.HUDMod;
 import me.liycxc.pvp.management.mods.impl.MenuBlurMod;

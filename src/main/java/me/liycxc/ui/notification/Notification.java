@@ -1,8 +1,8 @@
 package me.liycxc.ui.notification;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.utils.TimerUtils;
 import me.liycxc.utils.animation.normal.Animation;
 import me.liycxc.utils.animation.normal.Direction;

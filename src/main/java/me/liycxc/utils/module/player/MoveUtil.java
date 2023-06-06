@@ -1,8 +1,8 @@
 package me.liycxc.utils.module.player;
 
 import lombok.experimental.UtilityClass;
-import me.liycxc.events.impl.EventMove;
-import me.liycxc.events.impl.EventMoveInput;
+import me.liycxc.api.events.impl.EventMove;
+import me.liycxc.api.events.impl.EventMoveInput;
 import me.liycxc.utils.PlayerUtils;
 import me.liycxc.utils.vector.Vector2d;
 import net.minecraft.client.settings.KeyBinding;

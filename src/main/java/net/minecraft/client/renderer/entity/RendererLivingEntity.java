@@ -1,8 +1,8 @@
 package net.minecraft.client.renderer.entity;
 
 import com.google.common.collect.Lists;
-import me.liycxc.events.Event;
-import me.liycxc.events.impl.EventRendererLivingEntity;
+import me.liycxc.api.events.Event;
+import me.liycxc.api.events.impl.EventRendererLivingEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;

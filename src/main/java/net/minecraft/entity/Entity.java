@@ -1,6 +1,6 @@
 package net.minecraft.entity;
 
-import me.liycxc.events.impl.EventStrafe;
+import me.liycxc.api.events.impl.EventStrafe;
 import me.liycxc.utils.vector.Vector3d;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;

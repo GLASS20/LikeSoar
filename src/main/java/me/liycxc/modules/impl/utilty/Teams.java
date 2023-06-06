@@ -1,7 +1,7 @@
 package me.liycxc.modules.impl.utilty;
 
-import me.liycxc.api.impl.BoolValue;
 import me.liycxc.api.tags.ModuleTag;
+import me.liycxc.api.value.impl.BoolValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import net.minecraft.entity.EntityLivingBase;

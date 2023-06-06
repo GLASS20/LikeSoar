@@ -1,12 +1,10 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import java.awt.Color;
-
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventRender2D;
-import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventRender2D;
+import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.pvp.GuiEditHUD;
+import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.TargetUtils;
@@ -22,6 +20,8 @@ import me.liycxc.utils.render.StencilUtils;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+
+import java.awt.*;
 
 public class TargetInfoMod extends Mod {
 

@@ -1,16 +1,16 @@
 package me.liycxc.modules.impl.combat;
 
 import me.liycxc.NekoCat;
-import me.liycxc.api.impl.BoolValue;
-import me.liycxc.api.impl.FloatValue;
-import me.liycxc.api.impl.IntValue;
-import me.liycxc.api.impl.ListValue;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.*;
 import me.liycxc.api.tags.ModuleTag;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.*;
-import me.liycxc.manager.component.impl.BadPacketsComponent;
-import me.liycxc.manager.component.impl.InventoryDeSyncComponent;
-import me.liycxc.manager.component.impl.RotationComponent;
+import me.liycxc.api.value.impl.BoolValue;
+import me.liycxc.api.value.impl.FloatValue;
+import me.liycxc.api.value.impl.IntValue;
+import me.liycxc.api.value.impl.ListValue;
+import me.liycxc.manages.component.impl.BadPacketsComponent;
+import me.liycxc.manages.component.impl.InventoryDeSyncComponent;
+import me.liycxc.manages.component.impl.RotationComponent;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.MathUtils;

@@ -1,11 +1,11 @@
 package me.liycxc.pvp.management.mods.impl;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventCameraRotation;
-import me.liycxc.events.impl.EventKey;
-import me.liycxc.events.impl.EventPlayerHeadRotation;
-import me.liycxc.events.impl.EventTick;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventCameraRotation;
+import me.liycxc.api.events.impl.EventKey;
+import me.liycxc.api.events.impl.EventPlayerHeadRotation;
+import me.liycxc.api.events.impl.EventTick;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import me.liycxc.utils.ClientUtils;

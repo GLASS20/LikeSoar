@@ -1,8 +1,8 @@
 package me.liycxc.ui.clickgui;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.pvp.GuiSearchField;
 import me.liycxc.pvp.clickgui.category.impl.MusicPlayerCategory;
 import me.liycxc.pvp.clickgui.category.impl.SettingsCategory;

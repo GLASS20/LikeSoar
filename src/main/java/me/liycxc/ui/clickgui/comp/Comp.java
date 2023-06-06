@@ -1,6 +1,6 @@
 package me.liycxc.ui.clickgui.comp;
 
-import me.liycxc.api.Value;
+import me.liycxc.api.value.Value;
 import me.liycxc.modules.Module;
 import me.liycxc.ui.clickgui.impl.FeatureCategory;
 

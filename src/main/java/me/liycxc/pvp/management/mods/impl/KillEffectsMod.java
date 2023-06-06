@@ -1,10 +1,10 @@
 package me.liycxc.pvp.management.mods.impl;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventLoadWorld;
-import me.liycxc.events.impl.EventPreMotion;
-import me.liycxc.events.impl.EventUpdate;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventLoadWorld;
+import me.liycxc.api.events.impl.EventPreMotion;
+import me.liycxc.api.events.impl.EventUpdate;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import net.minecraft.block.Block;

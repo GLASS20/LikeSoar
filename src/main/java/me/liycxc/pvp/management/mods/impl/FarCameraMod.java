@@ -1,8 +1,8 @@
 package me.liycxc.pvp.management.mods.impl;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventCameraRotation;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventCameraRotation;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import net.minecraft.client.renderer.GlStateManager;

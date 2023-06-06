@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer.chunk;
 
 import com.google.common.collect.Sets;
-import me.liycxc.events.impl.EventRenderChunkPosition;
+import me.liycxc.api.events.impl.EventRenderChunkPosition;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockRedstoneWire;

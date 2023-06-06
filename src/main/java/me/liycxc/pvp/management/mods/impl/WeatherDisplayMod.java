@@ -1,8 +1,8 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventRender2D;
-import me.liycxc.events.impl.EventRenderShadow;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventRender2D;
+import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.pvp.management.mods.HudMod;
 
 public class WeatherDisplayMod extends HudMod{

@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import me.liycxc.events.impl.EventRenderItem;
+import me.liycxc.api.events.impl.EventRenderItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;

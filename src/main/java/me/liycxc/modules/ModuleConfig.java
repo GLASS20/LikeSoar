@@ -1,11 +1,11 @@
 package me.liycxc.modules;
 
 import me.liycxc.NekoCat;
-import me.liycxc.api.Value;
-import me.liycxc.api.impl.BoolValue;
-import me.liycxc.api.impl.FloatValue;
-import me.liycxc.api.impl.IntValue;
-import me.liycxc.api.impl.ListValue;
+import me.liycxc.api.value.Value;
+import me.liycxc.api.value.impl.BoolValue;
+import me.liycxc.api.value.impl.FloatValue;
+import me.liycxc.api.value.impl.IntValue;
+import me.liycxc.api.value.impl.ListValue;
 
 import java.io.*;
 import java.util.ArrayList;

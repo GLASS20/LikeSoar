@@ -1,13 +1,11 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import java.util.Arrays;
-
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventReceivePacket;
-import me.liycxc.events.impl.EventRender2D;
-import me.liycxc.events.impl.EventRenderShadow;
 import me.liycxc.NekoCat;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventReceivePacket;
+import me.liycxc.api.events.impl.EventRender2D;
+import me.liycxc.api.events.impl.EventRenderShadow;
+import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import me.liycxc.utils.ClientUtils;
 import me.liycxc.utils.font.FontUtils;
@@ -16,6 +14,8 @@ import me.liycxc.utils.server.ServerUtils;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.util.StringUtils;
+
+import java.util.Arrays;
 
 public class SessionInfoMod extends Mod {
 

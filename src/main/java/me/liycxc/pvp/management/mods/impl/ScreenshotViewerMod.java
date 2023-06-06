@@ -1,9 +1,9 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventKey;
 import me.liycxc.NekoCat;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventKey;
+import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 
 public class ScreenshotViewerMod extends Mod {

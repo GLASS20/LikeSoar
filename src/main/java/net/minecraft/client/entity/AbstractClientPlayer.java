@@ -2,8 +2,8 @@ package net.minecraft.client.entity;
 
 import com.mojang.authlib.GameProfile;
 import me.liycxc.NekoCat;
-import me.liycxc.events.impl.EventFovUpdate;
-import me.liycxc.events.impl.EventLook;
+import me.liycxc.api.events.impl.EventFovUpdate;
+import me.liycxc.api.events.impl.EventLook;
 import me.liycxc.utils.vector.Vector2f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;

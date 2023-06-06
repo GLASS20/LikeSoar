@@ -1,10 +1,10 @@
 package net.minecraft.client.gui;
 
 import me.liycxc.NekoCat;
-import me.liycxc.events.impl.EventRenderBossbar;
-import me.liycxc.events.impl.EventRenderCrosshair;
-import me.liycxc.events.impl.EventRenderScoreboard;
-import me.liycxc.events.impl.EventRenderSelectedItem;
+import me.liycxc.api.events.impl.EventRenderBossbar;
+import me.liycxc.api.events.impl.EventRenderCrosshair;
+import me.liycxc.api.events.impl.EventRenderScoreboard;
+import me.liycxc.api.events.impl.EventRenderSelectedItem;
 import me.liycxc.pvp.hooks.GuiIngameHook;
 import me.liycxc.pvp.management.mods.impl.HotbarMod;
 import me.liycxc.pvp.management.mods.impl.OldAnimationsMod;

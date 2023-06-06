@@ -1,11 +1,11 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventScrollMouse;
-import me.liycxc.events.impl.EventTick;
-import me.liycxc.events.impl.EventZoomFov;
 import me.liycxc.NekoCat;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventScrollMouse;
+import me.liycxc.api.events.impl.EventTick;
+import me.liycxc.api.events.impl.EventZoomFov;
+import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 

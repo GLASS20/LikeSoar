@@ -1,7 +1,7 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.*;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.*;
 import me.liycxc.pvp.management.mods.HudMod;
 
 public class ComboCounterMod extends HudMod{

@@ -1,17 +1,12 @@
 package me.liycxc.pvp.management.mods.impl;
 
-import java.awt.Color;
-import java.util.Collection;
-import java.util.List;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import me.liycxc.pvp.management.mods.Mod;
-import me.liycxc.events.EventTarget;
-import me.liycxc.events.impl.EventRenderScoreboard;
-import me.liycxc.events.impl.EventRenderShadow;
 import me.liycxc.NekoCat;
+import me.liycxc.api.events.EventTarget;
+import me.liycxc.api.events.impl.EventRenderScoreboard;
+import me.liycxc.api.events.impl.EventRenderShadow;
+import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import me.liycxc.utils.render.RenderUtils;
 import net.minecraft.client.gui.Gui;
@@ -20,6 +15,10 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.EnumChatFormatting;
+
+import java.awt.*;
+import java.util.Collection;
+import java.util.List;
 
 public class ScoreboardMod extends Mod {
 
