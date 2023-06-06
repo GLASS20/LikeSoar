@@ -14,6 +14,9 @@ import net.minecraft.network.play.server.S3EPacketTeams;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Code from rise 6.0
+ */
 @ModuleTag
 public class HypixelStaff extends Module {
     public HypixelStaff() {
