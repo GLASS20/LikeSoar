@@ -41,6 +41,7 @@ public class ModuleManager {
         moduleList.add(new SafeWalk());
         moduleList.add(new AntiBot());
         moduleList.add(new HypixelStaff());
+        moduleList.add(new FastPlace());
         registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(s -> s.getModuleName().charAt(0))).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
 
