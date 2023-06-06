@@ -10,15 +10,17 @@ import me.liycxc.modules.impl.movement.SafeWalk;
 import me.liycxc.modules.impl.render.Chams;
 import me.liycxc.modules.impl.utilty.*;
 import me.liycxc.utils.Logger;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ModuleManager {
-    public HashMap<Integer,Module> keyBinds = new HashMap<>();
+    public MultiValuedMap<Integer,Module> keyBinds = new ArrayListValuedHashMap<>();
     ArrayList<Module> modules = new ArrayList<Module>();
     List<Module> moduleList = new ArrayList<>();
 
@@ -76,5 +78,17 @@ public class ModuleManager {
 
     public ArrayList<Module> getModules() {
         return modules;
+    }
+
+    public void setKeybind(Module module, int key) {
+        MultiValuedMap<Integer, Module> newMap = new ArrayListValuedHashMap<>();
+        for (Map.Entry<Integer, Module> entry : keyBinds.entries()) {
+            if (entry.getValue().equals(module)) {
+                newMap.put(key, entry.getValue());
+            } else {
+                newMap.put(entry.getKey(), entry.getValue());
+            }
+        }
+        keyBinds = newMap;
     }
 }

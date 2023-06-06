@@ -288,6 +288,41 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/lombok.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/collections4/commons-collections4-4.4.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commonsd</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/collections4/commons-collections4-4.4-javadoc.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commonsds</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/collections4/commons-collections4-4.4-sources.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commonsdsts</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/collections4/commons-collections4-4.4-test-sources.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commonsdst</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/collections4/commons-collections4-4.4-tests.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>

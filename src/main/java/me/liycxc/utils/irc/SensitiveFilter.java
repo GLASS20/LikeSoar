@@ -1,5 +1,6 @@
 package me.liycxc.utils.irc;
 
+import me.liycxc.NekoCat;
 import me.liycxc.utils.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResourceManager;
@@ -39,7 +40,9 @@ public class SensitiveFilter {
                 sensitiveWordsList.add(keyword);
             }
         } catch (IOException e) {
-            Logger.error("Load SensitiveFilter error " + e.getMessage());
+            if (NekoCat.instance.DEVELOPMENT_SWITCH) {
+                Logger.error("Load SensitiveFilter error " + e.getMessage());
+            }
         }
     }
 
