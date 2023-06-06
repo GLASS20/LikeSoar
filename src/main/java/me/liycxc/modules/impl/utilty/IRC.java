@@ -68,8 +68,11 @@ public class IRC extends Module {
                                 if (!locMessages.contains(document.getObjectId("_id"))) {
                                     // Add message to loc array, then aren't echo again
                                     locMessages.add(document.getObjectId("_id"));
+                                    // Sensitive filter check
+                                    SensitiveFilter sensitiveFilter = new SensitiveFilter();
+                                    String showString = sensitiveFilter.filter(document.get("Message").toString());
                                     // Show message to player
-                                    PlayerUtils.tellPlayerIrcMessage(document.get("qqName").toString(),document.get("Message").toString());
+                                    PlayerUtils.tellPlayerIrcMessage(document.get("qqName").toString(),showString);
                                 }
                             }
                         }
@@ -87,9 +90,6 @@ public class IRC extends Module {
                             if(sendMessage.length() > 60) {
                                 sendMessage = sendMessage.substring(0,60);
                             }
-                            // Sensitive filter check
-                            SensitiveFilter sensitiveFilter = new SensitiveFilter();
-                            sendMessage = sensitiveFilter.filter(sendMessage);
                             // Check is null or empty
                             if (StringUtils.isNullOrEmpty(sendMessage)) {
                                 return;
@@ -142,13 +142,12 @@ public class IRC extends Module {
                     PlayerUtils.tellPlayerIrc("Cant get QQ data, module down");
                     this.onDisable();
                     this.setToggled(false);
-                } else {
-                    PlayerUtils.tellPlayerIrc("QQ Name: " + MineUser.qqName);
-                    PlayerUtils.tellPlayerIrc("QQ Number: " + PenguinUtils.QQNumber);
-                    PlayerUtils.tellPlayerIrc("Use .i or .switchchat to send massage");
-                    messageGetter.resume();
                 }
             }
+            PlayerUtils.tellPlayerIrc("QQ Name: " + MineUser.qqName);
+            PlayerUtils.tellPlayerIrc("QQ Number: " + MineUser.qqNumber);
+            PlayerUtils.tellPlayerIrc("Use .i or .switchchat to send massage");
+            messageGetter.resume();
         } else {
             this.onDisable();
         }
