@@ -40,7 +40,8 @@ public class ModuleManager {
         moduleList.add(new Stealer());
         moduleList.add(new SafeWalk());
         moduleList.add(new AntiBot());
-        registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
+        moduleList.add(new HypixelStaff());
+        registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(s -> s.getModuleName().charAt(0))).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
 
     public void registerModule(Module module) {
