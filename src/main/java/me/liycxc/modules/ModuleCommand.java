@@ -24,7 +24,6 @@ public class ModuleCommand {
 
     public static void runCommand(String command) {
         String preCommand = command.contains(" ") ? command.substring(0,command.indexOf(" ")) : command;
-        System.out.println(preCommand);
         try {
             switch (preCommand.toLowerCase()) {
                 case "i": {
