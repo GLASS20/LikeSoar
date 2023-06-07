@@ -6,7 +6,10 @@ import me.liycxc.api.events.impl.EventRenderShadow;
 import me.liycxc.pvp.GuiSearchField;
 import me.liycxc.pvp.clickgui.category.Category;
 import me.liycxc.pvp.clickgui.category.CategoryManager;
-import me.liycxc.pvp.clickgui.category.impl.*;
+import me.liycxc.pvp.clickgui.category.impl.CosmeticCategory;
+import me.liycxc.pvp.clickgui.category.impl.FeatureCategory;
+import me.liycxc.pvp.clickgui.category.impl.MusicPlayerCategory;
+import me.liycxc.pvp.clickgui.category.impl.SettingsCategory;
 import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.utils.GlUtils;
 import me.liycxc.utils.animation.normal.Animation;
@@ -161,7 +164,7 @@ public class ClickGUI extends GuiScreen{
 
 		for(Category c : categoryManager.getCategories()) {
 
-			boolean featureCategory = selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class));
+			boolean featureCategory = selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class));
 			boolean settingsCategory = selectedCategory.equals(categoryManager.getCategoryByClass(SettingsCategory.class));
 
 			float addX = (featureCategory) ? 88 : settingsCategory ? 95F : 0;
@@ -203,7 +206,7 @@ public class ClickGUI extends GuiScreen{
 		this.drawModDescription(mouseX, mouseY);
 		GlUtils.stopScale();
 
-		upAnimation.setAnimation(introAnimation.getValue() == 1.0F && (selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) ? 6 : -30, 16);
+		upAnimation.setAnimation(introAnimation.getValue() == 1.0F && (selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(MusicPlayerCategory.class))) ? 6 : -30, 16);
 
 		RoundedUtils.drawRound(upAnimation.getValue(), sr.getScaledHeight() - 30, 24, 24, 6, ColorUtils.getBackgroundColor(2));
 		FontUtils.icon24.drawString("O", upAnimation.getValue() + 6, sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
@@ -303,9 +306,6 @@ public class ClickGUI extends GuiScreen{
 			if(FeatureCategory.openModSetting) {
 				FeatureCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
 			}
-			if (HacksCategory.openModSetting) {
-				HacksCategory.openSettingAnimation.setDirection(Direction.BACKWARDS);
-			}
 			if(searchMode) {
 				searchMode = false;
 			} else {
@@ -341,7 +341,7 @@ public class ClickGUI extends GuiScreen{
 		int offset = 15;
 
 		if(MouseUtils.isInside(mouseX, mouseY, this.getX(), this.getY(), this.getWidth(), this.getHeight())) {
-			if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class)) || selectedCategory.equals(categoryManager.getCategoryByClass(HacksCategory.class))) {
+			if(selectedCategory.equals(categoryManager.getCategoryByClass(FeatureCategory.class))) {
 				for(Mod m : NekoCat.instance.modManager.getMods()) {
 					if(!m.isHide()) {
 						if(this.searchMode ? (StringUtils.containsIgnoreCase(m.getName(), this.searchWord.getText()) || StringUtils.containsIgnoreCase(m.getDescription(), this.searchWord.getText())) : true) {

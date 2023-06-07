@@ -6,11 +6,10 @@ import java.util.ArrayList;
 
 public class CategoryManager {
 
-	private ArrayList<Category> categories = new ArrayList<Category>();
+	private final ArrayList<Category> categories = new ArrayList<Category>();
 
 	public CategoryManager() {
 		categories.add(new FeatureCategory());
-		categories.add(new HacksCategory());
 		categories.add(new ConfigCategory());
 		categories.add(new CosmeticCategory());
 		categories.add(new EditHUDCategory());
