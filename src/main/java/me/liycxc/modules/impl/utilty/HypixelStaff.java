@@ -24,20 +24,22 @@ public class HypixelStaff extends Module {
     }
 
     private final List<String> fatPeople = new ArrayList<>();
+    private final List<String> locPeople = new ArrayList<>();
     private boolean started;
 
     @EventTarget
     public void onReceivePacket(EventReceivePacket event) {
-
         final Packet<?> p = event.getPacket();
 
         if (p instanceof S3EPacketTeams) {
+            final S3EPacketTeams packet = (S3EPacketTeams) p;
             if (mc.thePlayer.ticksExisted < 20) {
                 started = false;
+                for (final String name : packet.getPlayers()) {
+                   locPeople.add(name);
+                }
                 return;
             }
-
-            final S3EPacketTeams packet = (S3EPacketTeams) p;
 
             fatPeople.add("MCVisuals");
             fatPeople.add("Centranos");
@@ -65,7 +67,7 @@ public class HypixelStaff extends Module {
             fatPeople.add("The_Darthonian");
 
             for (final String name : packet.getPlayers()) {
-                if (started) {
+                if (started && !locPeople.contains(name)) {
                     PlayerUtils.tellPlayer(name + " joined late (possible staff member?)");
                 }
 
@@ -93,10 +95,12 @@ public class HypixelStaff extends Module {
     @EventTarget
     public void onLoadWorld(EventLoadWorld eventLoadWorld) {
         started = false;
+        locPeople.clear();
     }
 
     @Override
     public void onEnable() {
         started = false;
+        locPeople.clear();
     }
 }
