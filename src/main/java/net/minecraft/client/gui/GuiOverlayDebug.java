@@ -16,11 +16,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.src.Config;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.WorldType;
@@ -230,12 +226,16 @@ public class GuiOverlayDebug extends Gui {
         long j = Runtime.getRuntime().totalMemory();
         long k = Runtime.getRuntime().freeMemory();
         long l = j - k;
-        List<String> list = Lists.newArrayList(new String[] {String.format("Java: %s %dbit", new Object[]{System.getProperty("java.version"), Integer.valueOf(this.mc.isJava64bit() ? 64 : 32)}), String.format("Mem: % 2d%% %03d/%03dMB", new Object[]{Long.valueOf(l * 100L / i), Long.valueOf(bytesToMb(l)), Long.valueOf(bytesToMb(i))}), String.format("Allocated: % 2d%% %03dMB", new Object[]{Long.valueOf(j * 100L / i), Long.valueOf(bytesToMb(j))}), "", String.format("CPU: %s", new Object[]{OpenGlHelper.getCpu()}), "", String.format("Display: %dx%d (%s)", new Object[]{Integer.valueOf(Display.getWidth()), Integer.valueOf(Display.getHeight()), GL11.glGetString(GL11.GL_VENDOR)}), GL11.glGetString(GL11.GL_RENDERER), GL11.glGetString(GL11.GL_VERSION)});
         long i1 = NativeMemory.getBufferAllocated();
         long j1 = NativeMemory.getBufferMaximum();
-        String s = "Native: " + bytesToMb(i1) + "/" + bytesToMb(j1) + "MB";
-        list.add(4, s);
-        list.set(5, "GC: " + MemoryMonitor.getAllocationRateMb() + "MB/s");
+        List<String> list = Lists.newArrayList(String.format("Java: %s %dbit", System.getProperty("java.version"), this.mc.isJava64bit() ? 64 : 32),
+                String.format("Mem: % 2d%% %03d/%03dMB", l * 100L / i, bytesToMb(l), bytesToMb(i)),
+                String.format("Allocated: % 2d%% %03dMB", j * 100L / i, bytesToMb(j)), "",
+                String.format("Native: %03d/%03dMB", bytesToMb(i1), bytesToMb(j1)),
+                String.format("GC: %3dMB/s", MemoryMonitor.getAllocationRateMb()), "",
+                String.format("CPU: %s", OpenGlHelper.getCpu()), "",
+                String.format("Display: %dx%d (%s)", Display.getWidth(), Display.getHeight(), GL11.glGetString(GL11.GL_VENDOR)),
+                GL11.glGetString(GL11.GL_RENDERER), GL11.glGetString(GL11.GL_VERSION));
 
         if (Reflector.FMLCommonHandler_getBrandings.exists()) {
             Object object = Reflector.call(Reflector.FMLCommonHandler_instance, new Object[0]);
@@ -277,6 +277,39 @@ public class GuiOverlayDebug extends Gui {
     }
 
     private void renderLagometer() {
+        GlStateManager.disableDepth();
+        FrameTimer frametimer = this.mc.getFrameTimer();
+        int i = frametimer.getLastIndex();
+        int j = frametimer.getIndex();
+        long[] along = frametimer.getFrames();
+        ScaledResolution scaledresolution = new ScaledResolution(this.mc);
+        int k = i;
+        int l = 0;
+        drawRect(0, scaledresolution.getScaledHeight() - 60, 240, scaledresolution.getScaledHeight(), -1873784752);
+
+        while (k != j) {
+            int i1 = frametimer.getLagometerValue(along[k], 30);
+            int j1 = this.getFrameColor(MathHelper.clamp_int(i1, 0, 60), 0, 30, 60);
+            this.drawVerticalLine(l, scaledresolution.getScaledHeight(), scaledresolution.getScaledHeight() - i1, j1);
+            ++l;
+            k = frametimer.parseIndex(k + 1);
+        }
+
+        drawRect(1, scaledresolution.getScaledHeight() - 30 + 1, 14, scaledresolution.getScaledHeight() - 30 + 10, -1873784752);
+        this.fontRenderer.drawString("60", 2, scaledresolution.getScaledHeight() - 30 + 2, 14737632);
+        this.drawHorizontalLine(0, 239, scaledresolution.getScaledHeight() - 30, -1);
+        drawRect(1, scaledresolution.getScaledHeight() - 60 + 1, 14, scaledresolution.getScaledHeight() - 60 + 10, -1873784752);
+        this.fontRenderer.drawString("30", 2, scaledresolution.getScaledHeight() - 60 + 2, 14737632);
+        this.drawHorizontalLine(0, 239, scaledresolution.getScaledHeight() - 60, -1);
+        this.drawHorizontalLine(0, 239, scaledresolution.getScaledHeight() - 1, -1);
+        this.drawVerticalLine(0, scaledresolution.getScaledHeight() - 60, scaledresolution.getScaledHeight(), -1);
+        this.drawVerticalLine(239, scaledresolution.getScaledHeight() - 60, scaledresolution.getScaledHeight(), -1);
+
+        if (this.mc.gameSettings.limitFramerate <= 120) {
+            this.drawHorizontalLine(0, 239, scaledresolution.getScaledHeight() - 60 + this.mc.gameSettings.limitFramerate / 2, -16711681);
+        }
+
+        GlStateManager.enableDepth();
     }
 
     private int getFrameColor(int p_181552_1_, int p_181552_2_, int p_181552_3_, int p_181552_4_) {
