@@ -14,6 +14,7 @@ import me.liycxc.manages.component.impl.RotationComponent;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.MathUtils;
+import me.liycxc.utils.TimerUtils;
 import me.liycxc.utils.module.player.MovementFix;
 import me.liycxc.utils.module.player.RayCastUtil;
 import me.liycxc.utils.module.player.RotationUtil;
@@ -40,8 +41,8 @@ public class KillAura extends Module {
 
     private final ListValue mode = new ListValue("Attack Mode", new String[]{"Single","Switch","Multiple"},"Single");
 
-    private final ListValue autoBlock = new ListValue("Auto Block", new String[]{"None","Fake","Vanilla","NCP","Watchdog","Watchdog HvH","Legit","Intave","Old Intave","Imperfect Vanilla","Vanilla ReBlock","New NCP"},"None");
-
+    private final ListValue autoBlock = new ListValue("Auto Block", new String[]{"None","Fake","Vanilla","NCP","Watchdog","Watchdog HvH","Legit","Intave","Old Intave","Imperfect Vanilla","Vanilla ReBlock","New NCP","Block Hit"},"None");
+    private final IntValue blockhitDelay = new IntValue("BlockHit Delay",120,100,300,() -> autoBlock.get().equals("Block Hit"));
     private final ListValue clickMode = new ListValue("Click Delay Mode", new String[]{"Normal","Hit Select","1.9+","1.9+ (1.8 Visuals)"},"Normal");
 
     private final FloatValue range = new FloatValue("Range", 3f, 3f,6f);
@@ -87,6 +88,10 @@ public class KillAura extends Module {
 
     public StopWatch subTicksStopWatch = new StopWatch();
     private int attack, hitTicks, expandRange;
+
+    private long leftLastSwing = 0L;
+
+    private TimerUtils timeHelper = new TimerUtils();
 
     @EventTarget
     public void onPreMotion(EventPreMotion eventMotion) {
@@ -243,7 +248,7 @@ public class KillAura extends Module {
         String autoBlock = this.autoBlock.get();
         if (BadPacketsComponent.bad(false, true, true, true, true) &&
                 (autoBlock.equals("Fake") || autoBlock.equals("None") ||
-                        autoBlock.equals("Imperfect Vanilla") || autoBlock.equals("Vanilla ReBlock"))) {
+                        autoBlock.equals("Imperfect Vanilla") || autoBlock.equals("Vanilla ReBlock") || autoBlock.equals("Block Hit"))) {
             return;
         }
 
@@ -385,9 +390,15 @@ public class KillAura extends Module {
             }
         }
 
+        if(autoBlock.get().equals("Block Hit") && canBlock()) {
+            if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword && timeHelper.delay(blockhitDelay.get().longValue())) {
+                mc.thePlayer.getCurrentEquippedItem().useItemRightClick(mc.theWorld, mc.thePlayer);
+                timeHelper.reset();
+            }
+        }
+
         this.clickStopWatch.reset();
         this.hitTicks = 0;
-
 //        if (!pastTargets.contains(target)) pastTargets.add(target);
     }
 
@@ -415,7 +426,7 @@ public class KillAura extends Module {
 
     @EventTarget
     public void onRenderItem(EventRenderItem event){
-        if (target != null && !autoBlock.get().equals("None") && this.canBlock()) {
+        if (target != null && !(autoBlock.get().equals("None") || autoBlock.get().equals("Block Hit")) && this.canBlock()) {
             event.setEnumAction(EnumAction.BLOCK);
             event.setUseItem(true);
         }
@@ -451,8 +462,10 @@ public class KillAura extends Module {
                 }
                 break;
 
+                // All this no break
             case "Fake":
             case "None":
+            case "Block Hit":
                 if (this.getItemStack() == null || !(this.getItemStack().getItem() instanceof ItemSword)) {
                     return;
                 }
@@ -471,6 +484,7 @@ public class KillAura extends Module {
                     }
                 }
                 break;
+
         }
     }
 

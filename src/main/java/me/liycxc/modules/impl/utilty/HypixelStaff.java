@@ -39,6 +39,31 @@ public class HypixelStaff extends Module {
 
             final S3EPacketTeams packet = (S3EPacketTeams) p;
 
+            fatPeople.add("MCVisuals");
+            fatPeople.add("Centranos");
+            fatPeople.add("LeBrillant");
+            fatPeople.add("Aerh");
+            fatPeople.add("Gerbor12");
+            fatPeople.add("mrkeith");
+            fatPeople.add("Rhune");
+            fatPeople.add("SnowyPai");
+            fatPeople.add("Smoarzified");
+            fatPeople.add("DeluxeRose");
+            fatPeople.add("Greeenn");
+            fatPeople.add("jamzs");
+            fatPeople.add("JordWG");
+            fatPeople.add("Phaige");
+            fatPeople.add("Quack");
+            fatPeople.add("Pensul");
+            fatPeople.add("LadyBleu");
+            fatPeople.add("Fr0z3n");
+            fatPeople.add("Citria");
+            fatPeople.add("TheBirmanator");
+            fatPeople.add("TorWolf");
+            fatPeople.add("Minikloon");
+            fatPeople.add("Rozsa");
+            fatPeople.add("The_Darthonian");
+
             for (final String name : packet.getPlayers()) {
                 if (started) {
                     PlayerUtils.tellPlayer(name + " joined late (possible staff member?)");
@@ -73,33 +98,5 @@ public class HypixelStaff extends Module {
     @Override
     public void onEnable() {
         started = false;
-    }
-
-    @Override
-    public void onInitialize() {
-        fatPeople.add("MCVisuals");
-        fatPeople.add("Centranos");
-        fatPeople.add("LeBrillant");
-        fatPeople.add("Aerh");
-        fatPeople.add("Gerbor12");
-        fatPeople.add("mrkeith");
-        fatPeople.add("Rhune");
-        fatPeople.add("SnowyPai");
-        fatPeople.add("Smoarzified");
-        fatPeople.add("DeluxeRose");
-        fatPeople.add("Greeenn");
-        fatPeople.add("jamzs");
-        fatPeople.add("JordWG");
-        fatPeople.add("Phaige");
-        fatPeople.add("Quack");
-        fatPeople.add("Pensul");
-        fatPeople.add("LadyBleu");
-        fatPeople.add("Fr0z3n");
-        fatPeople.add("Citria");
-        fatPeople.add("TheBirmanator");
-        fatPeople.add("TorWolf");
-        fatPeople.add("Minikloon");
-        fatPeople.add("Rozsa");
-        fatPeople.add("The_Darthonian");
     }
 }
