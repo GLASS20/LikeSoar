@@ -136,7 +136,11 @@ public class NekoCat {
 		DayEventUtils.resetHudDesign();
 		moduleManager.registerModules();
 
+		// First load file
 		moduleConfig.load(fileManager.getNConfigFile());
+
+		// Second register modules event
+		moduleManager.EventRegister();
 	}
 	
 	public void stopClient() {

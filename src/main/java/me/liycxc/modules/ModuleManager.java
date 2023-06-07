@@ -54,13 +54,6 @@ public class ModuleManager {
         Logger.log("Initialize module: " + module.moduleName);
         module.onInitialize();
         Logger.log("Finished initialize module: " + module.moduleName);
-
-        if (module.getToggled()) {
-            NekoCat.instance.eventManager.register(module);
-            Logger.log("Event register module: " + module.moduleName);
-        } else {
-            NekoCat.instance.eventManager.unregister(module);
-        }
     }
 
     public void registerModuleByList(List<Module> moduleList) {
@@ -92,5 +85,16 @@ public class ModuleManager {
             }
         }
         keyBinds = newMap;
+    }
+
+    public void EventRegister() {
+        for (Module module : this.getModules()) {
+            if (module.getToggled()) {
+                NekoCat.instance.eventManager.register(module);
+                Logger.log("Event register module: " + module.moduleName);
+            } else {
+                NekoCat.instance.eventManager.unregister(module);
+            }
+        }
     }
 }
