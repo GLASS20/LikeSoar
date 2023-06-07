@@ -6,13 +6,14 @@ import com.mongodb.client.model.Filters;
 import lombok.Setter;
 import me.liycxc.NekoCat;
 import me.liycxc.api.events.EventTarget;
-import me.liycxc.api.events.impl.EventLoadWorld;
+import me.liycxc.api.events.impl.EventReceivePacket;
 import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.Logger;
 import me.liycxc.utils.PlayerUtils;
 import me.liycxc.utils.irc.*;
+import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraft.util.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -120,7 +121,7 @@ public class IRC extends Module {
     }
     @Override
     public void onEnable() {
-        this.onLoadWorld(null);
+        this.loginUp();
         super.onEnable();
     }
 
@@ -131,7 +132,13 @@ public class IRC extends Module {
     }
 
     @EventTarget
-    public void onLoadWorld(EventLoadWorld eventLoadWorld) {
+    public void ReceivePacket(EventReceivePacket event) {
+        if (event.getPacket() instanceof S01PacketJoinGame) {
+            this.loginUp();
+        }
+    }
+
+    private void loginUp() {
         if (toggled) {
             PlayerUtils.tellPlayerIrc("IRC - Multi-Platform");
             if (MineUser.isNull()) {
