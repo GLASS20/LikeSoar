@@ -18,20 +18,20 @@ import java.awt.*;
 public class Notification {
 	
     private String title;
-    private String messsage;
+    private String message;
 
     private Animation animation;
-    private TimerUtils timer = new TimerUtils();
+    private final TimerUtils timer = new TimerUtils();
     
     private boolean loaded = false;
     
     public void setNotification(String title, String message) {
     	this.title = title;
-    	this.messsage = message;
+    	this.message = message;
     }
 
     public void show() {
-        animation = new DecelerateAnimation(250, FontUtils.regular_bold20.getStringWidth(messsage) + 12);
+        animation = new DecelerateAnimation(250, FontUtils.regular_bold20.getStringWidth(message) + 13);
     	timer.reset();
     }
 
@@ -56,10 +56,10 @@ public class Notification {
         	animation.setDirection(Direction.BACKWARDS);
         }
         
-    	RoundedUtils.drawGradientRound((float) (sr.getScaledWidth() - offset), sr.getScaledHeight() - 40, (float) (FontUtils.regular_bold20.getStringWidth(messsage) + 1), 29, 6, ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4));
+    	RoundedUtils.drawGradientRound((float) (sr.getScaledWidth() - offset), sr.getScaledHeight() - 40, (float) (FontUtils.regular_bold20.getStringWidth(message) + 2), 29, 6, ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4), ColorUtils.getBackgroundColor(4));
         FontUtils.regular_bold26.drawString(title, (float) (sr.getScaledWidth() - offset + 3), sr.getScaledHeight() - 38, ColorUtils.getFontColor(2).getRGB());
         
-        FontUtils.regular20.drawString(messsage, (float) (sr.getScaledWidth() - offset + 3), sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
+        FontUtils.regular20.drawString(message, (float) (sr.getScaledWidth() - offset + 3), sr.getScaledHeight() - 22, ColorUtils.getFontColor(2).getRGB());
     }
     
     @EventTarget
@@ -69,7 +69,7 @@ public class Notification {
     	
     	if(animation != null) {
             double offset = animation.getValue();
-    		RoundedUtils.drawRound((float) (sr.getScaledWidth() - offset), sr.getScaledHeight() - 40, (float) (FontUtils.regular_bold20.getStringWidth(messsage) + 1), 29, 6, new Color(0, 0, 0));
+    		RoundedUtils.drawRound((float) (sr.getScaledWidth() - offset), sr.getScaledHeight() - 40, (float) (FontUtils.regular_bold20.getStringWidth(message) + 2), 29, 6, new Color(0, 0, 0));
     	}
     }
 }
