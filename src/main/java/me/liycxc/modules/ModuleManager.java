@@ -8,6 +8,7 @@ import me.liycxc.modules.impl.combat.Reach;
 import me.liycxc.modules.impl.movement.NoSlowDown;
 import me.liycxc.modules.impl.movement.SafeWalk;
 import me.liycxc.modules.impl.render.Chams;
+import me.liycxc.modules.impl.render.FarCamera;
 import me.liycxc.modules.impl.utilty.*;
 import me.liycxc.utils.Logger;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -30,7 +31,6 @@ public class ModuleManager {
         moduleList.add(new AutoTool());
         moduleList.add(new Reach());
         moduleList.add(new RightClick());
-        moduleList.add(new Chams());
         moduleList.add(new Teams());
         moduleList.add(new KillAura());
         moduleList.add(new Scaffold());
@@ -42,6 +42,11 @@ public class ModuleManager {
         moduleList.add(new AntiBot());
         moduleList.add(new HypixelStaff());
         moduleList.add(new FastPlace());
+
+        // Render
+        moduleList.add(new Chams());
+        moduleList.add(new FarCamera());
+
         registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(s -> s.getModuleName().charAt(0))).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
 
