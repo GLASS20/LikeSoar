@@ -72,6 +72,8 @@ public class Disabler extends Module {
                 }
             }
         }
+
+        getMode().onInitialize();
     }
 
     @Override
