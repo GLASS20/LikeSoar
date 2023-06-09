@@ -62,8 +62,6 @@ public class Disabler extends Module {
                 }
             }
         }
-
-        System.out.println("values " + values.size());
     }
 
     @Override
