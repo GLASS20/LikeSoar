@@ -25,6 +25,16 @@ public class Disabler extends Module {
     private final DisablerMode none = new DisablerMode("None");
 
     @Override
+    public void onEnable() {
+        getMode().onEnable();
+    }
+
+    @Override
+    public void onDisable() {
+        getMode().onDisable();
+    }
+
+    @Override
     public void onInitialize() {
         // Add DisablerModes xD
         modes.add(none);
