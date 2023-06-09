@@ -29,7 +29,7 @@ public class NoSlowDown extends Module {
     MSTimer timer = new MSTimer();
 
     @EventTarget
-    public void onUpdate(EventPreMotion event) {
+    public void onPreMotion(EventPreMotion event) {
         if (!MoveUtil.isMoving() || !mc.gameSettings.keyBindUseItem.isPressed()) {
             return;
         }
@@ -57,7 +57,7 @@ public class NoSlowDown extends Module {
 
     @EventTarget
     public void onSendPacket(EventSendPacket eventSendPacket) {
-        Packet packet = eventSendPacket.getPacket();
+        Packet<?> packet = eventSendPacket.getPacket();
 
         if (mc.thePlayer == null) {
             return;

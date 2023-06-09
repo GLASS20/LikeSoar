@@ -3,6 +3,7 @@ package me.liycxc.modules.impl.render;
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventCameraRotation;
 import me.liycxc.api.events.impl.EventScrollMouse;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.api.value.impl.FloatValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
@@ -10,6 +11,7 @@ import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.input.Keyboard;
 
+@ModuleTag
 public class FarCamera extends Module {
 
     private final SimpleAnimation animation = new SimpleAnimation(0.0F);
@@ -23,9 +25,6 @@ public class FarCamera extends Module {
 
     @EventTarget
     public void onCameraRotation(EventCameraRotation event) {
-
-
-
         animation.setAnimation(currentFactor, 20F);
         rangeOption.set(animation.getValue());
 

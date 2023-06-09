@@ -56,8 +56,6 @@ public class ServerUtils {
      * then send to server
      */
     public static void sendMessage(String string) {
-
-
         IRC.sendMessages.add(string);
     }
 
