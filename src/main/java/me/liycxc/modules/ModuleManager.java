@@ -42,6 +42,7 @@ public class ModuleManager {
         moduleList.add(new AntiBot());
         moduleList.add(new HypixelStaff());
         moduleList.add(new FastPlace());
+        moduleList.add(new Disabler());
 
         // Render
         moduleList.add(new Chams());

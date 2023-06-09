@@ -14,6 +14,7 @@ public abstract class Value<T> {
     @Getter
     private T value;
     @Getter
+    @Setter
     private Function0<Boolean> displayable;
     private final T defaultVal;
 
@@ -54,13 +55,13 @@ public abstract class Value<T> {
         setValue(defaultVal);
     }
 
-    protected void onChange(T oldValue, T newValue) {
+    public void onChange(T oldValue, T newValue) {
     }
 
-    protected void onChanged(T oldValue, T newValue) {
+    public void onChanged(T oldValue, T newValue) {
     }
 
-    protected void onChanging() {
+    public void onChanging() {
     }
 
     protected void changeValue(T value) {

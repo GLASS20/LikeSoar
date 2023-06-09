@@ -59,23 +59,29 @@ public class Module {
 
     public void onInitialize() {}
 
-    public void onWorld() {}
+    // public void onWorld() {}
 
     public void onEnable() {}
 
     public void onDisable() {}
 
     public void toggle() {
-        if (toggled) {
-            toggled = false;
-            NekoCat.instance.eventManager.unregister(this);
-            onDisable();
-        } else {
-            toggled = true;
-            NekoCat.instance.eventManager.register(this);
-            onEnable();
+        try {
+            if (toggled) {
+                toggled = false;
+                NekoCat.instance.eventManager.unregister(this);
+                onDisable();
+            } else {
+                toggled = true;
+                NekoCat.instance.eventManager.register(this);
+                onEnable();
+            }
+            ClientUtils.showNotification("Module", moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
+        } catch (Exception exception) {
+            if (NekoCat.instance.DEVELOPMENT_SWITCH) {
+                exception.printStackTrace();
+            }
         }
-        ClientUtils.showNotification("Module", moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
     }
 
     public List<Value<?>> getValues() {
