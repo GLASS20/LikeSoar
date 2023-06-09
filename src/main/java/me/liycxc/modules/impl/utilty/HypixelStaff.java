@@ -35,9 +35,7 @@ public class HypixelStaff extends Module {
             final S3EPacketTeams packet = (S3EPacketTeams) p;
             if (mc.thePlayer.ticksExisted < 20) {
                 started = false;
-                for (final String name : packet.getPlayers()) {
-                   locPeople.add(name);
-                }
+                locPeople.addAll(packet.getPlayers());
                 return;
             }
 
