@@ -56,12 +56,10 @@ public class ModuleCommand {
                 }
                 case "bind": {
                     String pre = command.substring(5);
-                    if (!pre.contains(" ")) {
+                    if (!pre.contains(" ") || pre.equalsIgnoreCase("bind ")) {
                         PlayerUtils.tellPlayer("Bind command error, please input again.");
                         break;
                     }
-                    System.out.println(pre);
-                    System.out.println(pre.indexOf(" "));
                     String name = pre.substring(0,pre.indexOf(" "));
                     Module targetModule = null;
                     for (Module module : NekoCat.instance.moduleManager.getModules()) {
