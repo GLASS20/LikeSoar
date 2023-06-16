@@ -5,6 +5,7 @@ import me.liycxc.api.events.impl.EventPreMotion;
 import me.liycxc.api.events.impl.EventSendPacket;
 import me.liycxc.api.events.impl.EventSlowDown;
 import me.liycxc.api.tags.ModuleTag;
+import me.liycxc.api.value.impl.BoolValue;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
@@ -25,6 +26,7 @@ public class NoSlowDown extends Module {
     }
 
     public ListValue modeValue = new ListValue("Mode",new String[]{"Vanilla","Hypixel"},"Vanilla");
+    public BoolValue onlySword = new BoolValue("Only Sword",true);
 
     MSTimer timer = new MSTimer();
 
@@ -87,7 +89,14 @@ public class NoSlowDown extends Module {
     @EventTarget
     public void onSlowDown (EventSlowDown eventSlowDown) {
         if (mc.thePlayer.isUsingItem() && !mc.thePlayer.isInWeb && !mc.thePlayer.isInWater() && !mc.thePlayer.isInLava() && MoveUtil.isMoving()) {
-            eventSlowDown.setCancelled(true);
+            if (onlySword.get()) {
+                if (mc.thePlayer.getItemInUse().getItem() instanceof ItemSword) {
+                    eventSlowDown.setCancelled(true);
+                }
+            } else {
+                eventSlowDown.setCancelled(true);
+
+            }
         }
     }
 }
