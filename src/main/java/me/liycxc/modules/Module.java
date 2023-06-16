@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.liycxc.NekoCat;
 import me.liycxc.api.value.Value;
-import me.liycxc.utils.ClientUtils;
+import me.liycxc.utils.PlayerUtils;
 import me.liycxc.utils.TimerUtils;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.Minecraft;
@@ -76,7 +76,9 @@ public class Module {
                 NekoCat.instance.eventManager.register(this);
                 onEnable();
             }
-            ClientUtils.showNotification("Module", moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
+            PlayerUtils.tellPlayer("[Module] " + moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
+            mc.thePlayer.playSound("random.click",0.5F,1F);
+            // ClientUtils.showNotification("Module", moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
         } catch (Exception exception) {
             if (NekoCat.instance.DEVELOPMENT_SWITCH) {
                 exception.printStackTrace();

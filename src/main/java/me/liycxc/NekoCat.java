@@ -274,10 +274,10 @@ public class NekoCat {
     
     @EventTarget
     public void onPreUpdate(EventPreMotion event) {
-        if (ServerUtils.isHypixel() && apiTimer.delay(3000) && HypixelUtils.getApiKey() == null) {
-            mc.thePlayer.sendChatMessage("/api new");
-            apiTimer.reset();
-        }
+//        if (ServerUtils.isHypixel() && apiTimer.delay(3000) && HypixelUtils.getApiKey() == null) {
+//            mc.thePlayer.sendChatMessage("/api new");
+//            apiTimer.reset();
+//        }
     }
     
     @EventTarget

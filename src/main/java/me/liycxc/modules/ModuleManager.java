@@ -1,12 +1,10 @@
 package me.liycxc.modules;
 
 import me.liycxc.NekoCat;
-import me.liycxc.modules.impl.combat.AntiBot;
-import me.liycxc.modules.impl.combat.AutoClick;
-import me.liycxc.modules.impl.combat.KillAura;
-import me.liycxc.modules.impl.combat.Reach;
+import me.liycxc.modules.impl.combat.*;
 import me.liycxc.modules.impl.movement.NoSlowDown;
 import me.liycxc.modules.impl.movement.SafeWalk;
+import me.liycxc.modules.impl.render.Animations;
 import me.liycxc.modules.impl.render.Chams;
 import me.liycxc.modules.impl.render.FarCamera;
 import me.liycxc.modules.impl.utilty.*;
@@ -43,10 +41,12 @@ public class ModuleManager {
         moduleList.add(new HypixelStaff());
         moduleList.add(new FastPlace());
         moduleList.add(new Disabler());
+        moduleList.add(new Velocity());
 
         // Render
         moduleList.add(new Chams());
         moduleList.add(new FarCamera());
+        moduleList.add(new Animations());
 
         registerModuleByList(moduleList.stream().sorted(Comparator.comparingInt(module -> module.getModuleName().length())).sorted(Comparator.comparingInt(s -> s.getModuleName().charAt(0))).sorted(Comparator.comparingInt(module -> module.getModuleCategory().ordinal())).collect(Collectors.toList()));
     }
