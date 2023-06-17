@@ -115,6 +115,10 @@ public final class RotationComponent extends Component {
     }
 
     private static void correctDisabledRotations() {
+        if (mc.thePlayer == null) {
+            return;
+        }
+
         final Vector2f rotations = new Vector2f(mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
         final Vector2f fixedRotations = RotationUtil.resetRotation(RotationUtil.applySensitivityPatch(rotations, lastRotations));
 
