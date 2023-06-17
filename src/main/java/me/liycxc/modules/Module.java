@@ -77,7 +77,7 @@ public class Module {
                 NekoCat.instance.eventManager.register(this);
                 onEnable();
             }
-            PlayerUtils.tellPlayer("[Module] " + moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
+            PlayerUtils.tellPlayer("Module " + moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
             mc.thePlayer.playSound("random.click",0.5F,1F);
             // ClientUtils.showNotification("Module", moduleName + " was " + (toggled ? "Enabled" : "Disabled"));
         } catch (Exception exception) {

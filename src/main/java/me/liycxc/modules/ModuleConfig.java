@@ -43,11 +43,10 @@ public class ModuleConfig {
     }
 
     public void save(File file) {
-
         ArrayList<String> toSave = new ArrayList<String>();
 
         for (Module module : NekoCat.instance.moduleManager.getModules()) {
-            toSave.add("ModuleName:" + module.moduleName + ":" + module.getToggled());
+            toSave.add("ModuleName:" + module.moduleName + ":" + module.getToggled() + ":" + module.keybind);
             // toSave.add("ModulePos:");
         }
 
@@ -90,35 +89,43 @@ public class ModuleConfig {
                 e.printStackTrace();
         }
 
-        for (String s : lines) {
+        try {
+            for (String s : lines) {
 
-            String[] args = s.split(":");
+                String[] args = s.split(":");
 
-            if (s.toLowerCase().startsWith("modulename:")) {
-                Module m = NekoCat.instance.moduleManager.getModule(args[1]);
-                if (m != null) {
-                    m.setToggled(Boolean.parseBoolean(args[2]));
-                }
-            } else if (s.toLowerCase().startsWith("set:")) {
-                Module m = NekoCat.instance.moduleManager.getModule(args[1]);
-                if (m != null) {
-                    Value<?> set = m.getValueByName(args[2]);
-                    if (set != null) {
-                        if (set instanceof BoolValue) {
-                            ((BoolValue) set).set(Boolean.parseBoolean(args[3]));
-                        }
-                        if (set instanceof ListValue) {
-                            ((ListValue) set).set(args[3]);
-                        }
-                        if (set instanceof FloatValue) {
-                            ((FloatValue) set).set(Float.parseFloat(args[3]));
-                        }
-                        if (set instanceof IntValue) {
-                            ((IntValue) set).set(Integer.parseInt(args[3]));
+                if (s.toLowerCase().startsWith("modulename:")) {
+                    Module m = NekoCat.instance.moduleManager.getModule(args[1]);
+                    if (m != null) {
+                        m.setToggled(Boolean.parseBoolean(args[2]));
+                        // Load config is later than init modules
+                        NekoCat.instance.moduleManager.setKeybind(m,Integer.parseInt(args[3]));
+                    }
+                } else if (s.toLowerCase().startsWith("set:")) {
+                    Module m = NekoCat.instance.moduleManager.getModule(args[1]);
+                    if (m != null) {
+                        Value<?> set = m.getValueByName(args[2]);
+                        if (set != null) {
+                            if (set instanceof BoolValue) {
+                                ((BoolValue) set).set(Boolean.parseBoolean(args[3]));
+                            }
+                            if (set instanceof ListValue) {
+                                ((ListValue) set).set(args[3]);
+                            }
+                            if (set instanceof FloatValue) {
+                                ((FloatValue) set).set(Float.parseFloat(args[3]));
+                            }
+                            if (set instanceof IntValue) {
+                                ((IntValue) set).set(Integer.parseInt(args[3]));
+                            }
                         }
                     }
+                    // PlayerUtils.tellPlayer("args[1]: " + args[1] + " args[2]: " + args[2] + " args[3]: " + args[3]);
                 }
-                // PlayerUtils.tellPlayer("args[1]: " + args[1] + " args[2]: " + args[2] + " args[3]: " + args[3]);
+            }
+        }catch (Exception exception) {
+            if (NekoCat.instance.DEVELOPMENT_SWITCH) {
+                exception.printStackTrace();
             }
         }
     }

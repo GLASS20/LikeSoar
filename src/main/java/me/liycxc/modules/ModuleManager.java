@@ -97,6 +97,7 @@ public class ModuleManager {
         if (!hasIt) {
             newMap.put(key,module);
         }
+        module.keybind = key;
         keyBinds = newMap;
     }
 
