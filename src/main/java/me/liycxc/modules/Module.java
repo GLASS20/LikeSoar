@@ -59,7 +59,8 @@ public class Module {
 
     public void onInitialize() {}
 
-    // public void onWorld() {}
+//    @Deprecated
+//    public void onWorld() {}
 
     public void onEnable() {}
 
