@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty.disabler.other;
+package me.liycxc.modules.impl.utilty.disabler.impl;
 
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventPreUpdate;

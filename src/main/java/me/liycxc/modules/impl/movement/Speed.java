@@ -1,4 +1,4 @@
-package me.liycxc.modules.impl.utilty;
+package me.liycxc.modules.impl.movement;
 
 import me.liycxc.NekoCat;
 import me.liycxc.api.tags.ModuleTag;
@@ -7,22 +7,23 @@ import me.liycxc.api.value.Value;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
-import me.liycxc.modules.impl.utilty.disabler.DisablerMode;
-import me.liycxc.modules.impl.utilty.disabler.impl.WatchdogMode;
+import me.liycxc.modules.impl.movement.speed.SpeedMode;
+import me.liycxc.modules.impl.movement.speed.impl.LegitMode;
+import me.liycxc.modules.impl.movement.speed.impl.WatchdogMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @ModuleTag
-public class Disabler extends Module {
-    public Disabler() {
-        super("Disabler","Disable anticheat", ModuleCategory.Util);
+public class Speed extends Module {
+    public Speed() {
+        super("Speed","Move fastly", ModuleCategory.Movement);
     }
 
-    public List<DisablerMode> modes = new ArrayList<>();
+    public List<SpeedMode> modes = new ArrayList<>();
     public List<Value<?>> values = new ArrayList<>();
     public List<String> names = new ArrayList<>();
-    private final DisablerMode none = new DisablerMode("None");
+    private final SpeedMode none = new SpeedMode("None");
 
     @Override
     public void onEnable() {
@@ -38,11 +39,11 @@ public class Disabler extends Module {
 
     @Override
     public void onInitialize() {
-        // Add DisablerModes xD
         modes.add(none);
         modes.add(new WatchdogMode());
+        modes.add(new LegitMode());
 
-        for (DisablerMode mode : modes) {
+        for (SpeedMode mode : modes) {
             names.add(mode.modeName);
         }
 
@@ -64,7 +65,7 @@ public class Disabler extends Module {
              }
         );
 
-        for (DisablerMode mode : modes) {
+        for (SpeedMode mode : modes) {
             if (mode.getValues().size() > 0) {
                 for (Value<?> value : mode.getValues()) {
                     Function0<Boolean> a = () -> values.get(0).get().equals(mode.modeName);
@@ -83,14 +84,14 @@ public class Disabler extends Module {
         return values;
     }
 
-    private DisablerMode getMode() {
+    private SpeedMode getMode() {
         return modes.stream()
                 .filter(mode -> mode.modeName.equalsIgnoreCase(((ListValue) values.get(0)).get()))
                 .findFirst()
                 .orElse(none);
     }
 
-    private DisablerMode getModeByName(String modeName) {
+    private SpeedMode getModeByName(String modeName) {
         return modes.stream()
                 .filter(mode -> mode.modeName.equalsIgnoreCase(modeName))
                 .findFirst()

@@ -1,20 +1,20 @@
-package me.liycxc.modules.impl.utilty.disabler;
+package me.liycxc.modules.impl.movement.speed;
 
 import me.liycxc.NekoCat;
 import me.liycxc.api.value.Value;
-import me.liycxc.modules.impl.utilty.Disabler;
+import me.liycxc.modules.impl.movement.Speed;
 import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisablerMode {
+public class SpeedMode {
     public String modeName;
-    public Disabler disabler = (Disabler) NekoCat.instance.moduleManager.getModule("Disabler");
+    public Speed speed = (Speed) NekoCat.instance.moduleManager.getModule("Speed");
     public Minecraft mc = Minecraft.getMinecraft();
 
-    public DisablerMode(String modeName) {
+    public SpeedMode(String modeName) {
         this.modeName = modeName;
     }
 

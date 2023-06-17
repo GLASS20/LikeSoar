@@ -170,7 +170,8 @@ public abstract class EntityLivingBase extends Entity {
     private float landMovementFactor;
 
     /** Number of ticks since last jump */
-    private int jumpTicks;
+    public int jumpTicks;
+    public int ticksSinceJump;
     private float absorptionAmount;
 
     /**
@@ -1344,7 +1345,7 @@ public abstract class EntityLivingBase extends Entity {
      * Causes this entity to do an upwards motion (jumping).
      */
     protected void jump() {
-        // if (this.ticksSinceJump <= 1) return;
+        if (this.ticksSinceJump <= 1) return;
 
         float jumpMotion = this.getJumpUpwardsMotion();
 
@@ -1364,7 +1365,7 @@ public abstract class EntityLivingBase extends Entity {
             }
         }
 
-        // this.ticksSinceJump = 0;
+        this.ticksSinceJump = 0;
         this.motionY = jumpMotion;
 
         if (this.isSprinting()) {
@@ -1399,6 +1400,7 @@ public abstract class EntityLivingBase extends Entity {
      */
     public void moveEntityWithHeading(float strafe, float forward) {
         if (this.isServerWorld()) {
+            this.ticksSinceJump++;
             if (!this.isInWater() || this instanceof EntityPlayer && ((EntityPlayer)this).capabilities.isFlying) {
                 if (!this.isInLava() || this instanceof EntityPlayer && ((EntityPlayer)this).capabilities.isFlying) {
                     float f4 = 0.91F;

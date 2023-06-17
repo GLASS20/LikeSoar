@@ -4,6 +4,7 @@ import me.liycxc.NekoCat;
 import me.liycxc.modules.impl.combat.*;
 import me.liycxc.modules.impl.movement.NoSlowDown;
 import me.liycxc.modules.impl.movement.SafeWalk;
+import me.liycxc.modules.impl.movement.Speed;
 import me.liycxc.modules.impl.render.Animations;
 import me.liycxc.modules.impl.render.Chams;
 import me.liycxc.modules.impl.render.FarCamera;
@@ -42,6 +43,7 @@ public class ModuleManager {
         moduleList.add(new FastPlace());
         moduleList.add(new Disabler());
         moduleList.add(new Velocity());
+        moduleList.add(new Speed());
 
         // Render
         moduleList.add(new Chams());
@@ -82,13 +84,18 @@ public class ModuleManager {
     }
 
     public void setKeybind(Module module, int key) {
+        boolean hasIt = false;
         MultiValuedMap<Integer, Module> newMap = new ArrayListValuedHashMap<>();
         for (Map.Entry<Integer, Module> entry : keyBinds.entries()) {
             if (entry.getValue().equals(module)) {
                 newMap.put(key, entry.getValue());
+                hasIt = true;
             } else {
                 newMap.put(entry.getKey(), entry.getValue());
             }
+        }
+        if (!hasIt) {
+            newMap.put(key,module);
         }
         keyBinds = newMap;
     }
