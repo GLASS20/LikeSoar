@@ -2,10 +2,12 @@ package me.liycxc.modules.impl.utilty.disabler.impl;
 
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventPreUpdate;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.api.value.impl.BoolValue;
 import me.liycxc.modules.impl.utilty.disabler.DisablerMode;
 import me.liycxc.utils.PlayerUtils;
 
+@ModuleTag
 public class WatchdogMode extends DisablerMode {
     public WatchdogMode() {
         super("Watchdog");

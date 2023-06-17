@@ -2,12 +2,14 @@ package me.liycxc.modules.impl.utilty;
 
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventPreMotion;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.api.value.impl.IntValue;
 import me.liycxc.manages.component.impl.SlotComponent;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import net.minecraft.item.ItemBlock;
 
+@ModuleTag
 public class FastPlace extends Module {
     public FastPlace() {
         super("FastPlace","FastPlace", ModuleCategory.Util);

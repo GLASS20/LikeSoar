@@ -3,6 +3,7 @@ package me.liycxc.modules.impl.movement.speed.impl;
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventPreUpdate;
 import me.liycxc.api.events.impl.EventStrafe;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.api.value.impl.BoolValue;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.manages.component.impl.RotationComponent;
@@ -11,6 +12,7 @@ import me.liycxc.utils.module.player.MoveUtil;
 import me.liycxc.utils.module.player.MovementFix;
 import me.liycxc.utils.vector.Vector2f;
 
+@ModuleTag
 public class LegitMode extends SpeedMode {
     public LegitMode() {
         super("Legit");

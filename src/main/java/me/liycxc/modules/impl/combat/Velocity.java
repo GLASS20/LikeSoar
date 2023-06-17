@@ -2,6 +2,7 @@ package me.liycxc.modules.impl.combat;
 
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventReceivePacket;
+import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
@@ -10,6 +11,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.potion.Potion;
 
+@ModuleTag
 public class Velocity extends Module {
     public Velocity() {
         super("Velocity","No kb", ModuleCategory.Combat);
