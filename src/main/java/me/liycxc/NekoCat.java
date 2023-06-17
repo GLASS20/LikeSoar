@@ -143,7 +143,7 @@ public class NekoCat {
 		// Second register modules event
 		moduleManager.EventRegister();
 
-		Verify.init();
+		// Verify.init();
 	}
 	
 	public void stopClient() {
