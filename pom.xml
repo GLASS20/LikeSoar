@@ -57,11 +57,6 @@
             <version>4.5.1</version>
         </dependency>
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>platform</artifactId>
-            <version>3.4.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
             <version>51.2</version>
@@ -360,69 +355,52 @@
                 <version>2.5.1</version>
                 <executions>
                     <execution>
-                        <!-- 混淆时刻，这里是打包的时候混淆-->
                         <phase>package</phase>
                         <goals>
-                            <!-- 使用插件的什么功能，当然是混淆-->
                             <goal>proguard</goal>
                         </goals>
                     </execution>
                 </executions>
+
                 <configuration>
-                    <!-- 是否将生成的PG文件安装部署-->
                     <attach>true</attach>
-
-                    <!-- 是否混淆-->
                     <obfuscate>true</obfuscate>
-
-                    <!-- 指定生成文件分类 -->
                     <attachArtifactClassifier>pg</attachArtifactClassifier>
+                    <includeDependency>true</includeDependency>
+                    <includeDependencyInjar>true</includeDependencyInjar>
+
                     <options>
-                        <!-- JDK目标版本1.8-->
                         <option>-target 1.8</option>
-
-                        <!--不用大小写混合类名机制-->
-                        <option>-dontusemixedcaseclassnames</option>
-
-                        <!-- 优化时允许访问并修改有修饰符的类和类的成员 -->
-                        <option>-allowaccessmodification</option>
 
                         <!-- 确定统一的混淆类的成员名称来增加混淆-->
                         <option>-useuniqueclassmembernames</option>
 
-                        <option>-keepattributes *Annotation*,InnerClasses</option>
-                        <option>-keepattributes Signature</option>
-                        <option>-keep class !net.**,!me.**,** {*;}</option>
-                        <option>-repackageclasses 'o'</option>
                         <!--不混淆所有interface接口-->
                         <option>-keepnames interface **</option>
                         <option>-keep interface * extends * { *; }</option>
-                        <option>-keepclassmembers enum * { *; }</option><!--保留枚举成员及方法-->
+
+                        <!--保留枚举成员及方法-->
+                        <option>-keepclassmembers enum * { *; }</option>
+
                         <!-- 不混淆所有包名-->
-                        <option>-keepattributes SourceFile,LineNumberTable</option>
-                        <option>-keep @NativeClass class net.**</option>
-                        <option>-keepclasseswithmembers @NativeClass class net.** { *; }</option>
-                        <option>-keep class **.R$* {*;}</option>
-                        <option>-keepclassmembers class * {
-                            void *(**On*Event);
-                            void *(**On*Listener);
-                            }</option>
+                        <option>-repackageclasses 'jnic'</option>
+                        <option>-ignorewarnings</option>
+                        <option>-keep class !net.minecraft.** {*;}</option>
+                        <option>-keep class !me.liycxc.** {*;}</option>
+                        <option>-keep class oh.yalan.** {*;}</option>
                         <option>-keepattributes InnerClasses</option>
+                        <option>-keepattributes *Annotation*</option>
                     </options>
 
-                    <!--class 混淆后输出的jar包-->
-                    <outjar>classes-obf.jar</outjar>
-
-                    <!-- 添加依赖，这里你可以按你的需要修改，这里测试只需要一个JRE的Runtime包就行了 -->
-                    <!--<libs>
-                        <lib>${project.basedir}/libs.jar</lib>
-                    </libs>-->
-
                     <libs>
-                        <lib>${project.basedir}/libs</lib>
+                        <lib>D:\Program Files\Zulu\zulu-8\jre\libs\rt.jar</lib>
+                        <lib>D:\Program Files\Zulu\zulu-8\jre\libs\jsse.jar</lib>
+                        <lib>D:\Program Files\Zulu\zulu-8\jre\libs\jce.jar</lib>
+                        <lib>D:\Program Files\IntelliJ IDEA Community\plugins\java\lib\resources\jdkAnnotations.jar</lib>
+<!--                        <lib>${project.basedir}\libs</lib>-->
+<!--                        <lib>${project.basedir}\libraries</lib>-->
                     </libs>
 
-                    <!-- 对什么东西进行加载，这里仅有classes成功，毕竟你也不可能对配置文件及JSP混淆吧-->
                     <injar>classes</injar>
 
                     <!-- 输出目录-->
@@ -431,5 +409,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
