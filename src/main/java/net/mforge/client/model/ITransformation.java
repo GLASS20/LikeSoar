@@ -1,7 +1,8 @@
-package net.minecraftforge.client.model;
+package net.mforge.client.model;
+
+import net.minecraft.util.EnumFacing;
 
 import javax.vecmath.Matrix4f;
-import net.minecraft.util.EnumFacing;
 
 public interface ITransformation {
     Matrix4f getMatrix();

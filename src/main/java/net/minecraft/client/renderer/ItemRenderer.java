@@ -1,6 +1,7 @@
 package net.minecraft.client.renderer;
 
 import me.liycxc.api.events.impl.EventRenderItem;
+import me.liycxc.api.events.impl.EventRenderItemPre;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -320,6 +321,13 @@ public class ItemRenderer {
                 final int itemInUseCount = abstractclientplayer.getItemInUseCount();
                 boolean useItem = itemInUseCount > 0;
 
+                final EventRenderItemPre eventRenderItemPre = new EventRenderItemPre(enumaction, useItem, animationProgression, partialTicks, swingProgress, itemToRender);
+                eventRenderItemPre.call();
+                enumaction = eventRenderItemPre.getEnumAction();
+                useItem = eventRenderItemPre.isUseItem();
+                animationProgression = eventRenderItemPre.getAnimationProgression();
+                swingProgress = eventRenderItemPre.getSwingProgress();
+
                 final EventRenderItem event = new EventRenderItem(enumaction, useItem, animationProgression, partialTicks, swingProgress, itemToRender);
                 event.call();
                 enumaction = event.getEnumAction();
@@ -343,7 +351,7 @@ public class ItemRenderer {
                                 break;
 
                             case BLOCK:
-                                this.transformFirstPersonItem(animationProgression, 0.0F);
+                                this.transformFirstPersonItem(animationProgression, swingProgress);
                                 this.blockTransformation();
                                 break;
 

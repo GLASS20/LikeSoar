@@ -534,8 +534,8 @@ public class RenderChunk {
         BlockPos blockpos1 = p_makeChunkCacheOF_1_.add(16, 16, 16);
         ChunkCache chunkcache = this.createRegionRenderCache(this.world, blockpos, blockpos1, 1);
 
-        if (Reflector.MinecraftForgeClient_onRebuildChunk.exists()) {
-            Reflector.call(Reflector.MinecraftForgeClient_onRebuildChunk, new Object[] {this.world, p_makeChunkCacheOF_1_, chunkcache});
+        if (Reflector.mforgeClient_onRebuildChunk.exists()) {
+            Reflector.call(Reflector.mforgeClient_onRebuildChunk, new Object[] {this.world, p_makeChunkCacheOF_1_, chunkcache});
         }
 
         ChunkCacheOF chunkcacheof = new ChunkCacheOF(chunkcache, blockpos, blockpos1, 1);

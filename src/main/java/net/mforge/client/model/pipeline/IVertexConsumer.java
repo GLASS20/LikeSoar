@@ -1,4 +1,4 @@
-package net.minecraftforge.client.model.pipeline;
+package net.mforge.client.model.pipeline;
 
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;

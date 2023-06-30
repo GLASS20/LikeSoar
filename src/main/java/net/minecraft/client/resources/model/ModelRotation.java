@@ -2,16 +2,17 @@ package net.minecraft.client.resources.model;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
-import java.util.Map;
+import net.mforge.client.model.IModelPart;
+import net.mforge.client.model.IModelState;
+import net.mforge.client.model.ITransformation;
+import net.mforge.client.model.TRSRTransformation;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.client.model.IModelPart;
-import net.minecraftforge.client.model.IModelState;
-import net.minecraftforge.client.model.ITransformation;
-import net.minecraftforge.client.model.TRSRTransformation;
 import net.optifine.reflect.Reflector;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+
+import java.util.Map;
 
 public enum ModelRotation implements IModelState, ITransformation {
     X0_Y0(0, 0),

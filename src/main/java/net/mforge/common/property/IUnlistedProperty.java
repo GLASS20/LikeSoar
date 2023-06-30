@@ -1,4 +1,4 @@
-package net.minecraftforge.common.property;
+package net.mforge.common.property;
 
 public interface IUnlistedProperty<V> {
     String getName();

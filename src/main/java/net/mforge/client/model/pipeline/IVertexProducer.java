@@ -1,4 +1,4 @@
-package net.minecraftforge.client.model.pipeline;
+package net.mforge.client.model.pipeline;
 
 public interface IVertexProducer {
     void pipe(IVertexConsumer var1);

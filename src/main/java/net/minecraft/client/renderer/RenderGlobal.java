@@ -558,8 +558,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     public void renderEntities(Entity renderViewEntity, ICamera camera, float partialTicks) {
         int i = 0;
 
-        if (Reflector.MinecraftForgeClient_getRenderPass.exists()) {
-            i = Reflector.callInt(Reflector.MinecraftForgeClient_getRenderPass, new Object[0]);
+        if (Reflector.mforgeClient_getRenderPass.exists()) {
+            i = Reflector.callInt(Reflector.mforgeClient_getRenderPass, new Object[0]);
         }
 
         if (this.renderEntitiesStartupCounter > 0) {

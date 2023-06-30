@@ -1,4 +1,4 @@
-package net.minecraftforge.fml.common.registry;
+package net.mforge.fml.common.registry;
 
 import net.minecraft.util.ResourceLocation;
 

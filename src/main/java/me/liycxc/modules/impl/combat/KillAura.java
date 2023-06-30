@@ -425,7 +425,7 @@ public class KillAura extends Module {
     }
 
     @EventTarget
-    public void onRenderItem(EventRenderItem event){
+    public void onRenderItem(EventRenderItemPre event){
         if (target != null && !(autoBlock.get().equals("None") || autoBlock.get().equals("Block Hit")) && this.canBlock()) {
             event.setEnumAction(EnumAction.BLOCK);
             event.setUseItem(true);
