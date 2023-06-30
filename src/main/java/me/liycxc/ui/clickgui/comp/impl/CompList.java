@@ -51,15 +51,26 @@ public class CompList extends Comp {
         if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(UtiltyModules.class))) {
             ad = UtiltyModules.scrollVAnimation.getValue();
         }
-        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + ad, 70, 10) && mouseButton == 0) {
-            int max = ((ListValue) setting).getValues().length;
-            if (parent.modeIndex + 1 >= max) {
-                parent.modeIndex = 0;
-            } else {
-                parent.modeIndex++;
+        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + ad, 70, 10)) {
+            if (mouseButton == 0) {
+                int max = ((ListValue) setting).getValues().length;
+                if (parent.modeIndex + 1 >= max) {
+                    parent.modeIndex = 0;
+                } else {
+                    parent.modeIndex++;
+                }
+                setting.set((((ListValue) setting).getValues())[parent.modeIndex]);
+                parent.isHitd = true;
+            } else if (mouseButton == 1) {
+                int max = ((ListValue) setting).getValues().length;
+                if (parent.modeIndex + 1 >= max) {
+                    parent.modeIndex = 0;
+                } else {
+                    parent.modeIndex++;
+                }
+                setting.set((((ListValue) setting).getDefaultVal()));
+                parent.isHitd = true;
             }
-            setting.set((((ListValue) setting).getValues())[parent.modeIndex]);
-            parent.isHitd = true;
         }
     }
 }

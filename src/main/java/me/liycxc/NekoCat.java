@@ -52,7 +52,7 @@ public class NekoCat {
 	}
 
 	public String getVersion() {
-		return "2077";
+		return "114514";
 	}
 
 	public static NekoCat instance = new NekoCat();

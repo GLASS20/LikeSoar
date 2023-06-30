@@ -11,7 +11,6 @@ import me.liycxc.ui.clickgui.impl.features.MovementModules;
 import me.liycxc.ui.clickgui.impl.features.RenderModules;
 import me.liycxc.ui.clickgui.impl.features.UtiltyModules;
 import me.liycxc.utils.GlUtils;
-import me.liycxc.utils.Logger;
 import me.liycxc.utils.animation.simple.SimpleAnimation;
 import me.liycxc.utils.color.ColorUtils;
 import me.liycxc.utils.font.FontUtils;
@@ -67,10 +66,14 @@ public class CompBoolean extends Comp {
         if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(UtiltyModules.class))) {
             ad = UtiltyModules.scrollVAnimation.getValue();
         }
-        if(MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + ad, 10, 10) && mouseButton == 0) {
-            setting.set(!(boolean)setting.get());
-            Logger.log("parent " + parent.getName());
-            parent.isHitd = true;
+        if(MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + ad, 10, 10)) {
+            if (mouseButton == 0) {
+                setting.set(!(boolean)setting.get());
+                parent.isHitd = true;
+            } else if (mouseButton == 1) {
+                setting.set(setting.getDefaultVal());
+                parent.isHitd = true;
+            }
         }
     }
 }

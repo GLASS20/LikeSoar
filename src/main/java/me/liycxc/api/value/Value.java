@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import me.liycxc.utils.Logger;
 
+/**
+ * @author Liycxc
+ */
+@Getter
+@Setter
 public abstract class Value<T> {
-
     private final String name;
-    @Setter
-    @Getter
     private T value;
-    @Getter
-    @Setter
     private Function0<Boolean> displayable;
     private final T defaultVal;
 

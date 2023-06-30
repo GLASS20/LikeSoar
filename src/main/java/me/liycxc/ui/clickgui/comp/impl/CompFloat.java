@@ -20,7 +20,7 @@ import java.math.RoundingMode;
 
 public class CompFloat extends Comp {
 
-    private boolean dragging = false;
+    private boolean dragging = false, rest = false;
     private double renderWidth;
     private double renderWidth2;
     private SimpleAnimation animation = new SimpleAnimation(0.0F);
@@ -49,12 +49,15 @@ public class CompFloat extends Comp {
         double diff = Math.min(l, Math.max(0, mouseX - (parent.getX() + x - 70)));
         
         if (dragging) {
-            if (diff == 0) {
-                setting.set(((FloatValue)setting).getMinimum());
-            }
-            else {
-                double newValue = roundToPlace(((diff / l) * (max - min) + min), 2);
-                ((FloatValue) setting).set(newValue);
+            if (rest) {
+                setting.set(setting.getDefaultVal());
+            } else {
+                if (diff == 0) {
+                    setting.set(((FloatValue)setting).getMinimum());
+                } else {
+                    double newValue = roundToPlace(((diff / l) * (max - min) + min), 2);
+                    ((FloatValue) setting).set(newValue);
+                }
             }
         }
         
@@ -84,8 +87,13 @@ public class CompFloat extends Comp {
         if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(UtiltyModules.class))) {
             ad = UtiltyModules.scrollVAnimation.getValue();
         }
-        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + 10 + ad,renderWidth2 + 3, 10) && mouseButton == 0) {
-            dragging = true;
+        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + 10 + ad,renderWidth2 + 3, 10)) {
+            if (mouseButton == 0) {
+                dragging = true;
+            } else if (mouseButton == 1) {
+                dragging = true;
+                rest = true;
+            }
         }
     }
 
@@ -93,6 +101,7 @@ public class CompFloat extends Comp {
     public void mouseReleased(int mouseX, int mouseY, int state) {
         super.mouseReleased(mouseX, mouseY, state);
         dragging = false;
+        rest = false;
     }
 
     private double roundToPlace(double value, int places) {

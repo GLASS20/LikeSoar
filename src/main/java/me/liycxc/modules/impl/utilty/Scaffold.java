@@ -119,6 +119,10 @@ public class Scaffold extends Module {
 
         // This is a temporary patch
         SlotComponent.setSlot(mc.thePlayer.inventory.currentItem);
+
+        if (mc.timer.timerSpeed != 1f){
+            mc.timer.timerSpeed = 1f;
+        }
     }
     
     @EventTarget

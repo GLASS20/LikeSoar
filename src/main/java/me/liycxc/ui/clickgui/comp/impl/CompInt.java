@@ -20,7 +20,7 @@ import java.math.RoundingMode;
 
 public class CompInt extends Comp {
 
-    private boolean dragging = false;
+    private boolean dragging = false, reset = false;
     private double renderWidth;
     private double renderWidth2;
     private SimpleAnimation animation = new SimpleAnimation(0.0F);
@@ -49,13 +49,17 @@ public class CompInt extends Comp {
         double diff = Math.min(l, Math.max(0, mouseX - (parent.getX() + x - 70)));
         
         if (dragging) {
-            if (diff == 0) {
-                setting.set(((IntValue)setting).getMinimum());
+            if (reset) {
+                setting.set(((IntValue)setting).getDefaultVal());
+            } else {
+                if (diff == 0) {
+                    setting.set(((IntValue)setting).getMinimum());
+                } else {
+                    double newValue = roundToPlace(((diff / l) * (max - min) + min), 2);
+                    ((IntValue) setting).set(newValue);
+                }
             }
-            else {
-                double newValue = roundToPlace(((diff / l) * (max - min) + min), 2);
-                ((IntValue) setting).set(newValue);
-            }
+
         }
         
         RoundedUtils.drawRound((float) (parent.getX() + x - 70), (float) (parent.getY() + y + 13), (float) (renderWidth2), 6, 3, ColorUtils.getBackgroundColor(2));
@@ -84,8 +88,13 @@ public class CompInt extends Comp {
         if(NekoCat.instance.guiManager.getgClickGUI().selectedCategory.equals(NekoCat.instance.guiManager.getgClickGUI().categoryManager.getCategoryByClass(UtiltyModules.class))) {
             ad = UtiltyModules.scrollVAnimation.getValue();
         }
-        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + 10 + ad,renderWidth2 + 3, 10) && mouseButton == 0) {
-            dragging = true;
+        if (MouseUtils.isInside(mouseX, mouseY, parent.getX() + x - 70, parent.getY() + y + 10 + ad,renderWidth2 + 3, 10)) {
+            if (mouseButton == 0) {
+                dragging = true;
+            } else if (mouseButton == 1) {
+                dragging = true;
+                reset = true;
+            }
         }
     }
 
@@ -93,6 +102,7 @@ public class CompInt extends Comp {
     public void mouseReleased(int mouseX, int mouseY, int state) {
         super.mouseReleased(mouseX, mouseY, state);
         dragging = false;
+        reset = false;
     }
 
     private double roundToPlace(double value, int places) {
