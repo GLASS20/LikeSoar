@@ -393,7 +393,7 @@ public class KillAura extends Module {
 
         this.clickStopWatch.reset();
         this.hitTicks = 0;
-//        if (!pastTargets.contains(target)) pastTargets.add(target);
+        //if (!pastTargets.contains(target)) pastTargets.add(target);
     }
 
     private void block(final boolean check, final boolean interact) {

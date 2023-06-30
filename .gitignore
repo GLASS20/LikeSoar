@@ -3,6 +3,7 @@
 .metadata
 .classpath
 .project
+.xml
 eclipse
 bin
 *.launch
