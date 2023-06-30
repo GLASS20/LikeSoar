@@ -53,10 +53,6 @@ public class KillAura extends Module {
     
     private final BoolValue keepSprint = new BoolValue("Keep sprint", false);
 
-    // private final ListValue espMode = new ListValue("Target ESP Mode", new String[]{"Ring","Box","None"},"Ring");
-
-    // public final ListValue boxMode = new ListValue("Box Mode", new String[]{"Above","Full"},"Above", () -> espMode.get().equals("Box"));
-
     private final BoolValue rayCast = new BoolValue("Ray cast", false);
 
     private final BoolValue advanced = new BoolValue("Advanced", false);
@@ -89,9 +85,7 @@ public class KillAura extends Module {
     public StopWatch subTicksStopWatch = new StopWatch();
     private int attack, hitTicks, expandRange;
 
-    private long leftLastSwing = 0L;
-
-    private TimerUtils timeHelper = new TimerUtils();
+    private final TimerUtils timeHelper = new TimerUtils();
 
     @EventTarget
     public void onPreMotion(EventPreMotion eventMotion) {
@@ -422,6 +416,7 @@ public class KillAura extends Module {
             }
             blocking = false;
         }
+        RotationComponent.stopRotation();
     }
 
     @EventTarget
@@ -617,7 +612,7 @@ public class KillAura extends Module {
             if (targets.isEmpty()) {
                 this.randomiseTargetRotations();
                 target = null;
-                RotationComponent.stopRotation();
+                // RotationComponent.stopRotation();
                 return;
             }
 
