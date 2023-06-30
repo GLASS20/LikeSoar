@@ -82,6 +82,7 @@ public class Scaffold extends Module {
     private int vulcanTime, vulcanBlock;
     private int MatrixTime;
     private int WatchdogBlocks;
+    private boolean sprintState = false;
     public Scaffold() {
         super("Scaffold","Make you fly in your way", ModuleCategory.Util);
     }
@@ -101,6 +102,12 @@ public class Scaffold extends Module {
                 mc.gameSettings.keyBindSprint.setPressed(true);
                 mc.thePlayer.setSprinting(true);
             }
+        }
+
+        sprintState = NekoCat.instance.modManager.getModByName("Sprint").isToggled();
+
+        if ("Disabled".equals(sprint.get()) && sprintState) {
+            NekoCat.instance.modManager.getModByName("Sprint").setToggled(false);
         }
     }
 
@@ -122,6 +129,10 @@ public class Scaffold extends Module {
 
         if (mc.timer.timerSpeed != 1f){
             mc.timer.timerSpeed = 1f;
+        }
+
+        if (sprintState) {
+            NekoCat.instance.modManager.getModByName("Sprint").setToggled(true);
         }
     }
     
@@ -247,6 +258,7 @@ public class Scaffold extends Module {
                 break;
             }
             case "Disabled": {
+
                 mc.gameSettings.keyBindSprint.setPressed(false);
                 mc.thePlayer.setSprinting(false);
                 break;
