@@ -1,5 +1,6 @@
 package net.minecraft.client.multiplayer;
 
+import me.liycxc.api.events.impl.EventSyncCurrentItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -10,6 +11,7 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -314,7 +316,13 @@ public class PlayerControllerMP {
      * Syncs the current player item with the server
      */
     public void syncCurrentPlayItem() {
-        int i = this.mc.thePlayer.inventory.currentItem;
+        InventoryPlayer inventoryPlayer = this.mc.thePlayer.inventory;
+        int i = inventoryPlayer.currentItem;
+
+        EventSyncCurrentItem syncCurrentItem = new EventSyncCurrentItem(i);
+        syncCurrentItem.call();
+
+        i = syncCurrentItem.getSlot();
 
         if (i != this.currentPlayerItem) {
             this.currentPlayerItem = i;

@@ -22,6 +22,8 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 
+import static me.liycxc.NekoCat.mc;
+
 public class GuiIngameHook {
 
 	private static Framebuffer shadowFramebuffer = new Framebuffer(1, 1, false);
@@ -40,7 +42,7 @@ public class GuiIngameHook {
 		event3.call();
 		
 		if((!NekoCat.instance.settingsManager.getSettingByClass(HUDMod.class, "Hide Debug Menu").getValBoolean()) || (NekoCat.instance.settingsManager.getSettingByClass(HUDMod.class, "Hide Debug Menu").getValBoolean() && !Minecraft.getMinecraft().gameSettings.showDebugInfo)) {
-			EventRender2D event = new EventRender2D(partialTicks);
+			EventRender2D event = new EventRender2D(partialTicks, mc.scaledresolution);
 			EventRenderShadow event2 = new EventRenderShadow(partialTicks);
 			
 	        shadowFramebuffer = GlUtils.createFrameBuffer(shadowFramebuffer);

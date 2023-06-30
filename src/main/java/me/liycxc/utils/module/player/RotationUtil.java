@@ -1,5 +1,6 @@
 package me.liycxc.utils.module.player;
 
+import lombok.experimental.UtilityClass;
 import me.liycxc.utils.MathConst;
 import me.liycxc.utils.vector.Vector2f;
 import me.liycxc.utils.vector.Vector3d;
@@ -12,6 +13,7 @@ import net.minecraft.util.Vec3;
 
 import static me.liycxc.NekoCat.mc;
 
+@UtilityClass
 public class RotationUtil {
     public static Rotation serverRotation = new Rotation(0F, 0F);
     public static Rotation targetRotation;

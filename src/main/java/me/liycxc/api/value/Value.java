@@ -4,8 +4,6 @@ import com.google.gson.JsonElement;
 import lombok.Getter;
 import lombok.Setter;
 import me.liycxc.utils.Logger;
-//import org.jetbrains.annotations.NotNull;
-//import org.jetbrains.annotations.Nullable;
 
 public abstract class Value<T> {
 

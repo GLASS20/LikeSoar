@@ -3,6 +3,7 @@ package me.liycxc.utils;
 import com.google.common.collect.Multimap;
 import lombok.experimental.UtilityClass;
 import me.liycxc.NekoCat;
+import me.liycxc.utils.player.EnumFacingOffset;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockLiquid;
@@ -803,5 +804,37 @@ public class PlayerUtils {
         MODIFIER_BY_TICK.put(18, 0.121500015f);
         MODIFIER_BY_TICK.put(19, 0.13537502f);
         MODIFIER_BY_TICK.put(20, 0.14999998f);
+    }
+
+    public EnumFacingOffset getEnumFacing(final Vec3 position) {
+        for (int x2 = -1; x2 <= 1; x2 += 2) {
+            if (!(PlayerUtils.block(position.xCoord + x2, position.yCoord, position.zCoord) instanceof BlockAir)) {
+                if (x2 > 0) {
+                    return new EnumFacingOffset(EnumFacing.WEST, new Vec3(x2, 0, 0));
+                } else {
+                    return new EnumFacingOffset(EnumFacing.EAST, new Vec3(x2, 0, 0));
+                }
+            }
+        }
+
+        for (int y2 = -1; y2 <= 1; y2 += 2) {
+            if (!(PlayerUtils.block(position.xCoord, position.yCoord + y2, position.zCoord) instanceof BlockAir)) {
+                if (y2 < 0) {
+                    return new EnumFacingOffset(EnumFacing.UP, new Vec3(0, y2, 0));
+                }
+            }
+        }
+
+        for (int z2 = -1; z2 <= 1; z2 += 2) {
+            if (!(PlayerUtils.block(position.xCoord, position.yCoord, position.zCoord + z2) instanceof BlockAir)) {
+                if (z2 < 0) {
+                    return new EnumFacingOffset(EnumFacing.SOUTH, new Vec3(0, 0, z2));
+                } else {
+                    return new EnumFacingOffset(EnumFacing.NORTH, new Vec3(0, 0, z2));
+                }
+            }
+        }
+
+        return null;
     }
 }

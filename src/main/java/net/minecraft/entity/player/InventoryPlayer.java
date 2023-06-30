@@ -28,7 +28,7 @@ public class InventoryPlayer implements IInventory {
     public ItemStack[] armorInventory = new ItemStack[4];
 
     /** The index of the currently held item (0-8). */
-    public int currentItem;
+    public int currentItem, alternativeCurrentItem;
     public boolean alternativeSlot = false;
 
     /** The player whose inventory this is. */

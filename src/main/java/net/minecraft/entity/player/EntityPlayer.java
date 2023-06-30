@@ -3,12 +3,18 @@ package net.minecraft.entity.player;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
+import me.liycxc.NekoCat;
 import me.liycxc.api.events.impl.EventAttackEntity;
+import me.liycxc.manages.component.impl.SmoothCameraComponent;
+import me.liycxc.modules.impl.utilty.Scaffold;
+import me.liycxc.utils.module.player.StopWatch;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.server.CommandBlockLogic;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
@@ -1530,12 +1536,7 @@ public abstract class EntityPlayer extends EntityLivingBase {
         this.addMovementStat(this.posX - d0, this.posY - d1, this.posZ - d2);
     }
 
-    /**
-     * the movespeed used for the new AI system
-     */
-    public float getAIMoveSpeed() {
-        return (float)this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
-    }
+    public StopWatch hideSneakHeight = new StopWatch();
 
     /**
      * Adds a value to a movement statistic field - like run, walk, swin or climb.
@@ -1959,14 +1960,39 @@ public abstract class EntityPlayer extends EntityLivingBase {
         return ichatcomponent;
     }
 
+    /**
+     * the movespeed used for the new AI system
+     */
+    @Override
+    public float getAIMoveSpeed() {
+        if (this instanceof EntityPlayerSP) {
+            final Scaffold scaffold = (Scaffold) NekoCat.instance.moduleManager.getModule("Scaffold");
+
+            if (scaffold != null && scaffold.getToggled() && scaffold.ignoreSpeed.getValue()) {
+                if (Minecraft.getMinecraft().gameSettings.keyBindSprint.isKeyDown()) {
+                    return 0.13000001F;
+                } else {
+                    return 0.1F;
+                }
+            }
+        }
+
+        return (float) this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
+    }
+
+    @Override
     public float getEyeHeight() {
         float f = 1.62F;
+
+        if (!SmoothCameraComponent.stopWatch.finished(60)) {
+            f = (float) (1.62F - (lastTickPosY + (((posY - lastTickPosY) * Minecraft.getMinecraft().timer.renderPartialTicks)) - SmoothCameraComponent.y));
+        }
 
         if (this.isPlayerSleeping()) {
             f = 0.2F;
         }
 
-        if (this.isSneaking()) {
+        if (this.isSneaking() && hideSneakHeight.finished(100)) {
             f -= 0.08F;
         }
 

@@ -33,7 +33,6 @@ import me.liycxc.utils.font.FontManager;
 import me.liycxc.utils.font.FontUtils;
 import me.liycxc.utils.server.HypixelUtils;
 import me.liycxc.utils.server.ServerUtils;
-import me.liycxc.verify.Verify;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.network.PacketBuffer;
@@ -43,6 +42,9 @@ import net.minecraft.util.BlockPos;
 
 import java.util.Random;
 
+/**
+ * @author Liycxc
+ */
 public class NekoCat {
 
 	public String getName() {

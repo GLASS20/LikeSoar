@@ -40,6 +40,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -270,6 +271,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
     private long field_175615_aJ = 0L;
     private final Thread mcThread = Thread.currentThread();
     private ModelManager modelManager;
+    public ScaledResolution scaledresolution;
 
     /**
      * The BlockRenderDispatcher instance that will be used based off gamesettings
@@ -781,7 +783,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
 
     private void drawSplashScreen(TextureManager textureManagerInstance) throws LWJGLException {
         GuiSplashScreen.onRender(textureManagerInstance);
-        /*ScaledResolution scaledresolution = new ScaledResolution(this);
+        scaledresolution = new ScaledResolution(this);
         int i = scaledresolution.getScaleFactor();
         Framebuffer framebuffer = new Framebuffer(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i, true);
         framebuffer.bindFramebuffer(false);
@@ -827,7 +829,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage {
         framebuffer.framebufferRender(scaledresolution.getScaledWidth() * i, scaledresolution.getScaledHeight() * i);
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.1F);
-        this.updateDisplay();*/
+        this.updateDisplay();
     }
 
     /**

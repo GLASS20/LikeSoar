@@ -18,6 +18,7 @@ public final class ComponentManager extends ArrayList<Component> {
         this.add(new SlotComponent());
         this.add(new SelectorDetectionComponent());
         this.add(new BlinkComponent());
+        this.add(new SmoothCameraComponent());
         this.registerToEventBus();
     }
 
