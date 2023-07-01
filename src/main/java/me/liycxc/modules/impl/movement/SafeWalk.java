@@ -10,6 +10,9 @@ import me.liycxc.modules.ModuleCategory;
 import net.minecraft.item.ItemBlock;
 import org.lwjgl.input.Keyboard;
 
+/**
+ * @author Liycxc
+ */
 @ModuleTag
 public class SafeWalk extends Module {
     public SafeWalk() {

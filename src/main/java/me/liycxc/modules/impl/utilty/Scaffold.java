@@ -134,6 +134,10 @@ public class Scaffold extends Module {
         if (sprintState) {
             NekoCat.instance.modManager.getModByName("Sprint").setToggled(true);
         }
+
+        if (safeWalk.get() && mc.thePlayer.safeWalk) {
+            mc.thePlayer.safeWalk = false;
+        }
     }
     
     @EventTarget

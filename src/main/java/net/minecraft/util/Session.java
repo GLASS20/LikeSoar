@@ -3,9 +3,13 @@ package net.minecraft.util;
 import com.google.common.collect.Maps;
 import com.mojang.authlib.GameProfile;
 import com.mojang.util.UUIDTypeAdapter;
+
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * @author Liycxc
+ */
 public class Session {
     private final String username;
     private final String playerID;
