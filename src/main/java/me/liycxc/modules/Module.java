@@ -13,6 +13,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Liycxc
+ */
 @Getter
 @Setter
 public class Module {
@@ -25,7 +28,7 @@ public class Module {
     public SimpleAnimation buttonAnimation = new SimpleAnimation(0.0f);
     public SimpleAnimation buttonOpacityAnimation = new SimpleAnimation(0.0f);
     public TimerUtils selectTimer = new TimerUtils();
-    public boolean toggled = false;
+    public boolean toggled;
 
     public Module(String moduleName, String description, ModuleCategory moduleCategory) {
         this.moduleName = moduleName;
