@@ -6,6 +6,9 @@ import me.liycxc.pvp.management.mods.Mod;
 import me.liycxc.pvp.management.mods.ModCategory;
 import net.minecraft.client.settings.KeyBinding;
 
+/**
+ * @author Liycxc
+ */
 public class SprintMod extends Mod {
 
 	public SprintMod() {
