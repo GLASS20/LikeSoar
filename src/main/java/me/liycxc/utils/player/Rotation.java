@@ -1,4 +1,4 @@
-package me.liycxc.utils.module.player;
+package me.liycxc.utils.player;
 
 import me.liycxc.utils.vector.Vector2f;
 

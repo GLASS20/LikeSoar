@@ -1,4 +1,4 @@
-package me.liycxc.utils.module.invs;
+package me.liycxc.utils.invs;
 
 import lombok.experimental.UtilityClass;
 import me.liycxc.utils.PlayerUtils;

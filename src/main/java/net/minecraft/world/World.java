@@ -4,7 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import me.liycxc.utils.ClientUtils;
-import me.liycxc.utils.module.player.RayCastUtil;
+import me.liycxc.utils.player.RayCastUtil;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

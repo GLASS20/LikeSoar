@@ -7,7 +7,7 @@ import me.liycxc.NekoCat;
 import me.liycxc.api.events.impl.EventJump;
 import me.liycxc.api.events.impl.EventLivingUpdate;
 import me.liycxc.pvp.management.mods.impl.SlowSwingMod;
-import me.liycxc.utils.module.player.MoveUtil;
+import me.liycxc.utils.player.MoveUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

@@ -6,7 +6,7 @@ import me.liycxc.api.tags.ModuleTag;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
-import me.liycxc.utils.module.player.MoveUtil;
+import me.liycxc.utils.player.MoveUtil;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.potion.Potion;

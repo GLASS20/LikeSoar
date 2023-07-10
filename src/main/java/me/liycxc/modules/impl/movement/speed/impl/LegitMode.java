@@ -8,8 +8,8 @@ import me.liycxc.api.value.impl.BoolValue;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.manages.component.impl.RotationComponent;
 import me.liycxc.modules.impl.movement.speed.SpeedMode;
-import me.liycxc.utils.module.player.MoveUtil;
-import me.liycxc.utils.module.player.MovementFix;
+import me.liycxc.utils.player.MoveUtil;
+import me.liycxc.utils.player.MovementFix;
 import me.liycxc.utils.vector.Vector2f;
 
 @ModuleTag

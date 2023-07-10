@@ -7,7 +7,7 @@ import me.liycxc.NekoCat;
 import me.liycxc.api.events.impl.EventAttackEntity;
 import me.liycxc.manages.component.impl.SmoothCameraComponent;
 import me.liycxc.modules.impl.utilty.Scaffold;
-import me.liycxc.utils.module.player.StopWatch;
+import me.liycxc.utils.player.StopWatch;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDirectional;

@@ -3,9 +3,9 @@ package me.liycxc.manages.component.impl;
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.*;
 import me.liycxc.manages.component.Component;
-import me.liycxc.utils.module.player.MoveUtil;
-import me.liycxc.utils.module.player.MovementFix;
-import me.liycxc.utils.module.player.RotationUtil;
+import me.liycxc.utils.player.MoveUtil;
+import me.liycxc.utils.player.MovementFix;
+import me.liycxc.utils.player.RotationUtil;
 import me.liycxc.utils.vector.Vector2f;
 
 public final class RotationComponent extends Component {

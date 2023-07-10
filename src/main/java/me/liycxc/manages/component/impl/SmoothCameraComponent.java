@@ -3,7 +3,7 @@ package me.liycxc.manages.component.impl;
 import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventPreMotion;
 import me.liycxc.manages.component.Component;
-import me.liycxc.utils.module.player.StopWatch;
+import me.liycxc.utils.player.StopWatch;
 
 /**
  * @author: Liycxc

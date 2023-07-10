@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author Liycxc
+ */
 public class ModuleManager {
     public MultiValuedMap<Integer,Module> keyBinds = new ArrayListValuedHashMap<>();
-    ArrayList<Module> modules = new ArrayList<Module>();
+    ArrayList<Module> modules = new ArrayList<>();
     List<Module> moduleList = new ArrayList<>();
 
     public void registerModules() {
@@ -44,6 +47,7 @@ public class ModuleManager {
         moduleList.add(new Disabler());
         moduleList.add(new Velocity());
         moduleList.add(new Speed());
+        moduleList.add(new AutoDisable());
 
         // Render
         moduleList.add(new Chams());

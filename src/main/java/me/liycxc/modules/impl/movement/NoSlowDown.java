@@ -11,7 +11,7 @@ import me.liycxc.modules.Module;
 import me.liycxc.modules.ModuleCategory;
 import me.liycxc.utils.MSTimer;
 import me.liycxc.utils.PlayerUtils;
-import me.liycxc.utils.module.player.MoveUtil;
+import me.liycxc.utils.player.MoveUtil;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.Packet;

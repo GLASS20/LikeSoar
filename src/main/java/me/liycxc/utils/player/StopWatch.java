@@ -1,4 +1,4 @@
-package me.liycxc.utils.module.player;
+package me.liycxc.utils.player;
 
 public class StopWatch {
     private long millis;
