@@ -1,8 +1,8 @@
-package me.liycxc.modules.impl.movement.speed;
+package me.liycxc.modules.impl.movement.noslow;
 
 import me.liycxc.NekoCat;
 import me.liycxc.api.value.Value;
-import me.liycxc.modules.impl.movement.Speed;
+import me.liycxc.modules.impl.movement.NoSlow;
 import net.minecraft.client.Minecraft;
 
 import java.lang.reflect.Field;
@@ -10,14 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This file is part of LikeSoar project.
+ * Copyright 2023 Liycxc
+ * All Rights Reserved.
+ *
  * @author Liycxc
+ * @date: 2023-07-10
+ * @time: 14:20
  */
-public class SpeedMode {
+public class NoSlowMode {
     public String modeName;
-    public Speed speed = (Speed) NekoCat.instance.moduleManager.getModule("Speed");
+    public NoSlow noSlow = (NoSlow) NekoCat.instance.moduleManager.getModule("NoSlow");
     public Minecraft mc = Minecraft.getMinecraft();
 
-    public SpeedMode(String modeName) {
+    public NoSlowMode(String modeName) {
         this.modeName = modeName;
     }
 

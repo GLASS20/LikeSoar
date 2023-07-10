@@ -4,7 +4,6 @@ import me.liycxc.api.events.EventTarget;
 import me.liycxc.api.events.impl.EventPreMotion;
 import me.liycxc.api.events.impl.EventStrafe;
 import me.liycxc.api.tags.ModuleTag;
-import me.liycxc.api.value.impl.BoolValue;
 import me.liycxc.api.value.impl.ListValue;
 import me.liycxc.modules.impl.movement.speed.SpeedMode;
 import me.liycxc.utils.PlayerUtils;
@@ -23,14 +22,14 @@ public class WatchdogMode extends SpeedMode {
     }
 
     public ListValue mode = new ListValue("Type",new String[]{"Full Strafe","Damage Strafe","Ground Strafe"},"Damage Strafe");
-    public BoolValue damageBoost = new BoolValue("Damage Boost",false);
 
     private float angle;
 
     @EventTarget
     public void onPreMotion(EventPreMotion event) {
-        if (mode.get().equals("Ground Strafe") || mode.get().equals("Damage Strafe"))
+        if ("Ground Strafe".equals(mode.get()) || "Damage Strafe".equals(mode.get())) {
             return;
+        }
 
         if (!(PlayerUtils.blockRelativeToPlayer(0, -1, 0) instanceof BlockAir) && mc.thePlayer.ticksSinceVelocity > 20) {
             event.setOnGround(true);

@@ -2,7 +2,7 @@ package me.liycxc.modules;
 
 import me.liycxc.NekoCat;
 import me.liycxc.modules.impl.combat.*;
-import me.liycxc.modules.impl.movement.NoSlowDown;
+import me.liycxc.modules.impl.movement.NoSlow;
 import me.liycxc.modules.impl.movement.SafeWalk;
 import me.liycxc.modules.impl.movement.Speed;
 import me.liycxc.modules.impl.render.Animations;
@@ -36,7 +36,7 @@ public class ModuleManager {
         moduleList.add(new Teams());
         moduleList.add(new KillAura());
         moduleList.add(new Scaffold());
-        moduleList.add(new NoSlowDown());
+        moduleList.add(new NoSlow());
         moduleList.add(new InvManager());
         moduleList.add(new InvMove());
         moduleList.add(new Stealer());
